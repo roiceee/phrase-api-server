@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import java.util.List;
 
 @RestController
 @RequestMapping("api")
@@ -18,7 +19,7 @@ public class RequestResourceController {
         this.fetchResourceService = fetchResourceService;
     }
 
-    @GetMapping
+    @GetMapping(params = {ReqParamNames.type})
     public ResponseEntity<Phrase> getRandomResource(
             @RequestParam (value = ReqParamNames.type) String type
             ) {
@@ -27,5 +28,17 @@ public class RequestResourceController {
                 .ok()
                 .body(phrase);
     }
+
+    @GetMapping(params = {ReqParamNames.type, ReqParamNames.qty})
+    public ResponseEntity<List<? extends Phrase>> getRandomResourceList(
+             @RequestParam (value = ReqParamNames.type) String type,
+             @RequestParam (value = ReqParamNames.qty) int qty
+    ) {
+        List<? extends Phrase> phraseList = fetchResourceService.getRandomPhraseList(type, qty);
+        return ResponseEntity
+                .ok()
+                .body(phraseList);
+    }
+
 
 }
