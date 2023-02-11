@@ -1,6 +1,6 @@
 package com.roiceee.quotejokeapi;
 
-import com.roiceee.quotejokeapi.exceptions.WrongReqParamTypeException;
+import com.roiceee.quotejokeapi.exceptions.InvalidParamTypeValueException;
 import com.roiceee.quotejokeapi.models.JokeModel;
 import com.roiceee.quotejokeapi.models.Phrase;
 import com.roiceee.quotejokeapi.models.QuoteModel;
@@ -63,7 +63,7 @@ public class FetchResourceServiceUnitTest {
     public void getRandomJokeTestWrongType() {
         String type = "wrong type";
 
-        Assertions.assertThrows(WrongReqParamTypeException.class,
+        Assertions.assertThrows(InvalidParamTypeValueException.class,
                 () -> {
                     fetchResourceService.getRandomPhrase(type);
                 });
