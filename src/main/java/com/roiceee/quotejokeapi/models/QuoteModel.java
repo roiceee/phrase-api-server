@@ -12,13 +12,13 @@ public class QuoteModel implements Phrase{
     @Id
     private long ID;
     private String author;
-    private String quote;
+    private String phrase;
 
 
 
     @Override
     public String getPhrase() {
-        return quote;
+        return phrase;
     }
 
     public long getID() {
@@ -37,12 +37,8 @@ public class QuoteModel implements Phrase{
         this.author = author;
     }
 
-    public String getQuote() {
-        return quote;
-    }
-
-    public void setQuote(String quote) {
-        this.quote = quote;
+    public void setPhrase(String quote) {
+        this.phrase = quote;
     }
 
     @Override
@@ -50,11 +46,12 @@ public class QuoteModel implements Phrase{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         QuoteModel that = (QuoteModel) o;
-        return getID() == that.getID() && Objects.equals(getAuthor(), that.getAuthor()) && Objects.equals(getQuote(), that.getQuote());
+        return getID() == that.getID() && Objects.equals(getAuthor(), that.getAuthor()) && Objects.equals(getPhrase(),
+                that.getPhrase());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getID(), getAuthor(), getQuote());
+        return Objects.hash(getID(), getAuthor(), getPhrase());
     }
 }

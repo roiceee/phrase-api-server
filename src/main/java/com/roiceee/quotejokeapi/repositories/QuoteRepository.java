@@ -13,6 +13,6 @@ public interface QuoteRepository extends CrudRepository<QuoteModel, Long> {
             "SELECT * FROM quotes " +
                     "ORDER BY RAND() LIMIT  1",
             nativeQuery = true)
-    JokeModel getRandomQuote();
+    QuoteModel getRandomQuote();
 
 }

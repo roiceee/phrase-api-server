@@ -22,17 +22,16 @@ public class FetchResourceService {
     public Phrase getRandomPhrase(String type) {
         return switch (type) {
             case ReqParamTypeValues.JOKE -> getRandomJoke();
-            //this exception is not intercepted
             case ReqParamTypeValues.QUOTE -> getRandomQuote();
             default -> throw new WrongReqParamTypeException(type);
         };
     }
 
-    public Phrase getRandomJoke() {
+    private Phrase getRandomJoke() {
         return jokeRepository.getRandomJoke();
     }
 
-    public Phrase getRandomQuote() {
+    private Phrase getRandomQuote() {
         return quoteRepository.getRandomQuote();
     }
 
