@@ -3,6 +3,7 @@ package com.roiceee.quotejokeapi.services;
 import com.roiceee.quotejokeapi.exceptions.WrongReqParamTypeException;
 import com.roiceee.quotejokeapi.models.Phrase;
 import com.roiceee.quotejokeapi.repositories.JokeRepository;
+import com.roiceee.quotejokeapi.repositories.QuoteRepository;
 import com.roiceee.quotejokeapi.util.ReqParamTypeValues;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,15 +12,18 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class FetchResourceService {
     JokeRepository jokeRepository;
+    QuoteRepository quoteRepository;
 
-    public FetchResourceService(JokeRepository jokeRepository) {
+    public FetchResourceService(JokeRepository jokeRepository, QuoteRepository quoteRepository) {
         this.jokeRepository = jokeRepository;
+        this.quoteRepository = quoteRepository;
     }
 
     public Phrase getRandomPhrase(String type) {
         return switch (type) {
             case ReqParamTypeValues.JOKE -> getRandomJoke();
             //this exception is not intercepted
+            case ReqParamTypeValues.QUOTE -> getRandomQuote();
             default -> throw new WrongReqParamTypeException(type);
         };
     }
@@ -28,5 +32,8 @@ public class FetchResourceService {
         return jokeRepository.getRandomJoke();
     }
 
+    public Phrase getRandomQuote() {
+        return quoteRepository.getRandomQuote();
+    }
 
 }
