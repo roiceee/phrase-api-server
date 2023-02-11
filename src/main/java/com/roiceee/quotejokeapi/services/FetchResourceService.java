@@ -17,10 +17,10 @@ public class FetchResourceService {
     }
 
     public Phrase getRandomPhrase(String type) {
-       return switch (type) {
+        return switch (type) {
             case ReqParamTypeValues.JOKE -> getRandomJoke();
             //this exception is not intercepted
-           default -> throw new WrongReqParamTypeException(type);
+            default -> throw new WrongReqParamTypeException(type);
         };
     }
 

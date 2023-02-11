@@ -33,7 +33,7 @@ public class RequestResourceControllerIntegrationTest {
     @Description("Check status of getRandomJokeResource with wrong parameter 'type' value.")
     public void getRandomJokeResourceTestWrongTypeValueTestStatus() throws Exception {
         String type = "wrong type";
-         mockMvc.perform(get("/api").param("type", type))
+        mockMvc.perform(get("/api").param("type", type))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isBadRequest());
     }

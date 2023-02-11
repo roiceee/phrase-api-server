@@ -22,7 +22,6 @@ public class RequestResourceController {
     public ResponseEntity<Phrase> getRandomResource(
             @RequestParam (value = ReqParamNames.type) String type
             ) {
-
             Phrase phrase = fetchResourceService.getRandomPhrase(type);
         return ResponseEntity
                 .ok()
