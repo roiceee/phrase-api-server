@@ -3,7 +3,6 @@ package com.roiceee.quotejokeapi.controllers;
 import com.roiceee.quotejokeapi.models.Phrase;
 import com.roiceee.quotejokeapi.services.FetchResourceService;
 import com.roiceee.quotejokeapi.util.ReqParamNames;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,10 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("api")
-public class AppController {
+public class RequestResourceController {
     FetchResourceService fetchResourceService;
 
-    public AppController(FetchResourceService fetchResourceService) {
+    public RequestResourceController(FetchResourceService fetchResourceService) {
         this.fetchResourceService = fetchResourceService;
     }
 
@@ -29,4 +28,5 @@ public class AppController {
                 .ok()
                 .body(phrase);
     }
+
 }
