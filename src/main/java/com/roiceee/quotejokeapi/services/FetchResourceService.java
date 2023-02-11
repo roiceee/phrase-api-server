@@ -7,6 +7,7 @@ import com.roiceee.quotejokeapi.models.Phrase;
 import com.roiceee.quotejokeapi.models.QuoteModel;
 import com.roiceee.quotejokeapi.repositories.JokeRepository;
 import com.roiceee.quotejokeapi.repositories.QuoteRepository;
+import com.roiceee.quotejokeapi.util.ReqParamQtyValues;
 import com.roiceee.quotejokeapi.util.ReqParamTypeValues;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,8 +35,8 @@ public class FetchResourceService {
     }
 
     public List<? extends Phrase> getRandomPhraseList(String type, int quantity) {
-        if (quantity < ReqParamTypeValues.MINQTY ||
-                quantity > ReqParamTypeValues.MAXQTY) {
+        if (quantity < ReqParamQtyValues.MINQTY ||
+                quantity > ReqParamQtyValues.MAXQTY) {
             throw new InvalidParamQuantityValueException(quantity);
         }
 

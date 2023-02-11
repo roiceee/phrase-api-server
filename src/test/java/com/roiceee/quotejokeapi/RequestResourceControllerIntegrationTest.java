@@ -3,6 +3,7 @@ package com.roiceee.quotejokeapi;
 import com.roiceee.quotejokeapi.controllers.RequestResourceController;
 import com.roiceee.quotejokeapi.services.FetchResourceService;
 import com.roiceee.quotejokeapi.util.ReqParamNames;
+import com.roiceee.quotejokeapi.util.ReqParamQtyValues;
 import com.roiceee.quotejokeapi.util.ReqParamTypeValues;
 import jdk.jfr.Description;
 import org.junit.jupiter.api.Test;
@@ -63,7 +64,7 @@ public class RequestResourceControllerIntegrationTest {
             "parameter type = joke and wrong quantity")
     public void getRandomJokeResourceListWrongTypeValueTestStatus() throws Exception {
         String type = ReqParamTypeValues.JOKE;
-        int qty = 11;
+        int qty = ReqParamQtyValues.MAXQTY + 1;
         mockMvc.perform(get("/api").param(ReqParamNames.type, type)
                         .param(ReqParamNames.qty, String.valueOf(qty)))
                 .andDo(MockMvcResultHandlers.print())
