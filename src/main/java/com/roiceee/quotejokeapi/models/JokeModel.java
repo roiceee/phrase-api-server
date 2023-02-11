@@ -23,17 +23,24 @@ public class JokeModel implements Phrase {
         this.phrase = phrase;
     }
 
+    public long getID() {
+        return ID;
+    }
+
+    public void setID(long ID) {
+        this.ID = ID;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         JokeModel jokeModel = (JokeModel) o;
-        return ID == jokeModel.ID && Objects.equals(getPhrase(), jokeModel.getPhrase());
+        return getID() == jokeModel.getID() && Objects.equals(getPhrase(), jokeModel.getPhrase());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(ID, getPhrase());
+        return Objects.hash(getID(), getPhrase());
     }
-
 }
