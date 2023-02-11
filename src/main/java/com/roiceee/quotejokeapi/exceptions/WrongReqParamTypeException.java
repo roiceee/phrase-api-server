@@ -4,11 +4,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.BAD_REQUEST)
-public class WrongTypeException extends RuntimeException{
-    public WrongTypeException(String message) {
+public class WrongReqParamTypeException extends RuntimeException{
+    public WrongReqParamTypeException(String message) {
         super(message);
     }
-    public WrongTypeException() {
+    public WrongReqParamTypeException() {
         super("Invalid value for request parameter 'type'.");
     }
 }

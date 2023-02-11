@@ -1,6 +1,6 @@
 package com.roiceee.quotejokeapi.services;
 
-import com.roiceee.quotejokeapi.exceptions.WrongTypeException;
+import com.roiceee.quotejokeapi.exceptions.WrongReqParamTypeException;
 import com.roiceee.quotejokeapi.models.Phrase;
 import com.roiceee.quotejokeapi.repositories.JokeRepository;
 import com.roiceee.quotejokeapi.util.ReqTypeValues;
@@ -20,7 +20,7 @@ public class FetchResourceService {
        return switch (type) {
             case ReqTypeValues.JOKE -> getRandomJoke();
             //this exception is not intercepted
-           default -> throw new WrongTypeException();
+           default -> throw new WrongReqParamTypeException();
         };
     }
 
