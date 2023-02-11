@@ -3,7 +3,9 @@ package com.roiceee.quotejokeapi;
 import com.roiceee.quotejokeapi.exceptions.WrongReqParamTypeException;
 import com.roiceee.quotejokeapi.models.JokeModel;
 import com.roiceee.quotejokeapi.models.Phrase;
+import com.roiceee.quotejokeapi.models.QuoteModel;
 import com.roiceee.quotejokeapi.repositories.JokeRepository;
+import com.roiceee.quotejokeapi.repositories.QuoteRepository;
 import com.roiceee.quotejokeapi.services.FetchResourceService;
 import com.roiceee.quotejokeapi.util.ReqParamTypeValues;
 import jdk.jfr.Description;
@@ -22,6 +24,9 @@ public class FetchResourceServiceUnitTest {
     @Mock
     JokeRepository jokeRepository;
 
+    @Mock
+    QuoteRepository quoteRepository;
+
     @InjectMocks
     FetchResourceService fetchResourceService;
 
@@ -37,6 +42,20 @@ public class FetchResourceServiceUnitTest {
         Phrase phrase = fetchResourceService.getRandomPhrase(type);
 
         Assertions.assertEquals(jokeModel, phrase);
+    }
+
+    @Test
+    @Description("Check happy flow when 'type' parameter value of 'quote' is input.")
+    public void getRandomQuoteTestHappyFlow() {
+        String type = ReqParamTypeValues.QUOTE;
+        QuoteModel quoteModel = new QuoteModel();
+        quoteModel.setPhrase("Test Quote");
+
+        Mockito.when(quoteRepository.getRandomQuote()).thenReturn(quoteModel);
+
+        Phrase phrase = fetchResourceService.getRandomPhrase(type);
+
+        Assertions.assertEquals(quoteModel, phrase);
     }
 
     @Test
