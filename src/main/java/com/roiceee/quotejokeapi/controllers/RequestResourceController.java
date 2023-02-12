@@ -47,12 +47,7 @@ public class RequestResourceController {
             @RequestParam (value = ReqParamNames.PAGE) int page,
             @RequestParam (value = ReqParamNames.QTY) int qty
     ) {
-        String query = "";
-        Page<? extends Phrase> phrases = fetchResourceService.getPhraseListWithQueryPagination(type, query, page,
-                qty);
-        return ResponseEntity
-                .ok()
-                .body(phrases);
+       return this.getResourcesByKeywordWithPagination(type, page, qty, "");
     }
     @GetMapping(params = {ReqParamNames.TYPE, ReqParamNames.PAGE, ReqParamNames.QTY, ReqParamNames.QUERY,})
     public ResponseEntity<Page<? extends Phrase>> getResourcesByKeywordWithPagination(
