@@ -1,6 +1,8 @@
 package com.roiceee.quotejokeapi.repositories;
 
 import com.roiceee.quotejokeapi.models.QuoteModel;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
@@ -21,4 +23,5 @@ public interface QuoteRepository extends PagingAndSortingRepository<QuoteModel, 
             nativeQuery = true)
     List<QuoteModel> getRandomQuoteList(int quantity);
 
+    Page<QuoteModel> findAllByPhraseIsContaining(String phrase, Pageable pageable);
 }

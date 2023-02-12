@@ -1,16 +1,11 @@
 package com.roiceee.quotejokeapi;
 
-import com.roiceee.quotejokeapi.controllers.RequestResourceController;
-import com.roiceee.quotejokeapi.services.FetchResourceService;
 import com.roiceee.quotejokeapi.util.ReqParamNames;
 import com.roiceee.quotejokeapi.util.ReqParamQtyValues;
 import com.roiceee.quotejokeapi.util.ReqParamTypeValues;
 import jdk.jfr.Description;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -33,7 +28,7 @@ public class RequestResourceControllerIntegrationTest {
     @Description("Check status of getRandomResource with parameter 'type' value of 'joke'.")
     public void getRandomJokeResourceTestHappyFlowTestStatus() throws Exception {
         String type = ReqParamTypeValues.JOKE;
-        mockMvc.perform(get("/api").param(ReqParamNames.type, type))
+        mockMvc.perform(get("/api").param(ReqParamNames.TYPE, type))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
@@ -42,7 +37,7 @@ public class RequestResourceControllerIntegrationTest {
     @Description("Check status of getRandomJokeResource with wrong parameter 'type' value.")
     public void getRandomJokeResourceTestWrongTypeValueTestStatus() throws Exception {
         String type = "wrong type";
-        mockMvc.perform(get("/api").param(ReqParamNames.type, type))
+        mockMvc.perform(get("/api").param(ReqParamNames.TYPE, type))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isBadRequest());
 
@@ -53,8 +48,8 @@ public class RequestResourceControllerIntegrationTest {
     public void getRandomJokeResourceListHappyFlowTestStatus() throws Exception {
         String type = ReqParamTypeValues.JOKE;
         int qty = 3;
-        mockMvc.perform(get("/api").param(ReqParamNames.type, type)
-                        .param(ReqParamNames.qty, String.valueOf(qty)))
+        mockMvc.perform(get("/api").param(ReqParamNames.TYPE, type)
+                        .param(ReqParamNames.QTY, String.valueOf(qty)))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
@@ -65,8 +60,8 @@ public class RequestResourceControllerIntegrationTest {
     public void getRandomJokeResourceListWrongTypeValueTestStatus() throws Exception {
         String type = ReqParamTypeValues.JOKE;
         int qty = ReqParamQtyValues.MAXQTY + 1;
-        mockMvc.perform(get("/api").param(ReqParamNames.type, type)
-                        .param(ReqParamNames.qty, String.valueOf(qty)))
+        mockMvc.perform(get("/api").param(ReqParamNames.TYPE, type)
+                        .param(ReqParamNames.QTY, String.valueOf(qty)))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isBadRequest());
     }

@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(HttpStatus.BAD_REQUEST)
 public class InvalidParamTypeValueException extends RuntimeException{
     public InvalidParamTypeValueException(String type) {
-        super("Invalid value '" + type + "' for parameter '" + ReqParamNames.type + "'.");
+        super("Invalid value '" + type + "' for parameter '" + ReqParamNames.TYPE + "'.");
     }
 }
