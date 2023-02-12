@@ -3,10 +3,12 @@ package com.roiceee.quotejokeapi.models;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 import java.util.Objects;
 
 @Entity
+@Table(name = "quotes")
 public class QuoteModel implements Phrase{
 
     @Id

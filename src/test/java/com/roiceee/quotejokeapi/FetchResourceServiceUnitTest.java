@@ -1,12 +1,16 @@
 package com.roiceee.quotejokeapi;
 
-import com.roiceee.quotejokeapi.exceptions.WrongReqParamTypeException;
+import com.roiceee.quotejokeapi.exceptions.InvalidParamPageValueException;
+import com.roiceee.quotejokeapi.exceptions.InvalidParamQuantityValueException;
+import com.roiceee.quotejokeapi.exceptions.InvalidParamTypeValueException;
 import com.roiceee.quotejokeapi.models.JokeModel;
 import com.roiceee.quotejokeapi.models.Phrase;
 import com.roiceee.quotejokeapi.models.QuoteModel;
 import com.roiceee.quotejokeapi.repositories.JokeRepository;
 import com.roiceee.quotejokeapi.repositories.QuoteRepository;
 import com.roiceee.quotejokeapi.services.FetchResourceService;
+import com.roiceee.quotejokeapi.util.ReqParamPageValues;
+import com.roiceee.quotejokeapi.util.ReqParamQtyValues;
 import com.roiceee.quotejokeapi.util.ReqParamTypeValues;
 import jdk.jfr.Description;
 import org.junit.jupiter.api.Assertions;
@@ -16,6 +20,13 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @ExtendWith(MockitoExtension.class)
@@ -32,7 +43,7 @@ public class FetchResourceServiceUnitTest {
 
     @Test
     @Description("Check happy flow when 'type' parameter value of 'joke' is input.")
-    public void getRandomJokeTestHappyFlow() {
+    public void getRandomJoke() {
         String type = ReqParamTypeValues.JOKE;
         JokeModel jokeModel = new JokeModel();
         jokeModel.setPhrase("Test Joke");
@@ -46,7 +57,7 @@ public class FetchResourceServiceUnitTest {
 
     @Test
     @Description("Check happy flow when 'type' parameter value of 'quote' is input.")
-    public void getRandomQuoteTestHappyFlow() {
+    public void getRandomQuote() {
         String type = ReqParamTypeValues.QUOTE;
         QuoteModel quoteModel = new QuoteModel();
         quoteModel.setPhrase("Test Quote");
@@ -63,10 +74,96 @@ public class FetchResourceServiceUnitTest {
     public void getRandomJokeTestWrongType() {
         String type = "wrong type";
 
-        Assertions.assertThrows(WrongReqParamTypeException.class,
-                () -> {
-                    fetchResourceService.getRandomPhrase(type);
-                });
+        Assertions.assertThrows(InvalidParamTypeValueException.class,
+                () -> fetchResourceService.getRandomPhrase(type));
     }
+
+    @Test
+    public void getRandomJokeList() {
+        String type = ReqParamTypeValues.JOKE;
+        int qty = ReqParamQtyValues.MINQTY;
+
+        JokeModel jokeModel = new JokeModel();
+        jokeModel.setPhrase("test joke");
+        jokeModel.setID(3);
+
+        List<JokeModel> phrases = new ArrayList<>();
+        phrases.add(jokeModel);
+
+        Mockito.when(jokeRepository.getRandomJokeList(qty)).thenReturn(phrases);
+        Assertions.assertEquals(fetchResourceService.getRandomPhraseList(type, qty), phrases);
+    }
+
+    @Test
+    public void getRandomQuoteList() {
+        String type = ReqParamTypeValues.QUOTE;
+        int qty = ReqParamQtyValues.MINQTY;
+
+        QuoteModel quoteModel = new QuoteModel();
+        quoteModel.setPhrase("test joke");
+        quoteModel.setID(3);
+        quoteModel.setAuthor("test author");
+
+        List<QuoteModel> phrases = new ArrayList<>();
+        phrases.add(quoteModel);
+
+        Mockito.when(quoteRepository.getRandomQuoteList(qty)).thenReturn(phrases);
+        Assertions.assertEquals(fetchResourceService.getRandomPhraseList(type, qty), phrases);
+    }
+
+    @Test
+    public void getRandomResourceListWrongType() {
+        String type = "wrong type";
+        int qty = ReqParamQtyValues.MINQTY;
+
+        Assertions.assertThrows(InvalidParamTypeValueException.class,
+                () -> fetchResourceService.getRandomPhraseList(type, qty));
+    }
+
+    @Test
+    public void getRandomResourceListInvalidQuantity() {
+        String type = ReqParamTypeValues.JOKE;
+        int qty = ReqParamQtyValues.MAXQTY + 1;
+
+        Assertions.assertThrows(InvalidParamQuantityValueException.class,
+                () -> fetchResourceService.getRandomPhraseList(type, qty));
+    }
+
+    @Test
+    public void getPhraseListWithQueryPaginationHappyFlow() {
+        String type = ReqParamTypeValues.JOKE;
+        String query = "sample query";
+        int qty = 1;
+        int page = ReqParamPageValues.MIN_PAGE;
+
+        List<JokeModel> jokeModels = new ArrayList<>();
+        Page<JokeModel> jokeModelPage = new PageImpl<>(jokeModels);
+
+        Mockito.when(jokeRepository.findAllByPhraseIsContaining(query, PageRequest.of(page, qty)))
+                .thenReturn(jokeModelPage);
+
+        Page<? extends Phrase> jokeModelPage1 = fetchResourceService.getPhraseListWithQueryPagination(type, query
+                , page,
+                qty);
+
+        Assertions.assertEquals(jokeModelPage, jokeModelPage1);
+    }
+
+    @Test
+    public void getPhraseListWithQueryPaginationWrongPage() {
+
+        int page = ReqParamPageValues.MIN_PAGE - 1;
+
+        Assertions.assertThrows(InvalidParamPageValueException.class, () -> fetchResourceService.getPhraseListWithQueryPagination(ReqParamTypeValues.JOKE, "sample", page,
+                ReqParamQtyValues.MINQTY));
+    }
+
+    @Test
+    public void getPhraseListWithQueryPaginationWrongQuantity() {
+
+        Assertions.assertThrows(InvalidParamQuantityValueException.class, () -> fetchResourceService.getPhraseListWithQueryPagination(ReqParamTypeValues.JOKE, "sample",
+                ReqParamPageValues.MIN_PAGE, ReqParamQtyValues.MINQTY - 1));
+    }
+
 
 }
