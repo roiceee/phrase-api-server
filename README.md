@@ -1,4 +1,4 @@
-# quote-joke-api
+# quote-joke-api-server
 
 ## Simple API made with Spring Boot that supplies jokes or quotes to your frontend!
 
