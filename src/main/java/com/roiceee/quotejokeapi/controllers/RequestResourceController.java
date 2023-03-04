@@ -2,7 +2,7 @@ package com.roiceee.quotejokeapi.controllers;
 
 import com.roiceee.quotejokeapi.models.Phrase;
 import com.roiceee.quotejokeapi.services.FetchResourceService;
-import com.roiceee.quotejokeapi.util.ReqParamNames;
+import com.roiceee.quotejokeapi.util.Params;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,9 +20,9 @@ public class RequestResourceController {
         this.fetchResourceService = fetchResourceService;
     }
 
-    @GetMapping(params = {ReqParamNames.TYPE})
+    @GetMapping(params = {Params.TYPE})
     public ResponseEntity<Phrase> getRandomResource(
-            @RequestParam (value = ReqParamNames.TYPE) String type
+            @RequestParam (value = Params.TYPE) String type
             ) {
             Phrase phrase = fetchResourceService.getRandomPhrase(type);
         return ResponseEntity
@@ -30,10 +30,10 @@ public class RequestResourceController {
                 .body(phrase);
     }
 
-    @GetMapping(params = {ReqParamNames.TYPE, ReqParamNames.QTY})
+    @GetMapping(params = {Params.TYPE, Params.QTY})
     public ResponseEntity<List<? extends Phrase>> getRandomResourceList(
-             @RequestParam (value = ReqParamNames.TYPE) String type,
-             @RequestParam (value = ReqParamNames.QTY) int qty
+             @RequestParam (value = Params.TYPE) String type,
+             @RequestParam (value = Params.QTY) int qty
     ) {
         List<? extends Phrase> phraseList = fetchResourceService.getRandomPhraseList(type, qty);
         return ResponseEntity
@@ -41,20 +41,20 @@ public class RequestResourceController {
                 .body(phraseList);
     }
 
-    @GetMapping(params = {ReqParamNames.TYPE, ReqParamNames.PAGE, ReqParamNames.QTY})
+    @GetMapping(params = {Params.TYPE, Params.PAGE, Params.QTY})
     public ResponseEntity<Page<? extends Phrase>> getResourcesWithPagination(
-            @RequestParam (value = ReqParamNames.TYPE) String type,
-            @RequestParam (value = ReqParamNames.PAGE) int page,
-            @RequestParam (value = ReqParamNames.QTY) int qty
+            @RequestParam (value = Params.TYPE) String type,
+            @RequestParam (value = Params.PAGE) int page,
+            @RequestParam (value = Params.QTY) int qty
     ) {
        return this.getResourcesByKeywordWithPagination(type, page, qty, "");
     }
-    @GetMapping(params = {ReqParamNames.TYPE, ReqParamNames.PAGE, ReqParamNames.QTY, ReqParamNames.QUERY,})
+    @GetMapping(params = {Params.TYPE, Params.PAGE, Params.QTY, Params.QUERY,})
     public ResponseEntity<Page<? extends Phrase>> getResourcesByKeywordWithPagination(
-            @RequestParam (value = ReqParamNames.TYPE) String type,
-            @RequestParam (value = ReqParamNames.PAGE) int page,
-            @RequestParam (value = ReqParamNames.QTY) int qty,
-             @RequestParam (value = ReqParamNames.QUERY) String query
+            @RequestParam (value = Params.TYPE) String type,
+            @RequestParam (value = Params.PAGE) int page,
+            @RequestParam (value = Params.QTY) int qty,
+             @RequestParam (value = Params.QUERY) String query
     ) {
 
         Page<? extends Phrase> phrases = fetchResourceService.getPhraseListWithQueryPagination(type, query, page, qty);

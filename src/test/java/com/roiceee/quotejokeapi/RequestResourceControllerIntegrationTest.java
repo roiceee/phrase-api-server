@@ -1,6 +1,6 @@
 package com.roiceee.quotejokeapi;
 
-import com.roiceee.quotejokeapi.util.ReqParamNames;
+import com.roiceee.quotejokeapi.util.Params;
 import com.roiceee.quotejokeapi.util.ReqParamQtyValues;
 import com.roiceee.quotejokeapi.util.ReqParamTypeValues;
 import jdk.jfr.Description;
@@ -28,7 +28,7 @@ public class RequestResourceControllerIntegrationTest {
     @Description("Check status of getRandomResource with parameter 'type' value of 'joke'.")
     public void getRandomJokeResourceTestHappyFlowTestStatus() throws Exception {
         String type = ReqParamTypeValues.JOKE;
-        mockMvc.perform(get("/api").param(ReqParamNames.TYPE, type))
+        mockMvc.perform(get("/api").param(Params.TYPE, type))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
@@ -37,7 +37,7 @@ public class RequestResourceControllerIntegrationTest {
     @Description("Check status of getRandomJokeResource with wrong parameter 'type' value.")
     public void getRandomJokeResourceTestWrongTypeValueTestStatus() throws Exception {
         String type = "wrong type";
-        mockMvc.perform(get("/api").param(ReqParamNames.TYPE, type))
+        mockMvc.perform(get("/api").param(Params.TYPE, type))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isBadRequest());
 
@@ -48,8 +48,8 @@ public class RequestResourceControllerIntegrationTest {
     public void getRandomJokeResourceListHappyFlowTestStatus() throws Exception {
         String type = ReqParamTypeValues.JOKE;
         int qty = 3;
-        mockMvc.perform(get("/api").param(ReqParamNames.TYPE, type)
-                        .param(ReqParamNames.QTY, String.valueOf(qty)))
+        mockMvc.perform(get("/api").param(Params.TYPE, type)
+                        .param(Params.QTY, String.valueOf(qty)))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
@@ -60,8 +60,8 @@ public class RequestResourceControllerIntegrationTest {
     public void getRandomJokeResourceListWrongTypeValueTestStatus() throws Exception {
         String type = ReqParamTypeValues.JOKE;
         int qty = ReqParamQtyValues.MAXQTY + 1;
-        mockMvc.perform(get("/api").param(ReqParamNames.TYPE, type)
-                        .param(ReqParamNames.QTY, String.valueOf(qty)))
+        mockMvc.perform(get("/api").param(Params.TYPE, type)
+                        .param(Params.QTY, String.valueOf(qty)))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isBadRequest());
     }
@@ -70,9 +70,9 @@ public class RequestResourceControllerIntegrationTest {
     @Description("Check status of getResourcesWithPagination")
     public void getResourcesWithPaginationHappyFlowTestStatus() throws Exception {
         String type = ReqParamTypeValues.JOKE;
-        mockMvc.perform(get("/api").param(ReqParamNames.TYPE, type)
-                        .param(ReqParamNames.PAGE, "2")
-                        .param(ReqParamNames.QTY, "4"))
+        mockMvc.perform(get("/api").param(Params.TYPE, type)
+                        .param(Params.PAGE, "2")
+                        .param(Params.QTY, "4"))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
@@ -83,16 +83,16 @@ public class RequestResourceControllerIntegrationTest {
         String type = ReqParamTypeValues.JOKE;
 
         mockMvc.perform(get("/api")
-                        .param(ReqParamNames.TYPE, type)
-                        .param(ReqParamNames.PAGE, "-1")
-                        .param(ReqParamNames.QTY, "4"))
+                        .param(Params.TYPE, type)
+                        .param(Params.PAGE, "-1")
+                        .param(Params.QTY, "4"))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isBadRequest());
 
         mockMvc.perform(get("/api")
-                        .param(ReqParamNames.TYPE, type)
-                        .param(ReqParamNames.PAGE, "2")
-                        .param(ReqParamNames.QTY, "34"))
+                        .param(Params.TYPE, type)
+                        .param(Params.PAGE, "2")
+                        .param(Params.QTY, "34"))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isBadRequest());
     }

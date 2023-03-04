@@ -1,6 +1,6 @@
 package com.roiceee.quotejokeapi.exceptions;
 
-import com.roiceee.quotejokeapi.util.ReqParamNames;
+import com.roiceee.quotejokeapi.util.Params;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class InvalidParamPageValueException extends RuntimeException{
 
     public InvalidParamPageValueException(int value) {
-        super("Invalid value '" + value + "' for parameter '" + ReqParamNames.PAGE + "'.");
+        super("Invalid value '" + value + "' for parameter '" + Params.PAGE + "'.");
     }
 
 }

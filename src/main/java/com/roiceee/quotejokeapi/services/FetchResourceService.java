@@ -1,5 +1,4 @@
 package com.roiceee.quotejokeapi.services;
-
 import com.roiceee.quotejokeapi.exceptions.InvalidParamPageValueException;
 import com.roiceee.quotejokeapi.exceptions.InvalidParamQuantityValueException;
 import com.roiceee.quotejokeapi.exceptions.InvalidParamTypeValueException;
