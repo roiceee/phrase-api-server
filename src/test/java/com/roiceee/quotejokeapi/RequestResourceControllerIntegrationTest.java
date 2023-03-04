@@ -67,25 +67,25 @@ public class RequestResourceControllerIntegrationTest {
     }
 
     @Test
-    @Description("Check status of getResourcesWithPagination")
+    @Description("Check status of getResourcesWithQuery")
     public void getResourcesWithPaginationHappyFlowTestStatus() throws Exception {
         String type = ReqParamTypeValues.JOKE;
         mockMvc.perform(get("/api").param(Params.TYPE, type)
-                        .param(Params.PAGE, "2")
+                        .param(Params.QUERY, "dad")
                         .param(Params.QTY, "4"))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     @Test
-    @Description("Check status of getResourcesWithPagination with wrong parameters")
+    @Description("Check status of getResourcesWithQuery with wrong parameters")
     public void getResourcesWithPaginationWrongParamsStatus() throws Exception {
         String type = ReqParamTypeValues.JOKE;
 
         mockMvc.perform(get("/api")
                         .param(Params.TYPE, type)
-                        .param(Params.PAGE, "-1")
-                        .param(Params.QTY, "4"))
+                        .param(Params.QUERY, "dad")
+                        .param(Params.QTY, "13"))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isBadRequest());
 
