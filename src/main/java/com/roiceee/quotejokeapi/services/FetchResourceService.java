@@ -46,6 +46,18 @@ public class FetchResourceService {
         };
     }
 
+    public List<? extends Phrase> getRandomPhraseListWithQuery(String type, int quantity, String query) {
+        validateQuantity(quantity);
+
+        return switch (type) {
+            case ReqParamTypeValues.JOKE -> jokeRepository.getRandomJokeListWithQuery(quantity, query);
+            case ReqParamTypeValues.QUOTE -> quoteRepository.getRandomQuoteListWithQuery(quantity, query);
+            default -> throw new InvalidParamTypeValueException(type);
+        };
+    }
+
+
+
     public Page<? extends Phrase> getPhraseListWithQueryPagination(String type, String query, int page, int quantity) {
         validateQuantity(quantity);
         validatePageNumber(page);
@@ -59,6 +71,7 @@ public class FetchResourceService {
             default -> throw new InvalidParamTypeValueException(type);
         };
     }
+
 
     private void validateQuantity(int quantity) {
         if (quantity < ReqParamQtyValues.MINQTY ||

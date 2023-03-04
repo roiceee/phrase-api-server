@@ -19,9 +19,17 @@ public interface QuoteRepository extends PagingAndSortingRepository<QuoteModel, 
     QuoteModel getRandomQuote();
 
     @Query(value = "SELECT * FROM quotes " +
-            "ORDER BY RAND() LIMIT  :quantity",
+            "ORDER BY RAND() LIMIT :quantity",
             nativeQuery = true)
     List<QuoteModel> getRandomQuoteList(int quantity);
+
+    @Query(value = "SELECT * FROM quotes " +
+            "WHERE PHRASE REGEXP :query " +
+            "ORDER BY RAND() LIMIT :quantity",
+            nativeQuery = true)
+    List<QuoteModel> getRandomQuoteListWithQuery(int quantity, String query);
+
+
 
     Page<QuoteModel> findAllByPhraseIsContaining(String phrase, Pageable pageable);
 }

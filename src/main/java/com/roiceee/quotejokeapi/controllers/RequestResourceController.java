@@ -41,13 +41,16 @@ public class RequestResourceController {
                 .body(phraseList);
     }
 
-    @GetMapping(params = {Params.TYPE, Params.PAGE, Params.QTY})
-    public ResponseEntity<Page<? extends Phrase>> getResourcesWithPagination(
+    @GetMapping(params = {Params.TYPE, Params.QTY, Params.QUERY})
+    public ResponseEntity<List<? extends Phrase>> getResourcesWithPagination(
             @RequestParam (value = Params.TYPE) String type,
-            @RequestParam (value = Params.PAGE) int page,
-            @RequestParam (value = Params.QTY) int qty
+            @RequestParam (value = Params.QTY) int qty,
+            @RequestParam (value = Params.QUERY) String query
     ) {
-       return this.getResourcesByKeywordWithPagination(type, page, qty, "");
+        List<? extends Phrase> phraseList = fetchResourceService.getRandomPhraseListWithQuery(type, qty, query);
+       return ResponseEntity
+               .ok()
+               .body(phraseList);
     }
     @GetMapping(params = {Params.TYPE, Params.PAGE, Params.QTY, Params.QUERY,})
     public ResponseEntity<Page<? extends Phrase>> getResourcesByKeywordWithPagination(

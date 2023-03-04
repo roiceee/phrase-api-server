@@ -25,5 +25,11 @@ public interface JokeRepository extends PagingAndSortingRepository<JokeModel, Lo
             nativeQuery = true)
     List<JokeModel> getRandomJokeList(int quantity);
 
+    @Query(value = "SELECT * FROM jokes " +
+            "WHERE PHRASE REGEXP :query " +
+            "ORDER BY RAND() LIMIT :quantity",
+            nativeQuery = true)
+    List<JokeModel> getRandomJokeListWithQuery(int quantity, String query);
+
     Page<JokeModel> findAllByPhraseIsContaining(String phrase, Pageable pageable);
 }
