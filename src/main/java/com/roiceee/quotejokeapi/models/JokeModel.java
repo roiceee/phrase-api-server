@@ -1,6 +1,7 @@
 package com.roiceee.quotejokeapi.models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -12,6 +13,7 @@ import java.util.Objects;
 public class JokeModel implements Phrase {
 
     @Id
+
     private long ID;
     private String phrase;
 
@@ -24,7 +26,7 @@ public class JokeModel implements Phrase {
     public void setPhrase(String phrase) {
         this.phrase = phrase;
     }
-
+    @JsonIgnore
     public long getID() {
         return ID;
     }

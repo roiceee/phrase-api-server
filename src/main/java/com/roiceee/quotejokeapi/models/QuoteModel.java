@@ -1,6 +1,6 @@
 package com.roiceee.quotejokeapi.models;
-
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -9,13 +9,13 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "quotes")
-public class QuoteModel implements Phrase{
+public class QuoteModel implements Phrase {
 
     @Id
     private long ID;
+
     private String author;
     private String phrase;
-
 
 
     @Override
@@ -23,6 +23,11 @@ public class QuoteModel implements Phrase{
         return phrase;
     }
 
+    public void setPhrase(String quote) {
+        this.phrase = quote;
+    }
+
+    @JsonIgnore
     public long getID() {
         return ID;
     }
@@ -37,10 +42,6 @@ public class QuoteModel implements Phrase{
 
     public void setAuthor(String author) {
         this.author = author;
-    }
-
-    public void setPhrase(String quote) {
-        this.phrase = quote;
     }
 
     @Override
