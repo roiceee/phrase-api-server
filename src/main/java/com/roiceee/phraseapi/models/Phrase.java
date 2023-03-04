@@ -1,4 +1,4 @@
-package com.roiceee.quotejokeapi.models;
+package com.roiceee.phraseapi.models;
 
 public interface Phrase {
     public String getPhrase();

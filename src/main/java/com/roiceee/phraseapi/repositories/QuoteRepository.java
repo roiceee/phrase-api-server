@@ -1,6 +1,6 @@
-package com.roiceee.quotejokeapi.repositories;
+package com.roiceee.phraseapi.repositories;
 
-import com.roiceee.quotejokeapi.models.QuoteModel;
+import com.roiceee.phraseapi.models.QuoteModel;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;

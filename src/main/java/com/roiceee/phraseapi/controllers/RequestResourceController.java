@@ -1,8 +1,8 @@
-package com.roiceee.quotejokeapi.controllers;
+package com.roiceee.phraseapi.controllers;
 
-import com.roiceee.quotejokeapi.models.Phrase;
-import com.roiceee.quotejokeapi.services.FetchResourceService;
-import com.roiceee.quotejokeapi.util.Params;
+import com.roiceee.phraseapi.models.Phrase;
+import com.roiceee.phraseapi.services.FetchResourceService;
+import com.roiceee.phraseapi.util.Params;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -1,4 +1,4 @@
-package com.roiceee.quotejokeapi;
+package com.roiceee.phraseapi;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

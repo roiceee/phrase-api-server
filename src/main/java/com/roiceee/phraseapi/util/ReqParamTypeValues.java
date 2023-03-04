@@ -1,4 +1,4 @@
-package com.roiceee.quotejokeapi.util;
+package com.roiceee.phraseapi.util;
 
 public class ReqParamTypeValues {
 

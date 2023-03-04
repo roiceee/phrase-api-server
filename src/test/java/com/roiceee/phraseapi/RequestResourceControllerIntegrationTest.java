@@ -1,8 +1,8 @@
-package com.roiceee.quotejokeapi;
+package com.roiceee.phraseapi;
 
-import com.roiceee.quotejokeapi.util.Params;
-import com.roiceee.quotejokeapi.util.ReqParamQtyValues;
-import com.roiceee.quotejokeapi.util.ReqParamTypeValues;
+import com.roiceee.phraseapi.util.Params;
+import com.roiceee.phraseapi.util.ReqParamQtyValues;
+import com.roiceee.phraseapi.util.ReqParamTypeValues;
 import jdk.jfr.Description;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

@@ -1,13 +1,10 @@
-package com.roiceee.quotejokeapi.repositories;
+package com.roiceee.phraseapi.repositories;
 
-import com.roiceee.quotejokeapi.models.JokeModel;
+import com.roiceee.phraseapi.models.JokeModel;
 
-import com.roiceee.quotejokeapi.models.Phrase;
-import com.roiceee.quotejokeapi.models.QuoteModel;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 import java.util.List;
