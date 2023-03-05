@@ -1,6 +1,6 @@
-package com.roiceee.phraseapi.repositories;
+package com.roiceee.phraseapi.mainapi.repositories;
 
-import com.roiceee.phraseapi.models.QuoteModel;
+import com.roiceee.phraseapi.mainapi.models.QuoteModel;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;

@@ -1,8 +1,8 @@
 package com.roiceee.phraseapi;
 
-import com.roiceee.phraseapi.util.Params;
-import com.roiceee.phraseapi.util.ReqParamQtyValues;
-import com.roiceee.phraseapi.util.ReqParamTypeValues;
+import com.roiceee.phraseapi.mainapi.util.Params;
+import com.roiceee.phraseapi.mainapi.util.ReqParamQtyValues;
+import com.roiceee.phraseapi.mainapi.util.ReqParamTypeValues;
 import jdk.jfr.Description;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,14 +21,16 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 @ExtendWith(MockitoExtension.class)
 public class RequestResourceControllerIntegrationTest {
 
+    private final String URL = "/api/phrase";
     @Autowired
     MockMvc mockMvc;
+    
 
     @Test
     @Description("Check status of getRandomResource with parameter 'type' value of 'joke'.")
     public void getRandomJokeResourceTestHappyFlowTestStatus() throws Exception {
         String type = ReqParamTypeValues.JOKE;
-        mockMvc.perform(get("/api").param(Params.TYPE, type))
+        mockMvc.perform(get(URL).param(Params.TYPE, type))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
@@ -37,7 +39,7 @@ public class RequestResourceControllerIntegrationTest {
     @Description("Check status of getRandomJokeResource with wrong parameter 'type' value.")
     public void getRandomJokeResourceTestWrongTypeValueTestStatus() throws Exception {
         String type = "wrong type";
-        mockMvc.perform(get("/api").param(Params.TYPE, type))
+        mockMvc.perform(get(URL).param(Params.TYPE, type))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isBadRequest());
 
@@ -48,7 +50,7 @@ public class RequestResourceControllerIntegrationTest {
     public void getRandomJokeResourceListHappyFlowTestStatus() throws Exception {
         String type = ReqParamTypeValues.JOKE;
         int qty = 3;
-        mockMvc.perform(get("/api").param(Params.TYPE, type)
+        mockMvc.perform(get(URL).param(Params.TYPE, type)
                         .param(Params.QTY, String.valueOf(qty)))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk());
@@ -60,7 +62,7 @@ public class RequestResourceControllerIntegrationTest {
     public void getRandomJokeResourceListWrongTypeValueTestStatus() throws Exception {
         String type = ReqParamTypeValues.JOKE;
         int qty = ReqParamQtyValues.MAXQTY + 1;
-        mockMvc.perform(get("/api").param(Params.TYPE, type)
+        mockMvc.perform(get(URL).param(Params.TYPE, type)
                         .param(Params.QTY, String.valueOf(qty)))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isBadRequest());
@@ -70,7 +72,7 @@ public class RequestResourceControllerIntegrationTest {
     @Description("Check status of getResourcesWithQuery")
     public void getResourcesWithPaginationHappyFlowTestStatus() throws Exception {
         String type = ReqParamTypeValues.JOKE;
-        mockMvc.perform(get("/api").param(Params.TYPE, type)
+        mockMvc.perform(get(URL).param(Params.TYPE, type)
                         .param(Params.QUERY, "dad")
                         .param(Params.QTY, "4"))
                 .andDo(MockMvcResultHandlers.print())
@@ -82,14 +84,14 @@ public class RequestResourceControllerIntegrationTest {
     public void getResourcesWithPaginationWrongParamsStatus() throws Exception {
         String type = ReqParamTypeValues.JOKE;
 
-        mockMvc.perform(get("/api")
+        mockMvc.perform(get(URL)
                         .param(Params.TYPE, type)
                         .param(Params.QUERY, "dad")
                         .param(Params.QTY, "13"))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isBadRequest());
 
-        mockMvc.perform(get("/api")
+        mockMvc.perform(get(URL)
                         .param(Params.TYPE, type)
                         .param(Params.PAGE, "2")
                         .param(Params.QTY, "34"))

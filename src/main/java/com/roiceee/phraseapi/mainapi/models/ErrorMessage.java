@@ -1,4 +1,4 @@
-package com.roiceee.phraseapi.models;
+package com.roiceee.phraseapi.mainapi.models;
 
 public class ErrorMessage {
     private String message;

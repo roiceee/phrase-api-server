@@ -9,11 +9,11 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.roiceee</groupId>
-    <artifactId>quote-joke-api</artifactId>
+    <artifactId>phrase-api-server</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
-    <name>quote-joke-api</name>
-    <description>quote-joke-api</description>
+    <name>phrase-api-server</name>
+    <description>REST server for Phrase API</description>
     <properties>
         <java.version>17</java.version>
     </properties>

@@ -1,4 +1,4 @@
-package com.roiceee.phraseapi.models;
+package com.roiceee.phraseapi.mainapi.models;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;

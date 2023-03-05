@@ -1,8 +1,7 @@
-package com.roiceee.phraseapi.controllers;
-
-import com.roiceee.phraseapi.models.Phrase;
-import com.roiceee.phraseapi.services.FetchResourceService;
-import com.roiceee.phraseapi.util.Params;
+package com.roiceee.phraseapi.mainapi.controllers;
+import com.roiceee.phraseapi.mainapi.models.Phrase;
+import com.roiceee.phraseapi.mainapi.services.FetchResourceService;
+import com.roiceee.phraseapi.mainapi.util.Params;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,8 +19,9 @@ public class RequestResourceController {
         this.fetchResourceService = fetchResourceService;
     }
 
-    @GetMapping(params = {Params.TYPE})
+    @GetMapping(params = {Params.appID, Params.TYPE})
     public ResponseEntity<Phrase> getRandomResource(
+            @RequestParam (value = Params.appID) String appid,
             @RequestParam (value = Params.TYPE) String type
             ) {
             Phrase phrase = fetchResourceService.getRandomPhrase(type);
@@ -30,8 +30,9 @@ public class RequestResourceController {
                 .body(phrase);
     }
 
-    @GetMapping(params = {Params.TYPE, Params.QTY})
+    @GetMapping(params = {Params.appID, Params.TYPE, Params.QTY})
     public ResponseEntity<List<? extends Phrase>> getRandomResourceList(
+             @RequestParam (value = Params.appID) String appid,
              @RequestParam (value = Params.TYPE) String type,
              @RequestParam (value = Params.QTY) int qty
     ) {
@@ -41,8 +42,9 @@ public class RequestResourceController {
                 .body(phraseList);
     }
 
-    @GetMapping(params = {Params.TYPE, Params.QTY, Params.QUERY})
+    @GetMapping(params = {Params.appID, Params.TYPE, Params.QTY, Params.QUERY})
     public ResponseEntity<List<? extends Phrase>> getResourcesWithPagination(
+            @RequestParam (value = Params.appID) String appid,
             @RequestParam (value = Params.TYPE) String type,
             @RequestParam (value = Params.QTY) int qty,
             @RequestParam (value = Params.QUERY) String query
@@ -52,8 +54,9 @@ public class RequestResourceController {
                .ok()
                .body(phraseList);
     }
-    @GetMapping(params = {Params.TYPE, Params.PAGE, Params.QTY, Params.QUERY,})
+    @GetMapping(params = {Params.appID, Params.TYPE, Params.PAGE, Params.QTY, Params.QUERY,})
     public ResponseEntity<Page<? extends Phrase>> getResourcesByKeywordWithPagination(
+            @RequestParam (value = Params.appID) String appid,
             @RequestParam (value = Params.TYPE) String type,
             @RequestParam (value = Params.PAGE) int page,
             @RequestParam (value = Params.QTY) int qty,

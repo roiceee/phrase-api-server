@@ -1,4 +1,4 @@
-package com.roiceee.phraseapi.util;
+package com.roiceee.phraseapi.mainapi.util;
 
 public class ReqParamQtyValues {
     public static final int MINQTY = 1;
