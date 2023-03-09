@@ -2,12 +2,10 @@ package com.roiceee.phraseapi.apikeymanagement.controllers;
 
 import com.roiceee.phraseapi.apikeymanagement.services.ApiKeyService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("apikey")
 public class ApiKeyController {
 
