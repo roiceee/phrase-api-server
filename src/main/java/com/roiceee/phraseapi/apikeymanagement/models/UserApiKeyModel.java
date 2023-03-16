@@ -10,31 +10,21 @@ import jakarta.persistence.Table;
 public class UserApiKeyModel {
     @Id
     @Column(name = "id")
-    private Long ID;
-
-    @Column(name = "user_id")
-    private String userID;
+    private String ID;
 
     @Column(name = "api_key")
     private String apiKey;
 
 
-    public void setID(Long id) {
+    public void setID(String id) {
         this.ID = id;
     }
 
 
-    public Long getID() {
+    public String getID() {
         return ID;
     }
 
-    public String getUserID() {
-        return userID;
-    }
-
-    public void setUserID(String userID) {
-        this.userID = userID;
-    }
 
     public String getApiKey() {
         return apiKey;

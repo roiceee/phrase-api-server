@@ -1,7 +1,9 @@
 package com.roiceee.phraseapi.apikeymanagement.controllers;
 
+import com.roiceee.phraseapi.apikeymanagement.models.ApiKeyResponseModel;
 import com.roiceee.phraseapi.apikeymanagement.services.ApiKeyService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,9 +18,14 @@ public class ApiKeyController {
     }
 
     @PostMapping("create")
-    public ResponseEntity<String> createAPIKey() {
+    public ResponseEntity<ApiKeyResponseModel> createAPIKey(Authentication authentication) {
 
-        return ResponseEntity.ok().body("Api Key Created");
+        String apiKey = apiKeyService.createNewApiKey(authentication.getName());
+
+        ApiKeyResponseModel responseModel = new ApiKeyResponseModel(apiKey);
+
+        return ResponseEntity.ok()
+                .body(responseModel);
     }
 
     @GetMapping("get")
