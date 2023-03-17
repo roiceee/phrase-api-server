@@ -1,5 +1,8 @@
 package com.roiceee.phraseapi.apikeymanagement.models;
 
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -20,7 +23,7 @@ public class UserApiKeyModel {
         this.ID = id;
     }
 
-
+    @JsonIgnore
     public String getID() {
         return ID;
     }

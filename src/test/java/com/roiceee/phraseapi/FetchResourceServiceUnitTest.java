@@ -1,8 +1,7 @@
 package com.roiceee.phraseapi;
 
-import com.roiceee.phraseapi.mainapi.exceptions.InvalidParamPageValueException;
-import com.roiceee.phraseapi.mainapi.exceptions.InvalidParamQuantityValueException;
-import com.roiceee.phraseapi.mainapi.exceptions.InvalidParamTypeValueException;
+
+import com.roiceee.phraseapi.mainapi.exceptions.InvalidParamValueException;
 import com.roiceee.phraseapi.mainapi.models.JokeModel;
 import com.roiceee.phraseapi.mainapi.models.Phrase;
 import com.roiceee.phraseapi.mainapi.models.QuoteModel;
@@ -74,7 +73,7 @@ public class FetchResourceServiceUnitTest {
     public void getRandomJokeTestWrongType() {
         String type = "wrong type";
 
-        Assertions.assertThrows(InvalidParamTypeValueException.class,
+        Assertions.assertThrows(InvalidParamValueException.class,
                 () -> fetchResourceService.getRandomPhrase(type));
     }
 
@@ -116,7 +115,7 @@ public class FetchResourceServiceUnitTest {
         String type = "wrong type";
         int qty = ReqParamQtyValues.MINQTY;
 
-        Assertions.assertThrows(InvalidParamTypeValueException.class,
+        Assertions.assertThrows(InvalidParamValueException.class,
                 () -> fetchResourceService.getRandomPhraseList(type, qty));
     }
 
@@ -125,7 +124,7 @@ public class FetchResourceServiceUnitTest {
         String type = ReqParamTypeValues.JOKE;
         int qty = ReqParamQtyValues.MAXQTY + 1;
 
-        Assertions.assertThrows(InvalidParamQuantityValueException.class,
+        Assertions.assertThrows(InvalidParamValueException.class,
                 () -> fetchResourceService.getRandomPhraseList(type, qty));
     }
 
@@ -154,14 +153,15 @@ public class FetchResourceServiceUnitTest {
 
         int page = ReqParamPageValues.MIN_PAGE - 1;
 
-        Assertions.assertThrows(InvalidParamPageValueException.class, () -> fetchResourceService.getPhraseListWithQueryPagination(ReqParamTypeValues.JOKE, "sample", page,
+        Assertions.assertThrows(InvalidParamValueException.class, () -> fetchResourceService.getPhraseListWithQueryPagination(ReqParamTypeValues.JOKE, "sample", page,
                 ReqParamQtyValues.MINQTY));
     }
 
     @Test
     public void getPhraseListWithQueryPaginationWrongQuantity() {
 
-        Assertions.assertThrows(InvalidParamQuantityValueException.class, () -> fetchResourceService.getPhraseListWithQueryPagination(ReqParamTypeValues.JOKE, "sample",
+        Assertions.assertThrows(InvalidParamValueException.class,
+                () -> fetchResourceService.getPhraseListWithQueryPagination(ReqParamTypeValues.JOKE, "sample",
                 ReqParamPageValues.MIN_PAGE, ReqParamQtyValues.MINQTY - 1));
     }
 

@@ -1,5 +1,6 @@
 package com.roiceee.phraseapi.apikeymanagement.services;
 
+import com.roiceee.phraseapi.apikeymanagement.exceptions.ApiKeyNotFoundException;
 import com.roiceee.phraseapi.apikeymanagement.exceptions.UserHasApiKeyAlreadyException;
 import com.roiceee.phraseapi.apikeymanagement.models.UserApiKeyModel;
 import com.roiceee.phraseapi.apikeymanagement.repositories.ApiKeyRepository;
@@ -18,25 +19,30 @@ public class ApiKeyService {
         this.apiKeyRepository = apiKeyRepository;
     }
 
-    public String createNewApiKey(String id) {
+    public UserApiKeyModel createNewApiKey(String id) {
         if (userAlreadyHasKey(id)) {
             throw new UserHasApiKeyAlreadyException();
         }
         String uuid = UUID.randomUUID().toString();
         apiKeyRepository.createApiKey(id, uuid);
-        return uuid;
+        UserApiKeyModel model = new UserApiKeyModel();
+        model.setApiKey(uuid);
+        return model;
     }
 
-    public Optional<UserApiKeyModel> getApiKey(String id) {
-        return apiKeyRepository.findById(id);
+    public UserApiKeyModel getApiKey(String id) {
+        Optional<UserApiKeyModel> key = apiKeyRepository.findById(id);
+        if (key.isEmpty()) {
+            throw new ApiKeyNotFoundException();
+        }
+        return key.get();
     }
 
     public void deleteApiKey(String id) {
+        if (!userAlreadyHasKey(id)) {
+            throw new ApiKeyNotFoundException();
+        }
         apiKeyRepository.deleteById(id);
-    }
-
-    public boolean apiKeyExists(String apiKey) {
-        return apiKeyRepository.existsByApiKey(apiKey);
     }
 
     public boolean userAlreadyHasKey(String id) {

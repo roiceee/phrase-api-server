@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class UserHasApiKeyAlreadyException extends RuntimeException {
 
     public UserHasApiKeyAlreadyException() {
-        super("User already has an existing API Key");
+        super("User already has an existing API Key.");
     }
 }

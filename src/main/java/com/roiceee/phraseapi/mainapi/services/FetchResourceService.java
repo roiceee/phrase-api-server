@@ -1,10 +1,9 @@
 package com.roiceee.phraseapi.mainapi.services;
-import com.roiceee.phraseapi.mainapi.exceptions.InvalidParamPageValueException;
-import com.roiceee.phraseapi.mainapi.exceptions.InvalidParamQuantityValueException;
-import com.roiceee.phraseapi.mainapi.exceptions.InvalidParamTypeValueException;
+import com.roiceee.phraseapi.mainapi.exceptions.InvalidParamValueException;
 import com.roiceee.phraseapi.mainapi.models.Phrase;
 import com.roiceee.phraseapi.mainapi.repositories.JokeRepository;
 import com.roiceee.phraseapi.mainapi.repositories.QuoteRepository;
+import com.roiceee.phraseapi.mainapi.util.Params;
 import com.roiceee.phraseapi.mainapi.util.ReqParamPageValues;
 import com.roiceee.phraseapi.mainapi.util.ReqParamQtyValues;
 import com.roiceee.phraseapi.mainapi.util.ReqParamTypeValues;
@@ -32,7 +31,7 @@ public class FetchResourceService {
         return switch (type) {
             case ReqParamTypeValues.JOKE -> jokeRepository.getRandomJoke();
             case ReqParamTypeValues.QUOTE -> quoteRepository.getRandomQuote();
-            default -> throw new InvalidParamTypeValueException(type);
+            default -> throw new InvalidParamValueException(type, Params.TYPE);
         };
     }
 
@@ -42,7 +41,7 @@ public class FetchResourceService {
         return switch (type) {
             case ReqParamTypeValues.JOKE -> jokeRepository.getRandomJokeList(quantity);
             case ReqParamTypeValues.QUOTE -> quoteRepository.getRandomQuoteList(quantity);
-            default -> throw new InvalidParamTypeValueException(type);
+            default -> throw new InvalidParamValueException(type, Params.TYPE);
         };
     }
 
@@ -52,7 +51,7 @@ public class FetchResourceService {
         return switch (type) {
             case ReqParamTypeValues.JOKE -> jokeRepository.getRandomJokeListWithQuery(quantity, query);
             case ReqParamTypeValues.QUOTE -> quoteRepository.getRandomQuoteListWithQuery(quantity, query);
-            default -> throw new InvalidParamTypeValueException(type);
+            default -> throw new InvalidParamValueException(type, Params.TYPE);
         };
     }
 
@@ -68,7 +67,7 @@ public class FetchResourceService {
                     jokeRepository.findAllByPhraseIsContaining(query, pageable);
             case ReqParamTypeValues.QUOTE ->
                     quoteRepository.findAllByPhraseIsContaining(query, pageable);
-            default -> throw new InvalidParamTypeValueException(type);
+            default -> throw new InvalidParamValueException(type, Params.TYPE);
         };
     }
 
@@ -76,13 +75,13 @@ public class FetchResourceService {
     private void validateQuantity(int quantity) {
         if (quantity < ReqParamQtyValues.MINQTY ||
                 quantity > ReqParamQtyValues.MAXQTY) {
-            throw new InvalidParamQuantityValueException(quantity);
+            throw new InvalidParamValueException(quantity, Params.QTY);
         }
     }
 
     private void validatePageNumber(int page) {
         if (page < ReqParamPageValues.MIN_PAGE) {
-            throw new InvalidParamPageValueException(page);
+            throw new InvalidParamValueException(page, Params.PAGE);
         }
     }
 }

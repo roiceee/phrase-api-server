@@ -1,6 +1,6 @@
 package com.roiceee.phraseapi.apikeymanagement.controllers;
 
-import com.roiceee.phraseapi.apikeymanagement.models.ApiKeyResponseModel;
+import com.roiceee.phraseapi.apikeymanagement.models.UserApiKeyModel;
 import com.roiceee.phraseapi.apikeymanagement.services.ApiKeyService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -18,20 +18,23 @@ public class ApiKeyController {
     }
 
     @PostMapping("create")
-    public ResponseEntity<ApiKeyResponseModel> createAPIKey(Authentication authentication) {
+    public ResponseEntity<UserApiKeyModel> createAPIKey(Authentication authentication) {
 
-        String apiKey = apiKeyService.createNewApiKey(authentication.getName());
-
-        ApiKeyResponseModel responseModel = new ApiKeyResponseModel(apiKey);
+        UserApiKeyModel userApiKeyModel = apiKeyService.createNewApiKey(authentication.getName());
 
         return ResponseEntity.ok()
-                .body(responseModel);
+                .body(userApiKeyModel);
+    }
+    @GetMapping("get")
+    public ResponseEntity<UserApiKeyModel> getApiKey(Authentication authentication) {
+        UserApiKeyModel userApiKeyModel = apiKeyService.getApiKey(authentication.getName());
+        return ResponseEntity.ok().body(userApiKeyModel);
     }
 
-    @GetMapping("get")
-    public ResponseEntity<String> getApiKey() {
-
-        return ResponseEntity.ok().body("Sample API Key");
+    @DeleteMapping("delete")
+    public ResponseEntity<String> deleteApiKey(Authentication authentication) {
+        apiKeyService.deleteApiKey(authentication.getName());
+        return ResponseEntity.ok().body("API key deleted.");
     }
 }
 
