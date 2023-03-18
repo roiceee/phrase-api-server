@@ -48,4 +48,11 @@ public class ApiKeyService {
     public boolean userAlreadyHasKey(String id) {
         return apiKeyRepository.existsById(id);
     }
+
+    public void checkIfApiKeyExists(String apiKey) {
+        if (!apiKeyRepository.existsByApiKey(apiKey)) {
+            throw new ApiKeyNotFoundException();
+        }
+    }
+
 }
