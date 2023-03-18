@@ -22,6 +22,7 @@ public class FetchResourceService {
     JokeRepository jokeRepository;
     QuoteRepository quoteRepository;
 
+
     public FetchResourceService(JokeRepository jokeRepository, QuoteRepository quoteRepository) {
         this.jokeRepository = jokeRepository;
         this.quoteRepository = quoteRepository;

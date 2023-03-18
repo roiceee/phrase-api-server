@@ -6,6 +6,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(HttpStatus.NOT_FOUND)
 public class ApiKeyNotFoundException extends RuntimeException{
     public ApiKeyNotFoundException() {
-        super("No API key found.");
+        super("API key not found.");
     }
 }
