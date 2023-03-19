@@ -32,9 +32,10 @@ public class SecurityConfig {
         http.authorizeHttpRequests()
                 .requestMatchers("/api/*").permitAll()
                 .requestMatchers("/apikey/*").authenticated()
-                .and().cors()
-                .and().csrf().disable()
-                .oauth2ResourceServer().jwt();
+                .requestMatchers("/check").permitAll();
+        http.cors();
+        http.csrf().disable();
+        http.oauth2ResourceServer().jwt();
         return http.build();
     }
 
