@@ -5,7 +5,7 @@ spring:
     password: mcdo4ever
   security:
     oauth2:
-      resourceserver:
+      resource-server:
         jwt:
           issuer-uri: https://dev-1wrhewbsoopiootw.us.auth0.com/
 
