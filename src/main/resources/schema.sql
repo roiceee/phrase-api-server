@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS `api_keys` (
                             PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-CREATE TABLE IF NOT EXISTS `phrase-api`.`request_count` (
+CREATE TABLE IF NOT EXISTS `request_count` (
                                               `request_number` INT NOT NULL AUTO_INCREMENT,
                                               `api_key` VARCHAR(255) NOT NULL,
                                               PRIMARY KEY (`request_number`));
