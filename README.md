@@ -1,6 +1,6 @@
 # phrase-api-server
 
-## Simple API made with Spring Boot that supplies jokes or quotes to your frontend!
+## Simple API made with Spring Boot that supplies text-related data to your frontend application.
 
 
 
