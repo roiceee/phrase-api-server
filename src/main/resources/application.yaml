@@ -1,0 +1,19 @@
+spring:
+
+  datasource:
+    url: ${DATASOURCE_URL}
+    username: ${DATASOURCE_USERNAME}
+    password: ${DATASOURCE_PASSWORD}
+  security:
+    oauth2:
+      resource-server:
+        jwt:
+          issuer-uri: https://dev-1wrhewbsoopiootw.us.auth0.com/
+
+
+server:
+  error:
+    include-stacktrace: never
+
+auth0:
+  audience: https://phrase-api

@@ -1,0 +1,58 @@
+package com.roiceee.phraseapi.mainapi.models;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import java.util.Objects;
+
+@Entity
+@Table(name = "quotes")
+public class QuoteModel implements Phrase {
+
+    @Id
+    private long ID;
+
+    private String author;
+    private String phrase;
+
+
+    @Override
+    public String getPhrase() {
+        return phrase;
+    }
+
+    public void setPhrase(String quote) {
+        this.phrase = quote;
+    }
+
+    @JsonIgnore
+    public long getID() {
+        return ID;
+    }
+
+    public void setID(long ID) {
+        this.ID = ID;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        QuoteModel that = (QuoteModel) o;
+        return getID() == that.getID() && Objects.equals(getAuthor(), that.getAuthor()) && Objects.equals(getPhrase(),
+                that.getPhrase());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getID(), getAuthor(), getPhrase());
+    }
+}

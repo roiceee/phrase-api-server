@@ -9,11 +9,11 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.roiceee</groupId>
-    <artifactId>quote-joke-api</artifactId>
+    <artifactId>phrase-api-server</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>war</packaging>
-    <name>quote-joke-api</name>
-    <description>quote-joke-api</description>
+    <packaging>jar</packaging>
+    <name>phrase-api-server</name>
+    <description>REST server for Phrase API</description>
     <properties>
         <java.version>17</java.version>
     </properties>
@@ -46,6 +46,15 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>me.paulschwarz</groupId>
+            <artifactId>spring-dotenv</artifactId>
+            <version>3.0.0</version>
         </dependency>
     </dependencies>
 
