@@ -1,4 +1,4 @@
-package com.roiceee.phraseapi.mainapi.exceptions;
+package com.roiceee.phraseapi.resourceapi.exceptions;
 
 import com.roiceee.phraseapi.util.ErrorMessage;
 import org.springframework.http.HttpStatus;
@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
-public class MainApiExceptionAdvice {
+public class ResourceApiExceptionAdvice {
 
     @ExceptionHandler(InvalidParamValueException.class)
     public ResponseEntity<ErrorMessage> handleInvalidParamPageValueException(InvalidParamValueException e) {

@@ -9,7 +9,7 @@ import org.springframework.data.repository.CrudRepository;
 public interface ApiKeyRepository extends CrudRepository <UserApiKeyModel, String> {
 
     @Modifying
-    @Query(value = "INSERT INTO api_keys (id, api_key) VALUES (:id, :apiKey);", nativeQuery = true)
+    @Query(value = "INSERT INTO public.api_keys (id, api_key) VALUES (:id, :apiKey);", nativeQuery = true)
     void createApiKey(String id, String apiKey);
 
     boolean existsByApiKey(String apiKey);

@@ -1,24 +1,77 @@
-CREATE SCHEMA IF NOT EXISTS`phrase-api` ;
+-- SCHEMA: public
 
-CREATE TABLE IF NOT EXISTS `jokes` (
-                         `id` int DEFAULT NULL,
-                         `phrase` text
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+-- DROP SCHEMA IF EXISTS public ;
+
+CREATE SCHEMA IF NOT EXISTS public
+    AUTHORIZATION postgres;
+
+COMMENT ON SCHEMA public
+    IS 'standard public schema';
+
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+GRANT ALL ON SCHEMA public TO postgres;
+
+-- Table: public.api_keys
+
+-- DROP TABLE IF EXISTS public.api_keys;
+
+CREATE TABLE IF NOT EXISTS public.api_keys
+(
+    id character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    api_key character varying(255) COLLATE pg_catalog."default",
+    CONSTRAINT pk_api_keys PRIMARY KEY (id)
+)
+
+    TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.api_keys
+    OWNER to postgres;
 
 
-CREATE TABLE IF NOT EXISTS `quotes` (
-                          `id` int DEFAULT NULL,
-                          `author` text,
-                          `phrase` text
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+-- Table: public.jokes
 
-CREATE TABLE IF NOT EXISTS `api_keys` (
-                            `id` varchar(255) NOT NULL,
-                            `api_key` varchar(255) DEFAULT NULL,
-                            PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+-- DROP TABLE IF EXISTS public.jokes;
 
-CREATE TABLE IF NOT EXISTS `request_count` (
-                                              `request_number` INT NOT NULL AUTO_INCREMENT,
-                                              `api_key` VARCHAR(255) NOT NULL,
-                                              PRIMARY KEY (`request_number`));
+CREATE TABLE IF NOT EXISTS public.jokes
+(
+    id integer,
+    phrase text COLLATE pg_catalog."default"
+)
+
+    TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.jokes
+    OWNER to postgres;
+
+-- Table: public.quotes
+
+-- DROP TABLE IF EXISTS public.quotes;
+
+CREATE TABLE IF NOT EXISTS public.quotes
+(
+    id integer,
+    author text COLLATE pg_catalog."default",
+    phrase text COLLATE pg_catalog."default"
+)
+
+    TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.quotes
+    OWNER to postgres;
+
+-- Table: public.request_count
+
+-- DROP TABLE IF EXISTS public.request_count;
+
+CREATE TABLE IF NOT EXISTS public.request_count
+(
+    request_number serial NOT NULL,
+    api_key character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT pk_request_count PRIMARY KEY (request_number)
+)
+
+    TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.request_count
+    OWNER to postgres;

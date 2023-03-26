@@ -1,6 +1,6 @@
-package com.roiceee.phraseapi.mainapi.services;
+package com.roiceee.phraseapi.resourceapi.services;
 
-import com.roiceee.phraseapi.mainapi.repositories.RequestNumberRepository;
+import com.roiceee.phraseapi.resourceapi.repositories.RequestNumberRepository;
 import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;

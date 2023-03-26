@@ -1,10 +1,10 @@
-package com.roiceee.phraseapi.mainapi.controllers;
+package com.roiceee.phraseapi.resourceapi.controllers;
 
 import com.roiceee.phraseapi.apikeymanagement.services.ApiKeyService;
-import com.roiceee.phraseapi.mainapi.models.Phrase;
-import com.roiceee.phraseapi.mainapi.services.FetchResourceService;
-import com.roiceee.phraseapi.mainapi.services.RequestCountService;
-import com.roiceee.phraseapi.mainapi.util.Params;
+import com.roiceee.phraseapi.resourceapi.models.Phrase;
+import com.roiceee.phraseapi.resourceapi.services.FetchResourceService;
+import com.roiceee.phraseapi.resourceapi.services.RequestCountService;
+import com.roiceee.phraseapi.resourceapi.util.Params;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

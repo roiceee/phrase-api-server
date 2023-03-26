@@ -1,4 +1,4 @@
-package com.roiceee.phraseapi.mainapi.models;
+package com.roiceee.phraseapi.resourceapi.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
