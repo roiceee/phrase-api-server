@@ -1,4 +1,4 @@
-package com.roiceee.phraseapi.mainapi.models;
+package com.roiceee.phraseapi.resourceapi.models;
 
 public interface Phrase {
     public String getPhrase();

@@ -23,7 +23,7 @@ app, and can be deleted to regenerate a new one.
 #### Technologies Used
 **Frontend:** Next.js\
 **Backend:** Spring Boot REST\
-**Database:** MySQL\
+**Database:** PostgreSQL\
 **Authentication Provider:** Auth0
 
 ### Resources:

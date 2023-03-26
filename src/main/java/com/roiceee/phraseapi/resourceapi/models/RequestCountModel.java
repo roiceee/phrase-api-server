@@ -1,4 +1,4 @@
-package com.roiceee.phraseapi.mainapi.models;
+package com.roiceee.phraseapi.resourceapi.models;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

@@ -1,6 +1,6 @@
-package com.roiceee.phraseapi.mainapi.repositories;
+package com.roiceee.phraseapi.resourceapi.repositories;
 
-import com.roiceee.phraseapi.mainapi.models.JokeModel;
+import com.roiceee.phraseapi.resourceapi.models.JokeModel;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,19 +12,19 @@ import java.util.List;
 public interface JokeRepository extends PagingAndSortingRepository<JokeModel, Long> {
 
     @Query(value =
-            "SELECT * FROM jokes " +
-            "ORDER BY RAND() LIMIT  1",
+            "SELECT * FROM public.jokes " +
+            "ORDER BY random() LIMIT  1",
             nativeQuery = true)
     JokeModel getRandomJoke();
 
-    @Query(value = "SELECT * FROM jokes " +
-            "ORDER BY RAND() LIMIT  :quantity",
+    @Query(value = "SELECT * FROM public.jokes " +
+            "ORDER BY random() LIMIT  :quantity",
             nativeQuery = true)
     List<JokeModel> getRandomJokeList(int quantity);
 
-    @Query(value = "SELECT * FROM jokes " +
-            "WHERE PHRASE REGEXP :query " +
-            "ORDER BY RAND() LIMIT :quantity",
+    @Query(value = "SELECT * FROM public.jokes " +
+            "WHERE lower(phrase) LIKE '%'||lower(:query)||'%' " +
+            "ORDER BY random() LIMIT :quantity",
             nativeQuery = true)
     List<JokeModel> getRandomJokeListWithQuery(int quantity, String query);
 
