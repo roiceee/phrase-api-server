@@ -1,4 +1,4 @@
-package com.roiceee.phraseapi.mainapi.controllers;
+package com.roiceee.phraseapi.resourceapi.controllers;
 
 
 import org.springframework.http.ResponseEntity;

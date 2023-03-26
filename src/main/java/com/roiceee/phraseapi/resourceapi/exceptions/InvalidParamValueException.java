@@ -1,6 +1,5 @@
-package com.roiceee.phraseapi.mainapi.exceptions;
+package com.roiceee.phraseapi.resourceapi.exceptions;
 
-import com.roiceee.phraseapi.mainapi.util.Params;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 

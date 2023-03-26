@@ -1,16 +1,16 @@
 package com.roiceee.phraseapi;
 
 
-import com.roiceee.phraseapi.mainapi.exceptions.InvalidParamValueException;
-import com.roiceee.phraseapi.mainapi.models.JokeModel;
-import com.roiceee.phraseapi.mainapi.models.Phrase;
-import com.roiceee.phraseapi.mainapi.models.QuoteModel;
-import com.roiceee.phraseapi.mainapi.repositories.JokeRepository;
-import com.roiceee.phraseapi.mainapi.repositories.QuoteRepository;
-import com.roiceee.phraseapi.mainapi.services.FetchResourceService;
-import com.roiceee.phraseapi.mainapi.util.ReqParamPageValues;
-import com.roiceee.phraseapi.mainapi.util.ReqParamQtyValues;
-import com.roiceee.phraseapi.mainapi.util.ReqParamTypeValues;
+import com.roiceee.phraseapi.resourceapi.exceptions.InvalidParamValueException;
+import com.roiceee.phraseapi.resourceapi.models.JokeModel;
+import com.roiceee.phraseapi.resourceapi.models.Phrase;
+import com.roiceee.phraseapi.resourceapi.models.QuoteModel;
+import com.roiceee.phraseapi.resourceapi.repositories.JokeRepository;
+import com.roiceee.phraseapi.resourceapi.repositories.QuoteRepository;
+import com.roiceee.phraseapi.resourceapi.services.FetchResourceService;
+import com.roiceee.phraseapi.resourceapi.util.ReqParamPageValues;
+import com.roiceee.phraseapi.resourceapi.util.ReqParamQtyValues;
+import com.roiceee.phraseapi.resourceapi.util.ReqParamTypeValues;
 import jdk.jfr.Description;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

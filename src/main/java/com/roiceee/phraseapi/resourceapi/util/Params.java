@@ -1,4 +1,4 @@
-package com.roiceee.phraseapi.mainapi.util;
+package com.roiceee.phraseapi.resourceapi.util;
 
 public class Params {
 
