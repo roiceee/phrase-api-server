@@ -24,7 +24,7 @@ public interface QuoteRepository extends PagingAndSortingRepository<QuoteModel, 
     List<QuoteModel> getRandomQuoteList(int quantity);
 
     @Query(value = "SELECT * FROM public.quotes " +
-            "WHERE phrase LIKE :query " +
+            "WHERE lower(phrase) LIKE '%'||lower(:query)||'%' " +
             "ORDER BY random() LIMIT :quantity",
             nativeQuery = true)
     List<QuoteModel> getRandomQuoteListWithQuery(int quantity, String query);

@@ -23,7 +23,7 @@ public interface JokeRepository extends PagingAndSortingRepository<JokeModel, Lo
     List<JokeModel> getRandomJokeList(int quantity);
 
     @Query(value = "SELECT * FROM public.jokes " +
-            "WHERE phrase LIKE :query " +
+            "WHERE lower(phrase) LIKE '%'||lower(:query)||'%' " +
             "ORDER BY random() LIMIT :quantity",
             nativeQuery = true)
     List<JokeModel> getRandomJokeListWithQuery(int quantity, String query);
