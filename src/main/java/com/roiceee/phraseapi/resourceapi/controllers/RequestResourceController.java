@@ -5,6 +5,7 @@ import com.roiceee.phraseapi.resourceapi.models.Phrase;
 import com.roiceee.phraseapi.resourceapi.services.FetchResourceService;
 import com.roiceee.phraseapi.resourceapi.services.RequestCountService;
 import com.roiceee.phraseapi.resourceapi.util.Params;
+import com.roiceee.phraseapi.util.RateLimiterService;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,11 +20,16 @@ public class RequestResourceController {
     ApiKeyService apiKeyService;
     RequestCountService requestCountService;
 
+    RateLimiterService rateLimiterService;
+
     public RequestResourceController(FetchResourceService fetchResourceService, ApiKeyService apiKeyService,
-                                     RequestCountService requestCountService) {
+                                     RequestCountService requestCountService,
+                                     RateLimiterService rateLimiterService) {
         this.fetchResourceService = fetchResourceService;
         this.apiKeyService = apiKeyService;
         this.requestCountService = requestCountService;
+        this.rateLimiterService = rateLimiterService;
+
     }
 
     @GetMapping(params = {Params.appID, Params.TYPE})
@@ -32,6 +38,7 @@ public class RequestResourceController {
             @RequestParam(value = Params.TYPE) String type
     ) {
         apiKeyService.checkIfApiKeyExists(appid);
+        rateLimiterService.consumeOne(appid);
         Phrase phrase = fetchResourceService.getRandomPhrase(type);
         requestCountService.addCount(appid);
         return ResponseEntity
@@ -46,6 +53,7 @@ public class RequestResourceController {
             @RequestParam(value = Params.QTY) int qty
     ) {
         apiKeyService.checkIfApiKeyExists(appid);
+        rateLimiterService.consumeOne(appid);
         List<? extends Phrase> phraseList = fetchResourceService.getRandomPhraseList(type, qty);
         requestCountService.addCount(appid);
         return ResponseEntity
@@ -61,6 +69,7 @@ public class RequestResourceController {
             @RequestParam(value = Params.QUERY) String query
     ) {
         apiKeyService.checkIfApiKeyExists(appid);
+        rateLimiterService.consumeOne(appid);
         List<? extends Phrase> phraseList = fetchResourceService.getRandomPhraseListWithQuery(type, qty, query);
         requestCountService.addCount(appid);
         return ResponseEntity
@@ -77,6 +86,7 @@ public class RequestResourceController {
             @RequestParam(value = Params.QUERY) String query
     ) {
         apiKeyService.checkIfApiKeyExists(appid);
+        rateLimiterService.consumeOne(appid);
         Page<? extends Phrase> phrases = fetchResourceService.getPhraseListWithQueryPagination(type, query, page,
                 qty);
         requestCountService.addCount(appid);

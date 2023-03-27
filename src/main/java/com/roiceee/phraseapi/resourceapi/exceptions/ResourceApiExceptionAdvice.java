@@ -16,4 +16,11 @@ public class ResourceApiExceptionAdvice {
         return ResponseEntity.status(status).body(errorMessage);
     }
 
+    @ExceptionHandler(TooManyRequestsException.class)
+    public ResponseEntity<ErrorMessage> handleTooManyRequestsException(TooManyRequestsException e) {
+        HttpStatus status = HttpStatus.TOO_MANY_REQUESTS;
+        ErrorMessage errorMessage = new ErrorMessage(status.value(), status.getReasonPhrase(), e.getMessage());
+        return ResponseEntity.status(status).body(errorMessage);
+    }
+
 }
