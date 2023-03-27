@@ -1,8 +1,7 @@
-package com.roiceee.phraseapi.util;
+package com.roiceee.phraseapi.services;
 
 import com.roiceee.phraseapi.apikeymanagement.models.UserApiKeyModel;
 import com.roiceee.phraseapi.apikeymanagement.repositories.ApiKeyRepository;
-import com.roiceee.phraseapi.apikeymanagement.services.ApiKeyService;
 import com.roiceee.phraseapi.resourceapi.exceptions.TooManyRequestsException;
 import io.github.bucket4j.Bandwidth;
 import io.github.bucket4j.Bucket;
@@ -14,11 +13,11 @@ import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Service
-public class RateLimiterService {
+public class ResourceControllerLimiterService {
     ApiKeyRepository apiKeyRepository;
     ConcurrentHashMap<String, Bucket> bucketCache;
 
-    public RateLimiterService(ApiKeyRepository apiKeyRepository) {
+    public ResourceControllerLimiterService(ApiKeyRepository apiKeyRepository) {
         this.apiKeyRepository = apiKeyRepository;
         initializeCache();
     }
