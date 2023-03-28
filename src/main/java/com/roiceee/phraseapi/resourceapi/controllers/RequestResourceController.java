@@ -5,7 +5,7 @@ import com.roiceee.phraseapi.resourceapi.models.Phrase;
 import com.roiceee.phraseapi.resourceapi.services.FetchResourceService;
 import com.roiceee.phraseapi.resourceapi.services.RequestCountService;
 import com.roiceee.phraseapi.resourceapi.util.Params;
-import com.roiceee.phraseapi.services.ResourceControllerLimiterService;
+import com.roiceee.phraseapi.resourceapi.services.ResourceControllerLimiterService;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -93,6 +93,7 @@ public class RequestResourceController {
 
     private void beforeAction(String appid) {
         apiKeyService.checkIfApiKeyExists(appid);
+        resourceControllerLimiterService.addExistingKeyIfAbsentInCache(appid);
         resourceControllerLimiterService.consumeOne(appid);
     }
 
