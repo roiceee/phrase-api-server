@@ -66,7 +66,7 @@ public class ResourceControllerLimiterService {
         return Bucket.builder().addLimit(bandwidth).build();
     }
     private long getCurrentTimestamp() {
-        return new Date().getTime();
+        return System.currentTimeMillis();
     }
 
     private void cleanCacheWithInterval() {
