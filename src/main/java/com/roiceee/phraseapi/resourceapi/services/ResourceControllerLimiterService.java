@@ -29,7 +29,7 @@ public class ResourceControllerLimiterService {
 
     public void addExistingKeyIfAbsentInCache(String apiKey) {
         BucketWithTimestamp bucketWithTimestamp = new BucketWithTimestamp(this.newBucket(),
-                this.getCurrentTimestamp());
+                System.currentTimeMillis());
         bucketCache.putIfAbsent(apiKey, bucketWithTimestamp);
     }
 
@@ -39,7 +39,7 @@ public class ResourceControllerLimiterService {
             return;
         }
         if (bucket.getBucket().tryConsume(1)) {
-            bucket.setTimestamp(this.getCurrentTimestamp());
+            bucket.setTimestamp(System.currentTimeMillis());
             return;
         }
         throw new TooManyRequestsException();
@@ -48,12 +48,13 @@ public class ResourceControllerLimiterService {
     public void clearUnusedKeysFromCache() {
         long HOURS_LAST_INVOKED_BEFORE_DELETE = 3;
         long removedItems = 0;
-        Iterator<Map.Entry<String, BucketWithTimestamp>> iterator = bucketCache.entrySet().iterator();
+        Set<Map.Entry<String, BucketWithTimestamp>> entrySet = bucketCache.entrySet();
+        Iterator<Map.Entry<String, BucketWithTimestamp>> iterator = entrySet.iterator();
         logger.info("Clean action starting...");
         while (iterator.hasNext()) {
             Map.Entry<String, BucketWithTimestamp> entry = iterator.next();
             long lastAccessed = entry.getValue().getTimestamp();
-            long difference = this.getCurrentTimestamp() - lastAccessed;
+            long difference = System.currentTimeMillis() - lastAccessed;
             if (Conversions.hoursToMilliseconds(HOURS_LAST_INVOKED_BEFORE_DELETE) > difference) {
                 continue;
             }
@@ -69,9 +70,6 @@ public class ResourceControllerLimiterService {
         Bandwidth bandwidth = Bandwidth.classic(REQUEST_LIMIT, Refill.intervally(REQUEST_LIMIT,
                 Duration.ofMinutes(REFRESH_INTERVAL_IN_MINUTES)));
         return Bucket.builder().addLimit(bandwidth).build();
-    }
-    private long getCurrentTimestamp() {
-        return System.currentTimeMillis();
     }
 
     private void cleanCacheWithInterval() {

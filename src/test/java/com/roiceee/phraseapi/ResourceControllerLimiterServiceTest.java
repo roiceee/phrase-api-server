@@ -11,8 +11,13 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import static org.mockito.Mockito.*;
@@ -24,7 +29,7 @@ public class ResourceControllerLimiterServiceTest {
     private ResourceControllerLimiterService service;
 
     @Mock
-    private ConcurrentHashMap<String, BucketWithTimestamp> bucketCache = new ConcurrentHashMap<>();
+    private ConcurrentHashMap<String, BucketWithTimestamp> bucketCache;
 
 
     @Test
@@ -36,7 +41,7 @@ public class ResourceControllerLimiterServiceTest {
     @Test
     public void testConsumeOne() {
         String apiKey = "testConsumeOne";
-        when(bucketCache.get(apiKey)).thenReturn(createBucketWithTimestamp(2));
+        when(bucketCache.get(apiKey)).thenReturn(createBucketWithTimestamp(2, 2));
         service.addExistingKeyIfAbsentInCache(apiKey);
         service.consumeOne(apiKey);
         Assertions.assertEquals(bucketCache.get(apiKey).getBucket().getAvailableTokens(), 1);
@@ -59,19 +64,42 @@ public class ResourceControllerLimiterServiceTest {
     public void testClearUnusedKeysFromCacheIfDeletes() {
         int initialSize = service.getBucketCache().size();
         String apiKey = "testClearUnusedKeysFromCacheIfDeletes";
-        service.getBucketCache().putIfAbsent(apiKey, createBucketWithTimestamp());
-        service.clearUnusedKeysFromCache();
-        Assertions.assertEquals(initialSize, service.getBucketCache().size());
 
+        HashMap<String, BucketWithTimestamp> hashMap = new HashMap<>();
+        hashMap.put(apiKey, createBucketWithTimestamp(3));
+        Set<Map.Entry<String, BucketWithTimestamp>> entries = hashMap.entrySet();
+        when(bucketCache.entrySet()).thenReturn(entries);
+        service.clearUnusedKeysFromCache();
+
+        Assertions.assertEquals(initialSize, entries.size());
+
+    }
+
+    @Test
+    public void testClearUnusedKeysFromCacheIfPersistsActiveKeys() {
+        int initialSize = service.getBucketCache().size();
+        String apiKey = "testClearUnusedKeysFromCacheIfPersistsActiveKeys";
+
+        HashMap<String, BucketWithTimestamp> hashMap = new HashMap<>();
+        hashMap.put(apiKey, createBucketWithTimestamp(1));
+
+        Set<Map.Entry<String, BucketWithTimestamp>> entries = hashMap.entrySet();
+        when(bucketCache.entrySet()).thenReturn(entries);
+        service.clearUnusedKeysFromCache();
+        Assertions.assertEquals(initialSize + 1, entries.size());
     }
 
     private BucketWithTimestamp createBucketWithTimestamp() {
-        return createBucketWithTimestamp(100);
+        return createBucketWithTimestamp(1, 10);
     }
-    private BucketWithTimestamp createBucketWithTimestamp(int requestLimit) {
+
+    private BucketWithTimestamp createBucketWithTimestamp(int hoursBeforeNow) {
+        return createBucketWithTimestamp(hoursBeforeNow, 10);
+    }
+    private BucketWithTimestamp createBucketWithTimestamp(int hoursBeforeNow, int requestLimit) {
         Bucket bucket = BucketLimiterFactory.createBucket(requestLimit, 1);
         return new BucketWithTimestamp(bucket,
-                Conversions.hoursToMilliseconds(System.currentTimeMillis()) - Conversions.hoursToMilliseconds(3));
+                System.currentTimeMillis() - Conversions.hoursToMilliseconds(hoursBeforeNow));
     }
 
 }
