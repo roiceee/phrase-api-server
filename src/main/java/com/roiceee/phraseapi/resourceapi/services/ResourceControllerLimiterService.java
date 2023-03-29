@@ -2,6 +2,7 @@ package com.roiceee.phraseapi.resourceapi.services;
 
 import com.roiceee.phraseapi.resourceapi.exceptions.TooManyRequestsException;
 import com.roiceee.phraseapi.resourceapi.models.BucketWithTimestamp;
+import com.roiceee.phraseapi.util.Conversions;
 import io.github.bucket4j.Bandwidth;
 import io.github.bucket4j.Bucket;
 import io.github.bucket4j.Refill;
@@ -15,12 +16,13 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 public class ResourceControllerLimiterService {
-    ConcurrentHashMap<String, BucketWithTimestamp> bucketCache;
+     ConcurrentHashMap<String, BucketWithTimestamp> bucketCache;
 
      Logger logger = LoggerFactory.getLogger(ResourceControllerLimiterService.class);
 
     public ResourceControllerLimiterService() {
-        logger.info("Instantiated");
+        this.bucketCache = new ConcurrentHashMap<>();
+        logger.info(this.getClass().getSimpleName() + " instantiated.");
         cleanCacheWithInterval();
     }
 
@@ -33,14 +35,17 @@ public class ResourceControllerLimiterService {
 
     public void consumeOne(String apiKey) {
         BucketWithTimestamp bucket = bucketCache.get(apiKey);
-        bucket.setTimestamp(this.getCurrentTimestamp());
+        if (bucket == null) {
+            return;
+        }
         if (bucket.getBucket().tryConsume(1)) {
+            bucket.setTimestamp(this.getCurrentTimestamp());
             return;
         }
         throw new TooManyRequestsException();
     }
 
-    private void clearUnusedKeysFromCache() {
+    public void clearUnusedKeysFromCache() {
         long HOURS_LAST_INVOKED_BEFORE_DELETE = 3;
         long removedItems = 0;
         Iterator<Map.Entry<String, BucketWithTimestamp>> iterator = bucketCache.entrySet().iterator();
@@ -49,7 +54,7 @@ public class ResourceControllerLimiterService {
             Map.Entry<String, BucketWithTimestamp> entry = iterator.next();
             long lastAccessed = entry.getValue().getTimestamp();
             long difference = this.getCurrentTimestamp() - lastAccessed;
-            if (this.hoursToMilliseconds(HOURS_LAST_INVOKED_BEFORE_DELETE) > difference) {
+            if (Conversions.hoursToMilliseconds(HOURS_LAST_INVOKED_BEFORE_DELETE) > difference) {
                 continue;
             }
             removedItems++;
@@ -76,10 +81,13 @@ public class ResourceControllerLimiterService {
             public void run() {
                 clearUnusedKeysFromCache();
             }
-        }, new Date().getTime() + this.hoursToMilliseconds(6), this.hoursToMilliseconds(INTERVAL_IN_HOURS));
+        }, new Date().getTime() + Conversions.hoursToMilliseconds(6), Conversions.hoursToMilliseconds(INTERVAL_IN_HOURS));
     }
 
-    private long hoursToMilliseconds(long hours) {
-        return hours * 60 * 60 * 1000;
+    public void setBucketCache(ConcurrentHashMap<String, BucketWithTimestamp> bucketCache) {
+        this.bucketCache = bucketCache;
+    }
+    public ConcurrentHashMap<String, BucketWithTimestamp> getBucketCache() {
+        return this.bucketCache;
     }
 }
