@@ -74,12 +74,13 @@ public class ResourceControllerLimiterService {
 
     private void cleanCacheWithInterval() {
         long INTERVAL_IN_HOURS = 6;
-        new Timer().schedule(new TimerTask() {
+        new Timer().scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
                 clearUnusedKeysFromCache();
             }
-        }, new Date().getTime() + Conversions.hoursToMilliseconds(6), Conversions.hoursToMilliseconds(INTERVAL_IN_HOURS));
+        },  Conversions.hoursToMilliseconds(INTERVAL_IN_HOURS),
+                Conversions.hoursToMilliseconds(INTERVAL_IN_HOURS));
     }
 
     public void setBucketCache(ConcurrentHashMap<String, BucketWithTimestamp> bucketCache) {
