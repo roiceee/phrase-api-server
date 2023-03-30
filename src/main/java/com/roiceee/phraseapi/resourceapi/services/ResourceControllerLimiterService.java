@@ -83,9 +83,6 @@ public class ResourceControllerLimiterService {
                 Conversions.hoursToMilliseconds(INTERVAL_IN_HOURS));
     }
 
-    public void setBucketCache(ConcurrentHashMap<String, BucketWithTimestamp> bucketCache) {
-        this.bucketCache = bucketCache;
-    }
     public ConcurrentHashMap<String, BucketWithTimestamp> getBucketCache() {
         return this.bucketCache;
     }
