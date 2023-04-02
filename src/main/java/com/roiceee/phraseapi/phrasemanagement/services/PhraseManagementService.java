@@ -1,11 +1,9 @@
 package com.roiceee.phraseapi.phrasemanagement.services;
 
-import com.roiceee.phraseapi.phrasemanagement.exceptions.InvalidPhraseTypeException;
-import com.roiceee.phraseapi.phrasemanagement.exceptions.PhraseAlreadyExistsException;
-import com.roiceee.phraseapi.phrasemanagement.exceptions.PhraseIsEmptyException;
-import com.roiceee.phraseapi.phrasemanagement.exceptions.PhraseNotFoundException;
+import com.roiceee.phraseapi.phrasemanagement.exceptions.*;
 import com.roiceee.phraseapi.phrasemanagement.models.PhrasePostObject;
 import com.roiceee.phraseapi.phrasemanagement.repositories.PhraseManagementRepository;
+import com.roiceee.phraseapi.phrasemanagement.util.PhraseManagementUtil;
 import com.roiceee.phraseapi.resourceapi.util.ReqParamTypeValues;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +24,7 @@ public class PhraseManagementService {
         checkIfPhraseIsNotEmpty(phrasePostObject.getPhrase());
         checkIfPhraseDoesntExist(phrasePostObject.getPhrase());
         checkIfTypeExists(phrasePostObject.getType());
+        checkIfMaxPhrasesExceeds(userID);
         phrasePostObject.setUserId(userID);
         phraseManagementRepository.save(phrasePostObject);
         return phrasePostObject;
@@ -50,6 +49,13 @@ public class PhraseManagementService {
 
     public int getNumberOfPhrases(String userId) {
         return (int) phraseManagementRepository.countPhrasePostObjectByUserId(userId);
+    }
+
+    private void checkIfMaxPhrasesExceeds(String userId) {
+        if (phraseManagementRepository.countPhrasePostObjectByUserId(userId) <= PhraseManagementUtil.MAX_PHRASES) {
+            return;
+        }
+        throw new MaxPhrasesLimitReachedException();
     }
 
 

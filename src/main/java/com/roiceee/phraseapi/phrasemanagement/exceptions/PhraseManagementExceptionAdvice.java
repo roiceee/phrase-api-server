@@ -35,4 +35,11 @@ public class PhraseManagementExceptionAdvice {
         ErrorMessage errorMessage = new ErrorMessage(status.value(), status.getReasonPhrase(), e.getMessage());
         return ResponseEntity.status(status).body(errorMessage);
     }
+
+    @ExceptionHandler(MaxPhrasesLimitReachedException.class)
+    public ResponseEntity<ErrorMessage> catchPhraseIsEmptyException(MaxPhrasesLimitReachedException e) {
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        ErrorMessage errorMessage = new ErrorMessage(status.value(), status.getReasonPhrase(), e.getMessage());
+        return ResponseEntity.status(status).body(errorMessage);
+    }
 }
