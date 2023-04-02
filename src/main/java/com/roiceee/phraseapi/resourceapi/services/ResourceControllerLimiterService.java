@@ -16,9 +16,9 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 public class ResourceControllerLimiterService {
-     ConcurrentHashMap<String, BucketWithTimestamp> bucketCache;
+    private final ConcurrentHashMap<String, BucketWithTimestamp> bucketCache;
 
-     Logger logger = LoggerFactory.getLogger(ResourceControllerLimiterService.class);
+    private final Logger logger = LoggerFactory.getLogger(ResourceControllerLimiterService.class);
 
     public ResourceControllerLimiterService() {
         this.bucketCache = new ConcurrentHashMap<>();

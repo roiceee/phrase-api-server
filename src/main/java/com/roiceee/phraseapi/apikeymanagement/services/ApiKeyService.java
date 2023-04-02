@@ -13,7 +13,7 @@ import java.util.UUID;
 @Service
 @Transactional
 public class ApiKeyService {
-    ApiKeyRepository apiKeyRepository;
+    private final ApiKeyRepository apiKeyRepository;
 
     public ApiKeyService(ApiKeyRepository apiKeyRepository) {
         this.apiKeyRepository = apiKeyRepository;

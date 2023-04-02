@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin
 public class CheckConnectionController {
 
-    Bucket bucket;
+    private final Bucket bucket;
 
     public CheckConnectionController() {
         final int REQUEST_LIMIT = 1000;

@@ -16,11 +16,11 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 @RequestMapping("api/phrase")
 public class RequestResourceController {
-    FetchResourceService fetchResourceService;
-    ApiKeyService apiKeyService;
-    RequestCountService requestCountService;
+    private final FetchResourceService fetchResourceService;
+    private final ApiKeyService apiKeyService;
+    private final RequestCountService requestCountService;
 
-    ResourceControllerLimiterService resourceControllerLimiterService;
+    private final ResourceControllerLimiterService resourceControllerLimiterService;
 
     public RequestResourceController(FetchResourceService fetchResourceService, ApiKeyService apiKeyService,
                                      RequestCountService requestCountService,

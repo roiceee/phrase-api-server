@@ -1,5 +1,6 @@
 package com.roiceee.phraseapi.resourceapi.services;
 import com.roiceee.phraseapi.resourceapi.exceptions.InvalidParamValueException;
+import com.roiceee.phraseapi.resourceapi.models.JokeModel;
 import com.roiceee.phraseapi.resourceapi.models.Phrase;
 import com.roiceee.phraseapi.resourceapi.repositories.JokeRepository;
 import com.roiceee.phraseapi.resourceapi.repositories.QuoteRepository;
@@ -19,8 +20,8 @@ import java.util.List;
 @Service
 @Transactional
 public class FetchResourceService {
-    JokeRepository jokeRepository;
-    QuoteRepository quoteRepository;
+    private final JokeRepository jokeRepository;
+    private final QuoteRepository quoteRepository;
 
 
     public FetchResourceService(JokeRepository jokeRepository, QuoteRepository quoteRepository) {

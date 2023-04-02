@@ -7,7 +7,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "quotes")
-public class QuoteModel implements Phrase {
+public class QuoteModel extends Phrase {
 
     @Id
     private long ID;
@@ -15,8 +15,6 @@ public class QuoteModel implements Phrase {
     private String author;
     private String phrase;
 
-
-    @Override
     public String getPhrase() {
         return phrase;
     }

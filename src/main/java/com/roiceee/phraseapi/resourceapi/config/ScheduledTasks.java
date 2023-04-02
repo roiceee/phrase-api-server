@@ -11,7 +11,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 @EnableScheduling
 public class ScheduledTasks {
 
-    ResourceControllerLimiterService resourceControllerLimiterService;
+    private final ResourceControllerLimiterService resourceControllerLimiterService;
 
     public ScheduledTasks(ResourceControllerLimiterService resourceControllerLimiterService) {
         this.resourceControllerLimiterService = resourceControllerLimiterService;

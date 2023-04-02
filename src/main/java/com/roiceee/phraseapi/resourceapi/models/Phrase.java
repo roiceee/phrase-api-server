@@ -1,5 +1,10 @@
 package com.roiceee.phraseapi.resourceapi.models;
 
-public interface Phrase {
-    public String getPhrase();
+public abstract class Phrase {
+
+   protected String phrase;
+
+   public abstract String getPhrase();
+
+   public abstract void setPhrase(String phrase);
 }

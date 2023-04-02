@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class RequestCountService {
-    RequestNumberRepository requestNumberRepository;
+    private final RequestNumberRepository requestNumberRepository;
 
     public RequestCountService(RequestNumberRepository requestNumberRepository) {
         this.requestNumberRepository = requestNumberRepository;
