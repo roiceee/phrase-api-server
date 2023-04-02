@@ -23,7 +23,6 @@ public class ResourceControllerLimiterService {
     public ResourceControllerLimiterService() {
         this.bucketCache = new ConcurrentHashMap<>();
         logger.info(this.getClass().getSimpleName() + " instantiated.");
-        cleanCacheWithInterval();
     }
 
 
@@ -61,7 +60,8 @@ public class ResourceControllerLimiterService {
             removedItems++;
             iterator.remove();
         }
-        logger.info("Removed " + removedItems + ".");
+        logger.info("Removed from cache: " + removedItems + ".");
+        logger.info("Cache size: " + bucketCache.size());
     }
 
     private Bucket newBucket() {
@@ -70,17 +70,6 @@ public class ResourceControllerLimiterService {
         Bandwidth bandwidth = Bandwidth.classic(REQUEST_LIMIT, Refill.intervally(REQUEST_LIMIT,
                 Duration.ofMinutes(REFRESH_INTERVAL_IN_MINUTES)));
         return Bucket.builder().addLimit(bandwidth).build();
-    }
-
-    private void cleanCacheWithInterval() {
-        long INTERVAL_IN_HOURS = 6;
-        new Timer().scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                clearUnusedKeysFromCache();
-            }
-        },  Conversions.hoursToMilliseconds(INTERVAL_IN_HOURS),
-                Conversions.hoursToMilliseconds(INTERVAL_IN_HOURS));
     }
 
     public ConcurrentHashMap<String, BucketWithTimestamp> getBucketCache() {
