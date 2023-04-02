@@ -7,14 +7,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
+
 
 @RestController
 @CrossOrigin(origins = {Origins.LOCAL, Origins.PROD})
 @RequestMapping("apikey")
 public class ApiKeyController {
 
-    ApiKeyService apiKeyService;
+    private final ApiKeyService apiKeyService;
 
     public ApiKeyController(ApiKeyService apiKeyService) {
         this.apiKeyService = apiKeyService;
