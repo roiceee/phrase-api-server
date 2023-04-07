@@ -7,8 +7,7 @@ https://phraseapi.vercel.app
 
 ### Project Description:
 Phrase API allows you to get text-related data that can be used for your frontend application (ex. A website or 
-web application). This API can be used for pet projects, and in getting familiar with the javascript fetch 
-API. 
+web application). 
 <br/>
 <br/>
 #### Authentication
