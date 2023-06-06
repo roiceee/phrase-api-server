@@ -1,10 +1,7 @@
 package com.roiceee.phraseapi.phrasemanagement.models;
 
 import com.roiceee.phraseapi.resourceapi.models.Phrase;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.util.Objects;
 
@@ -13,6 +10,7 @@ import java.util.Objects;
 public class PhrasePostObject extends Phrase {
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Column(name = "user_id")
@@ -80,5 +78,16 @@ public class PhrasePostObject extends Phrase {
     @Override
     public int hashCode() {
         return Objects.hash(getId(), getUserId(), getType(), getAuthor(), getPhrase());
+    }
+
+    @Override
+    public String toString() {
+        return "PhrasePostObject{" +
+                "id=" + id +
+                ", userId='" + userId + '\'' +
+                ", type='" + type + '\'' +
+                ", author='" + author + '\'' +
+                ", phrase='" + phrase + '\'' +
+                '}';
     }
 }

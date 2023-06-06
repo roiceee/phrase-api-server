@@ -52,7 +52,7 @@ public class PhraseManagementService {
     }
 
     private void checkIfMaxPhrasesExceeds(String userId) {
-        if (phraseManagementRepository.countPhrasePostObjectByUserId(userId) <= PhraseManagementUtil.MAX_PHRASES) {
+        if (phraseManagementRepository.countPhrasePostObjectByUserId(userId) < PhraseManagementUtil.MAX_PHRASES) {
             return;
         }
         throw new MaxPhrasesLimitReachedException();
