@@ -20,10 +20,7 @@ import java.util.List;
 @RequestMapping("phrase-management")
 public class PhraseManagementController {
     private final PhraseManagementService phraseManagementService;
-
     private final ModelMapper modelMapper;
-
-//    private final Logger logger = LoggerFactory.getLogger(PhraseManagementController.class);
 
     public PhraseManagementController(PhraseManagementService phraseManagementService, ModelMapper modelMapper) {
         this.phraseManagementService = phraseManagementService;
@@ -74,6 +71,7 @@ public class PhraseManagementController {
 
         List<PhrasePostObjectDTO> returnList = res.stream().map(obj -> modelMapper.map(obj,
                 PhrasePostObjectDTO.class)).toList();
+
         return ResponseEntity.ok().body(returnList);
     }
 
