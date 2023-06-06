@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 
@@ -57,16 +56,25 @@ public class PhraseManagementController {
     @PatchMapping("update")
     public ResponseEntity<PhrasePostObjectDTO> editPhrase(Authentication authentication,
                                                          @RequestBody PhrasePostObjectDTO phrasePostObjectDTO) {
+
         PhrasePostObject phrasePostObject = modelMapper.map(phrasePostObjectDTO, PhrasePostObject.class);
+
         PhrasePostObject res = phraseManagementService.editPhrase(authentication.getName(),
                 phrasePostObject);
+
         PhrasePostObjectDTO returnedObject = modelMapper.map(res, PhrasePostObjectDTO.class);
+
         return ResponseEntity.ok().body(returnedObject);
     }
 
-    @GetMapping("get")
-    public ResponseEntity<List<PhrasePostObject>> getAllPhrases(Authentication authentication) {
-        return ResponseEntity.ok().body(phraseManagementService.getAllPhrases(authentication.getName()));
+    @GetMapping("get-all")
+    public ResponseEntity<List<PhrasePostObjectDTO>> getAllPhrases(Authentication authentication) {
+
+        List<PhrasePostObject> res = phraseManagementService.getAllPhrases(authentication.getName());
+
+        List<PhrasePostObjectDTO> returnList = res.stream().map(obj -> modelMapper.map(obj,
+                PhrasePostObjectDTO.class)).toList();
+        return ResponseEntity.ok().body(returnList);
     }
 
     @GetMapping("get-metadata")

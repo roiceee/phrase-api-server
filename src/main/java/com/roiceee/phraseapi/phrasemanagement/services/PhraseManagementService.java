@@ -21,12 +21,16 @@ public class PhraseManagementService {
     }
 
     public PhrasePostObject addPhrase(String userID, PhrasePostObject phrasePostObject) {
+
         checkIfPhraseIsNotEmpty(phrasePostObject.getPhrase());
         checkIfPhraseDoesntExist(phrasePostObject.getPhrase());
         checkIfTypeExists(phrasePostObject.getType());
         checkIfMaxPhrasesExceeds(userID);
+
         phrasePostObject.setUserId(userID);
+
         phraseManagementRepository.save(phrasePostObject);
+
         return phrasePostObject;
     }
 
@@ -38,9 +42,7 @@ public class PhraseManagementService {
     public PhrasePostObject editPhrase(String userID, PhrasePostObject phrasePostObject) {
 
         checkIfPhraseIsNotEmpty(phrasePostObject.getPhrase());
-
         checkIfTypeExists(phrasePostObject.getType());
-
         checkIfPhraseExistsByIdAndUserId(phrasePostObject.getId(), userID);
 
         phraseManagementRepository.updatePhrasePostObject(phrasePostObject.getAuthor(),
