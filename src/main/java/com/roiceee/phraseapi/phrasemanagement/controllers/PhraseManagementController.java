@@ -8,8 +8,6 @@ import com.roiceee.phraseapi.phrasemanagement.services.PhraseManagementService;
 import com.roiceee.phraseapi.phrasemanagement.util.PhraseManagementUtil;
 import com.roiceee.phraseapi.util.Origins;
 import org.modelmapper.ModelMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -43,21 +41,26 @@ public class PhraseManagementController {
                 phrasePostObject);
 
         PhrasePostObjectDTO returnedObject = modelMapper.map(res, PhrasePostObjectDTO.class);
+
         return ResponseEntity.ok().body(returnedObject);
     }
 
     @DeleteMapping("delete")
     public ResponseEntity<String> deletePhrase(Authentication authentication,
                                                @RequestBody DeletePhraseDTO deletePhraseDTO) {
+
         phraseManagementService.deletePhrase(authentication.getName(), deletePhraseDTO.getId());
+
         return ResponseEntity.ok().body("Deleted successfully");
     }
 
     @PatchMapping("update")
-    public ResponseEntity<PhrasePostObject> editPhrase(Authentication authentication,
-                                                       PhrasePostObject phrasePostObject) {
-        PhrasePostObject returnedObject = phraseManagementService.editPhrase(authentication.getName(),
+    public ResponseEntity<PhrasePostObjectDTO> editPhrase(Authentication authentication,
+                                                         @RequestBody PhrasePostObjectDTO phrasePostObjectDTO) {
+        PhrasePostObject phrasePostObject = modelMapper.map(phrasePostObjectDTO, PhrasePostObject.class);
+        PhrasePostObject res = phraseManagementService.editPhrase(authentication.getName(),
                 phrasePostObject);
+        PhrasePostObjectDTO returnedObject = modelMapper.map(res, PhrasePostObjectDTO.class);
         return ResponseEntity.ok().body(returnedObject);
     }
 

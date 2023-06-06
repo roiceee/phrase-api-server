@@ -36,10 +36,16 @@ public class PhraseManagementService {
     }
 
     public PhrasePostObject editPhrase(String userID, PhrasePostObject phrasePostObject) {
+
         checkIfPhraseIsNotEmpty(phrasePostObject.getPhrase());
+
         checkIfTypeExists(phrasePostObject.getType());
+
+        checkIfPhraseExistsByIdAndUserId(phrasePostObject.getId(), userID);
+
         phraseManagementRepository.updatePhrasePostObject(phrasePostObject.getAuthor(),
                 phrasePostObject.getPhrase(), userID, phrasePostObject.getId());
+
         return phrasePostObject;
     }
 
