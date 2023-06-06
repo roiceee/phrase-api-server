@@ -1,13 +1,12 @@
 package com.roiceee.phraseapi.phrasemanagement.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class DeletePhraseDTO {
+
     private long id;
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 }
