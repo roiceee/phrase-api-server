@@ -79,9 +79,12 @@ public class PhraseManagementController {
 
     @GetMapping("get-metadata")
     public ResponseEntity<PhraseManagementMetadata> getMetadata(Authentication authentication) {
+
         int numberOfPhrases = phraseManagementService.getNumberOfPhrases(authentication.getName());
+
         PhraseManagementMetadata phraseManagementMetadata =
                 new PhraseManagementMetadata(PhraseManagementUtil.MAX_PHRASES, numberOfPhrases);
+
         return ResponseEntity.ok().body(phraseManagementMetadata);
     }
 
