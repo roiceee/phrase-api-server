@@ -8,6 +8,8 @@ import com.roiceee.phraseapi.resourceapi.util.Params;
 import com.roiceee.phraseapi.resourceapi.util.ReqParamPageValues;
 import com.roiceee.phraseapi.resourceapi.util.ReqParamQtyValues;
 import com.roiceee.phraseapi.resourceapi.util.ReqParamTypeValues;
+import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -19,15 +21,11 @@ import java.util.List;
 
 @Service
 @Transactional
+@AllArgsConstructor
 public class FetchResourceService {
     private final JokeRepository jokeRepository;
     private final QuoteRepository quoteRepository;
 
-
-    public FetchResourceService(JokeRepository jokeRepository, QuoteRepository quoteRepository) {
-        this.jokeRepository = jokeRepository;
-        this.quoteRepository = quoteRepository;
-    }
 
     public Phrase getRandomPhrase(String type) {
         return switch (type) {

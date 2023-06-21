@@ -4,6 +4,7 @@ import com.roiceee.phraseapi.apikeymanagement.exceptions.ApiKeyNotFoundException
 import com.roiceee.phraseapi.apikeymanagement.exceptions.UserHasApiKeyAlreadyException;
 import com.roiceee.phraseapi.apikeymanagement.models.UserApiKeyModel;
 import com.roiceee.phraseapi.apikeymanagement.repositories.ApiKeyRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,12 +13,11 @@ import java.util.UUID;
 
 @Service
 @Transactional
+@AllArgsConstructor
 public class ApiKeyService {
     private final ApiKeyRepository apiKeyRepository;
 
-    public ApiKeyService(ApiKeyRepository apiKeyRepository) {
-        this.apiKeyRepository = apiKeyRepository;
-    }
+
 
     public UserApiKeyModel createNewApiKey(String id) {
         if (userAlreadyHasKey(id)) {

@@ -4,8 +4,9 @@ import com.roiceee.phraseapi.apikeymanagement.services.ApiKeyService;
 import com.roiceee.phraseapi.resourceapi.models.Phrase;
 import com.roiceee.phraseapi.resourceapi.services.FetchResourceService;
 import com.roiceee.phraseapi.resourceapi.services.RequestCountService;
-import com.roiceee.phraseapi.resourceapi.util.Params;
 import com.roiceee.phraseapi.resourceapi.services.ResourceControllerLimiterService;
+import com.roiceee.phraseapi.resourceapi.util.Params;
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,22 +16,14 @@ import java.util.List;
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("api/phrase")
+@AllArgsConstructor
 public class RequestResourceController {
+
     private final FetchResourceService fetchResourceService;
     private final ApiKeyService apiKeyService;
     private final RequestCountService requestCountService;
-
     private final ResourceControllerLimiterService resourceControllerLimiterService;
 
-    public RequestResourceController(FetchResourceService fetchResourceService, ApiKeyService apiKeyService,
-                                     RequestCountService requestCountService,
-                                     ResourceControllerLimiterService resourceControllerLimiterService) {
-        this.fetchResourceService = fetchResourceService;
-        this.apiKeyService = apiKeyService;
-        this.requestCountService = requestCountService;
-        this.resourceControllerLimiterService = resourceControllerLimiterService;
-
-    }
 
     @GetMapping(params = {Params.appID, Params.TYPE})
     public ResponseEntity<Phrase> getRandomResource(
