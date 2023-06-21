@@ -1,8 +1,11 @@
 package com.roiceee.phraseapi.apikeymanagement.controllers;
 
+import com.roiceee.phraseapi.apikeymanagement.dtos.UserApiKeyDTO;
 import com.roiceee.phraseapi.apikeymanagement.models.UserApiKeyModel;
 import com.roiceee.phraseapi.apikeymanagement.services.ApiKeyService;
 import com.roiceee.phraseapi.util.Origins;
+import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -12,26 +15,25 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @CrossOrigin(origins = {Origins.LOCAL, Origins.PROD})
 @RequestMapping("apikey")
+@AllArgsConstructor
 public class ApiKeyController {
 
     private final ApiKeyService apiKeyService;
-
-    public ApiKeyController(ApiKeyService apiKeyService) {
-        this.apiKeyService = apiKeyService;
-
-    }
+    private final ModelMapper modelMapper;
 
     @PostMapping("create")
-    public ResponseEntity<UserApiKeyModel> createAPIKey(Authentication authentication) {
+    public ResponseEntity<UserApiKeyDTO> createAPIKey(Authentication authentication) {
 
         UserApiKeyModel userApiKeyModel = apiKeyService.createNewApiKey(authentication.getName());
+        UserApiKeyDTO userApiKeyDTO = modelMapper.map(userApiKeyModel, UserApiKeyDTO.class);
         return ResponseEntity.ok()
-                .body(userApiKeyModel);
+                .body(userApiKeyDTO);
     }
     @GetMapping("get")
-    public ResponseEntity<UserApiKeyModel> getApiKey(Authentication authentication) {
+    public ResponseEntity<UserApiKeyDTO> getApiKey(Authentication authentication) {
         UserApiKeyModel userApiKeyModel = apiKeyService.getApiKey(authentication.getName());
-        return ResponseEntity.ok().body(userApiKeyModel);
+        UserApiKeyDTO userApiKeyDTO = modelMapper.map(userApiKeyModel, UserApiKeyDTO.class);
+        return ResponseEntity.ok().body(userApiKeyDTO);
     }
 
     @DeleteMapping("delete")
