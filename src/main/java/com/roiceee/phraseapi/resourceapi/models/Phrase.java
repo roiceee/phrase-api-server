@@ -1,5 +1,9 @@
 package com.roiceee.phraseapi.resourceapi.models;
 
+
+import lombok.Data;
+
+@Data
 public abstract class Phrase {
 
    protected String phrase;

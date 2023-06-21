@@ -1,19 +1,14 @@
 package com.roiceee.phraseapi.phrasemanagement.models;
 
-import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.roiceee.phraseapi.resourceapi.models.Phrase;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-import org.hibernate.annotations.Type;
-import org.springframework.data.annotation.TypeAlias;
+import lombok.*;
 
+
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "phrase_management")
-@Getter
-@Setter
-@ToString
+@Data
 public class PhrasePostObject extends Phrase {
     @Id
     @Column(name = "id")
