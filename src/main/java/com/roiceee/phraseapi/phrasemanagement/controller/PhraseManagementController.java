@@ -17,7 +17,7 @@ import java.util.List;
 
 @Controller
 @CrossOrigin(origins = {Origins.LOCAL, Origins.PROD})
-@RequestMapping("phrase-management")
+@RequestMapping("phrase-management/user")
 public class PhraseManagementController {
     private final PhraseManagementService phraseManagementService;
     private final ModelMapper modelMapper;
