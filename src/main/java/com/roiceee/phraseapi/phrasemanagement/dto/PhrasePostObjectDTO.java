@@ -1,14 +1,10 @@
 package com.roiceee.phraseapi.phrasemanagement.dto;
 
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import com.roiceee.phraseapi.phrasemanagement.model.Status;
+import lombok.Data;
 
-import java.util.Objects;
-@EqualsAndHashCode
-@Getter
-@Setter
+@Data
 public class PhrasePostObjectDTO {
 
     private long id;
@@ -19,5 +15,5 @@ public class PhrasePostObjectDTO {
 
     private String phrase;
 
-    private String status;
+    private Status status;
 }
