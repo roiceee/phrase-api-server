@@ -1,8 +1,8 @@
 package com.roiceee.phraseapi;
 
-import com.roiceee.phraseapi.resourceapi.exceptions.TooManyRequestsException;
-import com.roiceee.phraseapi.resourceapi.models.BucketWithTimestamp;
-import com.roiceee.phraseapi.resourceapi.services.ResourceControllerLimiterService;
+import com.roiceee.phraseapi.resourceapi.exception.TooManyRequestsException;
+import com.roiceee.phraseapi.resourceapi.model.BucketWithTimestamp;
+import com.roiceee.phraseapi.resourceapi.service.ResourceControllerLimiterService;
 import com.roiceee.phraseapi.util.BucketLimiterFactory;
 import com.roiceee.phraseapi.util.Conversions;
 import io.github.bucket4j.Bucket;
@@ -11,11 +11,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;

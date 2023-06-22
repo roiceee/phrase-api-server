@@ -1,7 +1,6 @@
 package com.roiceee.phraseapi.resourceapi.config;
 
-import com.roiceee.phraseapi.resourceapi.services.ResourceControllerLimiterService;
-import com.roiceee.phraseapi.util.Conversions;
+import com.roiceee.phraseapi.resourceapi.service.ResourceControllerLimiterService;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableScheduling;
