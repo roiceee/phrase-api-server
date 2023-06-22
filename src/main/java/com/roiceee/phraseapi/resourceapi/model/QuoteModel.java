@@ -1,8 +1,6 @@
 package com.roiceee.phraseapi.resourceapi.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -15,6 +13,7 @@ import lombok.EqualsAndHashCode;
 public class QuoteModel extends Phrase {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     private long ID;
 
