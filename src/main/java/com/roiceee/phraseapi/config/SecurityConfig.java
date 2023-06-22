@@ -33,7 +33,7 @@ public class SecurityConfig {
                 .requestMatchers("/api/*").permitAll()
                 .requestMatchers("/apikey/*").authenticated()
                 .requestMatchers("/check").permitAll()
-                .requestMatchers("/phrase-management/*").authenticated();
+                .requestMatchers("/phrase-management/user/*").authenticated();
         http.cors();
         http.csrf().disable();
         http.oauth2ResourceServer().jwt();
