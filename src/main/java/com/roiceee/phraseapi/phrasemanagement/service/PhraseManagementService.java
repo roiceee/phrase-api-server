@@ -2,6 +2,7 @@ package com.roiceee.phraseapi.phrasemanagement.service;
 
 import com.roiceee.phraseapi.phrasemanagement.exception.*;
 import com.roiceee.phraseapi.phrasemanagement.model.PhrasePostObject;
+import com.roiceee.phraseapi.phrasemanagement.model.Status;
 import com.roiceee.phraseapi.phrasemanagement.repository.PhraseManagementRepository;
 import com.roiceee.phraseapi.phrasemanagement.util.PhraseManagementUtil;
 import com.roiceee.phraseapi.resourceapi.util.ReqParamTypeValues;
@@ -27,6 +28,7 @@ public class PhraseManagementService {
         checkIfTypeExists(phrasePostObject.getType());
         checkIfMaxPhrasesExceeds(userID);
 
+        phrasePostObject.setStatus(Status.PENDING);
         phrasePostObject.setUserId(userID);
 
         phraseManagementRepository.save(phrasePostObject);
