@@ -33,7 +33,13 @@ public class SecurityConfig {
                 .requestMatchers("/api/*").permitAll()
                 .requestMatchers("/apikey/*").authenticated()
                 .requestMatchers("/check").permitAll()
-                .requestMatchers("/phrase-management/user/*").authenticated();
+                .requestMatchers("/actuator/health").permitAll()
+                .requestMatchers("/phrase-management/user/*").authenticated()
+
+                //set to authenticated for testing purposes
+                    //hasAuthority("SCOPE_approve:phrases")
+                .requestMatchers("/phrase-management/admin/*").authenticated();
+
         http.cors();
         http.csrf().disable();
         http.oauth2ResourceServer().jwt();
