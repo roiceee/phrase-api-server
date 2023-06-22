@@ -26,7 +26,7 @@ public class JokeModel extends Phrase {
     private String phrase;
 
     @Column(name = "phrase_management_id")
-    private long phrasemanagementID;
+    private Long phrasemanagementID;
     @JsonIgnore
     public long getID() {
         return ID;
