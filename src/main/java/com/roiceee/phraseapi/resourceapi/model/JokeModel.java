@@ -14,11 +14,19 @@ import lombok.EqualsAndHashCode;
 public class JokeModel extends Phrase {
 
     @Id
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     private long ID;
+
+    @Column(name = "author")
     private String author;
+
+    @Column(name = "phrase")
     private String phrase;
+
+    @Column(name = "phrase_management_id")
+    private long phrasemanagementID;
     @JsonIgnore
     public long getID() {
         return ID;
