@@ -4,28 +4,24 @@ import com.roiceee.phraseapi.phrasemanagement.dto.DeletePhraseDTO;
 import com.roiceee.phraseapi.phrasemanagement.dto.PhrasePostObjectDTO;
 import com.roiceee.phraseapi.phrasemanagement.model.PhraseManagementMetadata;
 import com.roiceee.phraseapi.phrasemanagement.model.PhrasePostObject;
-import com.roiceee.phraseapi.phrasemanagement.service.PhraseManagementService;
+import com.roiceee.phraseapi.phrasemanagement.service.PhraseManagementUserService;
 import com.roiceee.phraseapi.phrasemanagement.util.PhraseManagementUtil;
 import com.roiceee.phraseapi.util.Origins;
+import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 
-@Controller
+@RestController
 @CrossOrigin(origins = {Origins.LOCAL, Origins.PROD})
 @RequestMapping("phrase-management/user")
-public class PhraseManagementController {
-    private final PhraseManagementService phraseManagementService;
+@AllArgsConstructor
+public class PhraseManagementUserController {
+    private final PhraseManagementUserService phraseManagementService;
     private final ModelMapper modelMapper;
-
-    public PhraseManagementController(PhraseManagementService phraseManagementService, ModelMapper modelMapper) {
-        this.phraseManagementService = phraseManagementService;
-        this.modelMapper = modelMapper;
-    }
 
     @PostMapping("add")
     public ResponseEntity<PhrasePostObjectDTO> addPhrase(Authentication authentication,

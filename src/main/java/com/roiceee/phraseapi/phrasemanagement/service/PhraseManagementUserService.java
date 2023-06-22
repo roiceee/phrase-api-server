@@ -13,11 +13,11 @@ import java.util.List;
 
 @Service
 @Transactional
-public class PhraseManagementService {
+public class PhraseManagementUserService {
 
     private final PhraseManagementRepository phraseManagementRepository;
 
-    public PhraseManagementService(PhraseManagementRepository phraseManagementRepository) {
+    public PhraseManagementUserService(PhraseManagementRepository phraseManagementRepository) {
         this.phraseManagementRepository = phraseManagementRepository;
     }
 
