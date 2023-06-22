@@ -33,4 +33,6 @@ public interface QuoteRepository extends JpaRepository<QuoteModel, Long> {
 
 
     Page<QuoteModel> findAllByPhraseIsContaining(String phrase, Pageable pageable);
+
+    void deleteByPhrasemanagementID(Long id);
 }

@@ -30,4 +30,6 @@ public interface JokeRepository extends JpaRepository<JokeModel, Long> {
     List<JokeModel> getRandomJokeListWithQuery(int quantity, String query);
 
     Page<JokeModel> findAllByPhraseIsContaining(String phrase, Pageable pageable);
+
+    void deleteByPhrasemanagementID(Long id);
 }
