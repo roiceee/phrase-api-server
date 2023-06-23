@@ -2,7 +2,8 @@ package com.roiceee.phraseapi.phrasemanagement.model;
 
 import com.roiceee.phraseapi.resourceapi.model.Phrase;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 
 @EqualsAndHashCode(callSuper = true)

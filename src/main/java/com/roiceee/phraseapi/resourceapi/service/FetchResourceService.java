@@ -1,4 +1,5 @@
 package com.roiceee.phraseapi.resourceapi.service;
+
 import com.roiceee.phraseapi.resourceapi.exception.InvalidParamValueException;
 import com.roiceee.phraseapi.resourceapi.model.Phrase;
 import com.roiceee.phraseapi.resourceapi.repository.JokeRepository;
@@ -13,7 +14,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 
 import java.util.List;
 

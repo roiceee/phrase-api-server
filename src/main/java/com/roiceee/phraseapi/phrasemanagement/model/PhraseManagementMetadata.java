@@ -1,6 +1,7 @@
 package com.roiceee.phraseapi.phrasemanagement.model;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
 
 @Data

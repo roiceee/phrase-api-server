@@ -5,7 +5,10 @@ import com.roiceee.phraseapi.resourceapi.exception.TooManyRequestsException;
 import com.roiceee.phraseapi.util.BucketLimiterFactory;
 import io.github.bucket4j.Bucket;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(value = "check")
