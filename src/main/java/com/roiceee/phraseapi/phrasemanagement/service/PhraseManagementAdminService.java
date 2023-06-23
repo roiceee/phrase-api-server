@@ -51,6 +51,16 @@ public class PhraseManagementAdminService {
         return phrasePostObject;
     }
 
+    public void deletePhrase(Long id) {
+        Optional<PhrasePostObject> res = phraseManagementRepository.findById(id);
+        if (res.isEmpty()) {
+            throw new PhraseNotFoundException();
+        }
+        PhrasePostObject phrasePostObject = res.get();
+        deleteFromResourceById(phrasePostObject);
+        phraseManagementRepository.delete(phrasePostObject);
+    }
+
     public Page<PhrasePostObject> getAllPhrases(int page) {
         return phraseManagementRepository.findAll(pageableOf(page));
     }

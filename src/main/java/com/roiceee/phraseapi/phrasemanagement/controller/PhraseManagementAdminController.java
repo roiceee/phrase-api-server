@@ -59,6 +59,13 @@ public class PhraseManagementAdminController {
         return ResponseEntity.ok().body(returnedObject);
     }
 
+    @DeleteMapping("delete")
+    public ResponseEntity<String> deletePhrase(@RequestParam Long id) {
+
+        phraseManagementAdminService.deletePhrase(id);
+        return ResponseEntity.ok().body("Deleted successfully");
+    }
+
     @PatchMapping("reject")
     public ResponseEntity<PhrasePostObjectDTO> rejectPhrase(@RequestParam Long id) {
 
