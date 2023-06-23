@@ -32,7 +32,11 @@ public class SecurityConfig {
         http.authorizeHttpRequests()
                 .requestMatchers("/api/*").permitAll()
                 .requestMatchers("/apikey/*").authenticated()
-                .requestMatchers("/check").permitAll();
+                .requestMatchers("/check").permitAll()
+                .requestMatchers("/actuator/health").permitAll()
+                .requestMatchers("/phrase-management/user/*").authenticated()
+                .requestMatchers("/phrase-management/admin/*").hasAuthority("SCOPE_approve:phrases");
+
         http.cors();
         http.csrf().disable();
         http.oauth2ResourceServer().jwt();

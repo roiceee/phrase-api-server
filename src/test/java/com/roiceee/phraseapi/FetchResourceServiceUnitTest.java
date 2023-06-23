@@ -1,13 +1,13 @@
 package com.roiceee.phraseapi;
 
 
-import com.roiceee.phraseapi.resourceapi.exceptions.InvalidParamValueException;
-import com.roiceee.phraseapi.resourceapi.models.JokeModel;
-import com.roiceee.phraseapi.resourceapi.models.Phrase;
-import com.roiceee.phraseapi.resourceapi.models.QuoteModel;
-import com.roiceee.phraseapi.resourceapi.repositories.JokeRepository;
-import com.roiceee.phraseapi.resourceapi.repositories.QuoteRepository;
-import com.roiceee.phraseapi.resourceapi.services.FetchResourceService;
+import com.roiceee.phraseapi.resourceapi.exception.InvalidParamValueException;
+import com.roiceee.phraseapi.resourceapi.model.JokeModel;
+import com.roiceee.phraseapi.resourceapi.model.Phrase;
+import com.roiceee.phraseapi.resourceapi.model.QuoteModel;
+import com.roiceee.phraseapi.resourceapi.repository.JokeRepository;
+import com.roiceee.phraseapi.resourceapi.repository.QuoteRepository;
+import com.roiceee.phraseapi.resourceapi.service.FetchResourceService;
 import com.roiceee.phraseapi.resourceapi.util.ReqParamPageValues;
 import com.roiceee.phraseapi.resourceapi.util.ReqParamQtyValues;
 import com.roiceee.phraseapi.resourceapi.util.ReqParamTypeValues;
@@ -22,7 +22,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
-
 
 import java.util.ArrayList;
 import java.util.List;
