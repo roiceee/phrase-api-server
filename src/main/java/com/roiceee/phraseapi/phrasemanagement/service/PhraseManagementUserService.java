@@ -5,7 +5,10 @@ import com.roiceee.phraseapi.phrasemanagement.model.PhrasePostObject;
 import com.roiceee.phraseapi.phrasemanagement.model.Status;
 import com.roiceee.phraseapi.phrasemanagement.repository.PhraseManagementRepository;
 import com.roiceee.phraseapi.phrasemanagement.util.PhraseManagementUtil;
+import com.roiceee.phraseapi.resourceapi.repository.JokeRepository;
+import com.roiceee.phraseapi.resourceapi.repository.QuoteRepository;
 import com.roiceee.phraseapi.resourceapi.util.ReqParamTypeValues;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,13 +16,13 @@ import java.util.List;
 
 @Service
 @Transactional
+@AllArgsConstructor
 public class PhraseManagementUserService {
 
     private final PhraseManagementRepository phraseManagementRepository;
+    private final JokeRepository jokeRepository;
+    private final QuoteRepository quoteRepository;
 
-    public PhraseManagementUserService(PhraseManagementRepository phraseManagementRepository) {
-        this.phraseManagementRepository = phraseManagementRepository;
-    }
 
     public PhrasePostObject addPhrase(String userID, PhrasePostObject phrasePostObject) {
 
@@ -38,6 +41,7 @@ public class PhraseManagementUserService {
 
     public void deletePhrase(String userID, long phraseID) {
         checkIfPhraseExistsByIdAndUserId(phraseID, userID);
+        deletePhraseFromResourcesByID(phraseID);
         phraseManagementRepository.deletePhrasePostObjectByIdAndUserId(phraseID, userID);
     }
 
@@ -96,4 +100,10 @@ public class PhraseManagementUserService {
         }
         throw new PhraseAlreadyExistsException();
     }
+
+    private void deletePhraseFromResourcesByID(long phraseID) {
+        jokeRepository.deleteByPhrasemanagementID(phraseID);
+        quoteRepository.deleteByPhrasemanagementID(phraseID);
+    }
+
 }
