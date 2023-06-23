@@ -35,10 +35,7 @@ public class SecurityConfig {
                 .requestMatchers("/check").permitAll()
                 .requestMatchers("/actuator/health").permitAll()
                 .requestMatchers("/phrase-management/user/*").authenticated()
-
-                //set to authenticated for testing purposes
-                    //hasAuthority("SCOPE_approve:phrases")
-                .requestMatchers("/phrase-management/admin/*").authenticated();
+                .requestMatchers("/phrase-management/admin/*").hasAuthority("SCOPE_approve:phrases");
 
         http.cors();
         http.csrf().disable();
