@@ -3,7 +3,7 @@ package com.roiceee.phraseapi.phrasemanagement.model;
 public enum Status {
     PENDING("PENDING"),
     REJECTED("REJECTED"),
-    ACCEPTED("ACCEPTED");
+    APPROVED("APPROVED");
 
     private final String value;
 

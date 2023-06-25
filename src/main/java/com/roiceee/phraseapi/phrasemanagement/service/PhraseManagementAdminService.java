@@ -33,7 +33,7 @@ public class PhraseManagementAdminService {
             throw new PhraseNotFoundException();
         }
         PhrasePostObject phrasePostObject = res.get();
-        phrasePostObject.setStatus(Status.ACCEPTED);
+        phrasePostObject.setStatus(Status.APPROVED);
         addToResource(phrasePostObject);
         phraseManagementRepository.save(phrasePostObject);
         return phrasePostObject;
@@ -70,7 +70,7 @@ public class PhraseManagementAdminService {
     }
 
     public Page<PhrasePostObject> getAllApprovedPhrases(int page) {
-        return phraseManagementRepository.findAllByStatus(pageableOf(page), Status.ACCEPTED);
+        return phraseManagementRepository.findAllByStatus(pageableOf(page), Status.APPROVED);
     }
 
     public Page<PhrasePostObject> getAllRejectedPhrases(int page) {
