@@ -39,10 +39,10 @@ public class PhraseManagementUserService {
         return phrasePostObject;
     }
 
-    public void deletePhrase(String userID, long phraseID) {
-        checkIfPhraseExistsByIdAndUserId(phraseID, userID);
-        deletePhraseFromResourcesByID(phraseID);
-        phraseManagementRepository.deletePhrasePostObjectByIdAndUserId(phraseID, userID);
+    public void deletePhrase(String userID, long id) {
+        checkIfPhraseExistsByIdAndUserId(id, userID);
+        deletePhraseFromResourcesByID(id);
+        phraseManagementRepository.deletePhrasePostObjectByIdAndUserId(id, userID);
     }
 
     public PhrasePostObject editPhrase(String userID, PhrasePostObject phrasePostObject) {
@@ -51,9 +51,11 @@ public class PhraseManagementUserService {
         checkIfTypeExists(phrasePostObject.getType());
         checkIfPhraseExistsByIdAndUserId(phrasePostObject.getId(), userID);
 
-        phraseManagementRepository.updatePhrasePostObject(phrasePostObject.getAuthor(),
-                phrasePostObject.getPhrase(), userID, phrasePostObject.getId());
+        phrasePostObject.setStatus(Status.PENDING);
+        phrasePostObject.setUserId(userID);
 
+        deletePhraseFromResourcesByID(phrasePostObject.getId());
+        phraseManagementRepository.save(phrasePostObject);
         return phrasePostObject;
     }
 
