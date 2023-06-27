@@ -50,7 +50,7 @@ public class PhraseManagementUserService {
         checkIfPhraseIsEmpty(phrasePostObject.getPhrase());
         checkIfTypeExists(phrasePostObject.getType());
         checkIfPhraseExistsByIdAndUserId(phrasePostObject.getId(), userID);
-        checkIfPhraseExists(phrasePostObject.getPhrase());
+        checkIfUpdatedPhraseIsSameAsOldPhrase(phrasePostObject.getPhrase(), phrasePostObject.getId());
 
         phrasePostObject.setStatus(Status.PENDING);
         phrasePostObject.setUserId(userID);
@@ -102,6 +102,13 @@ public class PhraseManagementUserService {
             return;
         }
         throw new PhraseAlreadyExistsException();
+    }
+
+    private void checkIfUpdatedPhraseIsSameAsOldPhrase(String phrase, long phraseID) {
+        if (phraseManagementRepository.existsPhrasePostObjectByPhraseAndId(phrase, phraseID)) {
+            return;
+        }
+        checkIfPhraseExists(phrase);
     }
 
     private void deletePhraseFromResourcesByID(long phraseID) {
