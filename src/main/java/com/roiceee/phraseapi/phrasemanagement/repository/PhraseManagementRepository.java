@@ -19,6 +19,8 @@ public interface PhraseManagementRepository extends JpaRepository<PhrasePostObje
     void deletePhrasePostObjectByIdAndUserId(Long id, String userId);
 
     long countPhrasePostObjectByUserId(String userId);
+
+    boolean existsPhrasePostObjectByPhraseAndId(String phrase, Long id);
     @Modifying
     @Query(value = "UPDATE phrase_management " +
             "SET author = :author, phrase = :phrase " +
