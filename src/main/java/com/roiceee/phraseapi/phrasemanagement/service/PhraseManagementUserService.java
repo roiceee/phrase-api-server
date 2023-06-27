@@ -26,8 +26,8 @@ public class PhraseManagementUserService {
 
     public PhrasePostObject addPhrase(String userID, PhrasePostObject phrasePostObject) {
 
-        checkIfPhraseIsNotEmpty(phrasePostObject.getPhrase());
-        checkIfPhraseDoesntExist(phrasePostObject.getPhrase());
+        checkIfPhraseIsEmpty(phrasePostObject.getPhrase());
+        checkIfPhraseExists(phrasePostObject.getPhrase());
         checkIfTypeExists(phrasePostObject.getType());
         checkIfMaxPhrasesExceeds(userID);
 
@@ -47,9 +47,10 @@ public class PhraseManagementUserService {
 
     public PhrasePostObject editPhrase(String userID, PhrasePostObject phrasePostObject) {
 
-        checkIfPhraseIsNotEmpty(phrasePostObject.getPhrase());
+        checkIfPhraseIsEmpty(phrasePostObject.getPhrase());
         checkIfTypeExists(phrasePostObject.getType());
         checkIfPhraseExistsByIdAndUserId(phrasePostObject.getId(), userID);
+        checkIfPhraseExists(phrasePostObject.getPhrase());
 
         phrasePostObject.setStatus(Status.PENDING);
         phrasePostObject.setUserId(userID);
@@ -82,7 +83,7 @@ public class PhraseManagementUserService {
         throw new InvalidPhraseTypeException();
     }
 
-    private void checkIfPhraseIsNotEmpty(String phrase) {
+    private void checkIfPhraseIsEmpty(String phrase) {
         if (!phrase.isEmpty() || !phrase.isBlank()) {
             return;
         }
@@ -96,7 +97,7 @@ public class PhraseManagementUserService {
         throw new PhraseNotFoundException();
     }
 
-    private void checkIfPhraseDoesntExist(String phrase) {
+    private void checkIfPhraseExists(String phrase) {
         if (!phraseManagementRepository.existsPhrasePostObjectByPhrase(phrase)) {
             return;
         }
