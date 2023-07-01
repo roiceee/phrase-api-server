@@ -30,4 +30,8 @@ public class JokeModel extends Phrase {
     public long getID() {
         return ID;
     }
+    @JsonIgnore
+    public long getPhrasemanagementID() {
+        return phrasemanagementID;
+    }
 }

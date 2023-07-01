@@ -30,4 +30,8 @@ public class QuoteModel extends Phrase {
     public long getID() {
         return ID;
     }
+    @JsonIgnore
+    public long getPhraseManagementID() {
+        return phrasemanagementID;
+    }
 }
