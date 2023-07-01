@@ -19,6 +19,12 @@ public class PhraseManagementAdminController {
     private final PhraseManagementAdminService phraseManagementAdminService;
     private final ModelMapper modelMapper;
 
+    @GetMapping("check")
+    public ResponseEntity<String> check() {
+        return ResponseEntity.ok().body("Is an admin.");
+    }
+
+
     @GetMapping("get-all")
     public ResponseEntity<Page<PhrasePostObjectDTO>> getAllPhrases(
             @RequestParam(defaultValue = "0") Integer pageNo
