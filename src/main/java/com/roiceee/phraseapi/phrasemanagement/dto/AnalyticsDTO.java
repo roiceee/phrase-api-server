@@ -4,9 +4,10 @@ import lombok.Data;
 
 @Data
 public class AnalyticsDTO {
-    private Long total;
+    private Long totalPhrases;
     private Long quotes;
     private Long jokes;
+    private Long userDefinedPhrases;
     private Long requests;
     private Long apiKeys;
 }

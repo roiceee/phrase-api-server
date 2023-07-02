@@ -86,9 +86,10 @@ public class PhraseManagementAdminService {
         AnalyticsDTO analyticsDTO = new AnalyticsDTO();
         long quotes = quoteRepository.count();
         long jokes = jokeRepository.count();
-        analyticsDTO.setTotal(quotes + jokes);
+        analyticsDTO.setTotalPhrases(quotes + jokes);
         analyticsDTO.setQuotes(quotes);
         analyticsDTO.setJokes(jokes);
+        analyticsDTO.setUserDefinedPhrases(phraseManagementRepository.count());
         analyticsDTO.setRequests(requestNumberRepository.getCountSum());
         analyticsDTO.setApiKeys(apiKeyRepository.count());
 
