@@ -1,6 +1,7 @@
 package com.roiceee.phraseapi.phrasemanagement.controller;
 
 import com.roiceee.phraseapi.phrasemanagement.dto.PhrasePostObjectDTO;
+import com.roiceee.phraseapi.phrasemanagement.model.AnalyticsDTO;
 import com.roiceee.phraseapi.phrasemanagement.model.PhrasePostObject;
 import com.roiceee.phraseapi.phrasemanagement.service.PhraseManagementAdminService;
 import com.roiceee.phraseapi.util.Origins;
@@ -79,4 +80,10 @@ public class PhraseManagementAdminController {
         PhrasePostObjectDTO returnedObject = modelMapper.map(res, PhrasePostObjectDTO.class);
         return ResponseEntity.ok().body(returnedObject);
     }
+
+    @GetMapping("get-analytics")
+    public ResponseEntity<AnalyticsDTO> getAnalytics() {
+        return ResponseEntity.ok().body(phraseManagementAdminService.getAnalytics());
+    }
+
 }
