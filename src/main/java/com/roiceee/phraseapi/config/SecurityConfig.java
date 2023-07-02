@@ -1,5 +1,6 @@
 package com.roiceee.phraseapi.config;
 
+import org.apache.coyote.Request;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,6 +9,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.oauth2.core.DelegatingOAuth2TokenValidator;
 import org.springframework.security.oauth2.core.OAuth2TokenValidator;
 import org.springframework.security.oauth2.jwt.*;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
+import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
 
 /**
@@ -15,7 +18,8 @@ import org.springframework.security.web.SecurityFilterChain;
  */
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig {
+public class SecurityConfig  {
+
 
     @Value("${auth0.audience}")
     private String audience;
@@ -23,23 +27,29 @@ public class SecurityConfig {
     @Value("${spring.security.oauth2.resourceserver.jwt.issuer-uri}")
     private String issuer;
 
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         /*
         This is where we configure the security required for our endpoints and set up our app to serve as
         an OAuth2 Resource Server, using JWT validation.
         */
+
+
+
         http.authorizeHttpRequests()
                 .requestMatchers("/api/*").permitAll()
                 .requestMatchers("/apikey/*").authenticated()
                 .requestMatchers("/check").permitAll()
                 .requestMatchers("/actuator/health").permitAll()
-                .requestMatchers("/phrase-management/user/*").authenticated()
-                .requestMatchers("/phrase-management/admin/*").hasAuthority("SCOPE_approve:phrases");
+                .requestMatchers("/phrase-management/user/**").authenticated()
+                .requestMatchers("/phrase-management/admin/**").hasAuthority("approve:phrases");
+
+
 
         http.cors();
         http.csrf().disable();
-        http.oauth2ResourceServer().jwt();
+        http.oauth2ResourceServer().jwt().jwtAuthenticationConverter(authenticationConverter());
         return http.build();
     }
 
@@ -62,5 +72,15 @@ public class SecurityConfig {
         jwtDecoder.setJwtValidator(withAudience);
 
         return jwtDecoder;
+    }
+
+     protected JwtAuthenticationConverter authenticationConverter() {
+        JwtGrantedAuthoritiesConverter authoritiesConverter = new JwtGrantedAuthoritiesConverter();
+        authoritiesConverter.setAuthorityPrefix("");
+        authoritiesConverter.setAuthoritiesClaimName("permissions");
+
+        JwtAuthenticationConverter converter = new JwtAuthenticationConverter();
+        converter.setJwtGrantedAuthoritiesConverter(authoritiesConverter);
+        return converter;
     }
 }
