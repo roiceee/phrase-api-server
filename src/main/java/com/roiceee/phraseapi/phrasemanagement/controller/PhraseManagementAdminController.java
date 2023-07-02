@@ -1,7 +1,7 @@
 package com.roiceee.phraseapi.phrasemanagement.controller;
 
 import com.roiceee.phraseapi.phrasemanagement.dto.PhrasePostObjectDTO;
-import com.roiceee.phraseapi.phrasemanagement.model.AnalyticsDTO;
+import com.roiceee.phraseapi.phrasemanagement.dto.AnalyticsDTO;
 import com.roiceee.phraseapi.phrasemanagement.model.PhrasePostObject;
 import com.roiceee.phraseapi.phrasemanagement.service.PhraseManagementAdminService;
 import com.roiceee.phraseapi.util.Origins;

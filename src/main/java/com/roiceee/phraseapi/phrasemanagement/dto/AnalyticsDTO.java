@@ -1,4 +1,4 @@
-package com.roiceee.phraseapi.phrasemanagement.model;
+package com.roiceee.phraseapi.phrasemanagement.dto;
 
 import lombok.Data;
 
