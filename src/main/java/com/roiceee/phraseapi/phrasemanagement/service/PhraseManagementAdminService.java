@@ -1,8 +1,8 @@
 package com.roiceee.phraseapi.phrasemanagement.service;
 
 import com.roiceee.phraseapi.apikeymanagement.repository.ApiKeyRepository;
+import com.roiceee.phraseapi.phrasemanagement.dto.AnalyticsDTO;
 import com.roiceee.phraseapi.phrasemanagement.exception.PhraseNotFoundException;
-import com.roiceee.phraseapi.phrasemanagement.model.AnalyticsDTO;
 import com.roiceee.phraseapi.phrasemanagement.model.PhrasePostObject;
 import com.roiceee.phraseapi.phrasemanagement.model.Status;
 import com.roiceee.phraseapi.phrasemanagement.repository.PhraseManagementRepository;
@@ -120,12 +120,10 @@ public class PhraseManagementAdminService {
 
     public void deleteFromResourceById(PhrasePostObject phrasePostObject) {
         switch (phrasePostObject.getType()) {
-            case "joke" -> {
-                jokeRepository.deleteByPhrasemanagementID(phrasePostObject.getId());
-            }
-            case "quote" -> {
-                quoteRepository.deleteByPhrasemanagementID(phrasePostObject.getId());
-            }
+            case "joke" -> jokeRepository.deleteByPhrasemanagementID(phrasePostObject.getId());
+
+            case "quote" -> quoteRepository.deleteByPhrasemanagementID(phrasePostObject.getId());
+
         }
     }
 }
