@@ -90,6 +90,9 @@ public class PhraseManagementAdminService {
         analyticsDTO.setQuotes(quotes);
         analyticsDTO.setJokes(jokes);
         analyticsDTO.setUserDefinedPhrases(phraseManagementRepository.count());
+        analyticsDTO.setApprovedPhrases(phraseManagementRepository.countByStatus(Status.APPROVED));
+        analyticsDTO.setRejectedPhrases(phraseManagementRepository.countByStatus(Status.REJECTED));
+        analyticsDTO.setPendingPhrases(phraseManagementRepository.countByStatus(Status.PENDING));
         analyticsDTO.setRequests(requestNumberRepository.getCountSum());
         analyticsDTO.setApiKeys(apiKeyRepository.count());
 
