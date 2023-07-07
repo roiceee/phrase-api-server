@@ -31,8 +31,6 @@ public class PhraseManagementUserService {
         checkIfTypeExists(phrasePostObject.getType());
         checkIfMaxPhrasesExceeds(userID);
 
-        //make id null to avoid id conflict, let the database generate the id
-        phrasePostObject.setId(null);
         phrasePostObject.setStatus(Status.PENDING);
         phrasePostObject.setUserId(userID);
 
