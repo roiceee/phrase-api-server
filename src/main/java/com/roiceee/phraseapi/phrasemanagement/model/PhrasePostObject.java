@@ -14,7 +14,7 @@ public class PhrasePostObject extends Phrase {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(name = "user_id")
     private String userId;
