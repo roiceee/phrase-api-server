@@ -25,34 +25,34 @@ public class PhraseManagementAdminController {
         return ResponseEntity.ok().body("Is an admin.");
     }
 
-
-    @GetMapping("get-all")
+    @CrossOrigin(origins = {Origins.LOCAL, Origins.PROD})
+    @GetMapping("get-all/{pageNo}")
     public ResponseEntity<Page<PhrasePostObjectDTO>> getAllPhrases(
-            @RequestParam(defaultValue = "0") Integer pageNo
+            @PathVariable("pageNo") Integer pageNo
     ) {
         return ResponseEntity.ok().body(phraseManagementAdminService.getAllPhrases(pageNo)
                 .map(phrasePostObject -> modelMapper.map(phrasePostObject, PhrasePostObjectDTO.class)));
     }
 
-    @GetMapping("get-pending")
+    @GetMapping("get-pending/{pageNo}")
     public ResponseEntity<Page<PhrasePostObjectDTO>> getAllPendingPhrases(
-            @RequestParam(defaultValue = "0") Integer pageNo
+            @PathVariable("pageNo") Integer pageNo
     ) {
         return ResponseEntity.ok().body(phraseManagementAdminService.getAllPendingPhrases(pageNo)
                 .map(phrasePostObject -> modelMapper.map(phrasePostObject, PhrasePostObjectDTO.class)));
     }
 
-    @GetMapping("get-approved")
+    @GetMapping("get-approved/{pageNo}")
     public ResponseEntity<Page<PhrasePostObjectDTO>> getAllApprovedPhrases(
-            @RequestParam(defaultValue = "0") Integer pageNo
+            @PathVariable("pageNo") Integer pageNo
     ) {
         return ResponseEntity.ok().body(phraseManagementAdminService.getAllApprovedPhrases(pageNo)
                 .map(phrasePostObject -> modelMapper.map(phrasePostObject, PhrasePostObjectDTO.class)));
     }
 
-    @GetMapping("get-rejected")
+    @GetMapping("get-rejected/{pageNo}")
     public ResponseEntity<Page<PhrasePostObjectDTO>> getAllRejectedPhrases(
-            @RequestParam(defaultValue = "0") Integer pageNo
+            @PathVariable("pageNo") Integer pageNo
     ) {
         return ResponseEntity.ok().body(phraseManagementAdminService.getAllRejectedPhrases(pageNo)
                 .map(phrasePostObject -> modelMapper.map(phrasePostObject, PhrasePostObjectDTO.class)));
