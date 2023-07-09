@@ -5,9 +5,9 @@ import com.roiceee.phraseapi.phrasemanagement.model.Status;
 import lombok.Data;
 
 @Data
-public class PhrasePostObjectDTO {
+public class PhrasePostObjectUserDTO {
 
-    private long id;
+    private Long id;
 
     private String type;
 

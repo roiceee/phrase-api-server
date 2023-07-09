@@ -1,7 +1,7 @@
 package com.roiceee.phraseapi.phrasemanagement.controller;
 
-import com.roiceee.phraseapi.phrasemanagement.dto.PhrasePostObjectDTO;
 import com.roiceee.phraseapi.phrasemanagement.dto.AnalyticsDTO;
+import com.roiceee.phraseapi.phrasemanagement.dto.PhrasePostObjectAdminDTO;
 import com.roiceee.phraseapi.phrasemanagement.model.PhrasePostObject;
 import com.roiceee.phraseapi.phrasemanagement.service.PhraseManagementAdminService;
 import com.roiceee.phraseapi.util.Origins;
@@ -25,44 +25,45 @@ public class PhraseManagementAdminController {
         return ResponseEntity.ok().body("Is an admin.");
     }
 
-    @CrossOrigin(origins = {Origins.LOCAL, Origins.PROD})
     @GetMapping("get-all/{pageNo}")
-    public ResponseEntity<Page<PhrasePostObjectDTO>> getAllPhrases(
+    public ResponseEntity<Page<PhrasePostObjectAdminDTO>> getAllPhrases(
             @PathVariable("pageNo") Integer pageNo
+
     ) {
+
         return ResponseEntity.ok().body(phraseManagementAdminService.getAllPhrases(pageNo)
-                .map(phrasePostObject -> modelMapper.map(phrasePostObject, PhrasePostObjectDTO.class)));
+                .map(this::convertToPhrasePostObjectAdminDTO));
     }
 
     @GetMapping("get-pending/{pageNo}")
-    public ResponseEntity<Page<PhrasePostObjectDTO>> getAllPendingPhrases(
+    public ResponseEntity<Page<PhrasePostObjectAdminDTO>> getAllPendingPhrases(
             @PathVariable("pageNo") Integer pageNo
     ) {
         return ResponseEntity.ok().body(phraseManagementAdminService.getAllPendingPhrases(pageNo)
-                .map(phrasePostObject -> modelMapper.map(phrasePostObject, PhrasePostObjectDTO.class)));
+                .map(this::convertToPhrasePostObjectAdminDTO));
     }
 
     @GetMapping("get-approved/{pageNo}")
-    public ResponseEntity<Page<PhrasePostObjectDTO>> getAllApprovedPhrases(
+    public ResponseEntity<Page<PhrasePostObjectAdminDTO>> getAllApprovedPhrases(
             @PathVariable("pageNo") Integer pageNo
     ) {
         return ResponseEntity.ok().body(phraseManagementAdminService.getAllApprovedPhrases(pageNo)
-                .map(phrasePostObject -> modelMapper.map(phrasePostObject, PhrasePostObjectDTO.class)));
+                .map(this::convertToPhrasePostObjectAdminDTO));
     }
 
     @GetMapping("get-rejected/{pageNo}")
-    public ResponseEntity<Page<PhrasePostObjectDTO>> getAllRejectedPhrases(
+    public ResponseEntity<Page<PhrasePostObjectAdminDTO>> getAllRejectedPhrases(
             @PathVariable("pageNo") Integer pageNo
     ) {
         return ResponseEntity.ok().body(phraseManagementAdminService.getAllRejectedPhrases(pageNo)
-                .map(phrasePostObject -> modelMapper.map(phrasePostObject, PhrasePostObjectDTO.class)));
+                .map(this::convertToPhrasePostObjectAdminDTO));
     }
 
     @PatchMapping("approve")
-    public ResponseEntity<PhrasePostObjectDTO> approvePhrase(@RequestParam Long id) {
+    public ResponseEntity<PhrasePostObjectAdminDTO> approvePhrase(@RequestParam Long id) {
 
         PhrasePostObject res = phraseManagementAdminService.approvePhrase(id);
-        PhrasePostObjectDTO returnedObject = modelMapper.map(res, PhrasePostObjectDTO.class);
+        PhrasePostObjectAdminDTO returnedObject = convertToPhrasePostObjectAdminDTO(res);
         return ResponseEntity.ok().body(returnedObject);
     }
 
@@ -74,16 +75,20 @@ public class PhraseManagementAdminController {
     }
 
     @PatchMapping("reject")
-    public ResponseEntity<PhrasePostObjectDTO> rejectPhrase(@RequestParam Long id) {
+    public ResponseEntity<PhrasePostObjectAdminDTO> rejectPhrase(@RequestParam Long id) {
 
         PhrasePostObject res = phraseManagementAdminService.rejectPhrase(id);
-        PhrasePostObjectDTO returnedObject = modelMapper.map(res, PhrasePostObjectDTO.class);
+        PhrasePostObjectAdminDTO returnedObject = convertToPhrasePostObjectAdminDTO(res);
         return ResponseEntity.ok().body(returnedObject);
     }
 
     @GetMapping("get-analytics")
     public ResponseEntity<AnalyticsDTO> getAnalytics() {
         return ResponseEntity.ok().body(phraseManagementAdminService.getAnalytics());
+    }
+
+    private PhrasePostObjectAdminDTO convertToPhrasePostObjectAdminDTO(PhrasePostObject phrasePostObject) {
+        return modelMapper.map(phrasePostObject, PhrasePostObjectAdminDTO.class);
     }
 
 }

@@ -6,6 +6,7 @@ import com.roiceee.phraseapi.phrasemanagement.exception.PhraseNotFoundException;
 import com.roiceee.phraseapi.phrasemanagement.model.PhrasePostObject;
 import com.roiceee.phraseapi.phrasemanagement.model.Status;
 import com.roiceee.phraseapi.phrasemanagement.repository.PhraseManagementRepository;
+import com.roiceee.phraseapi.phrasemanagement.util.PhraseManagementUtil;
 import com.roiceee.phraseapi.resourceapi.model.JokeModel;
 import com.roiceee.phraseapi.resourceapi.model.QuoteModel;
 import com.roiceee.phraseapi.resourceapi.repository.JokeRepository;
@@ -39,6 +40,7 @@ public class PhraseManagementAdminService {
         }
         PhrasePostObject phrasePostObject = res.get();
         phrasePostObject.setStatus(Status.APPROVED);
+        phrasePostObject.setDateModifiedByAdmin(PhraseManagementUtil.getCurrentTimestamp());
         addToResource(phrasePostObject);
         phraseManagementRepository.save(phrasePostObject);
         return phrasePostObject;
@@ -51,6 +53,7 @@ public class PhraseManagementAdminService {
         }
         PhrasePostObject phrasePostObject = res.get();
         phrasePostObject.setStatus(Status.REJECTED);
+        phrasePostObject.setDateModifiedByAdmin(PhraseManagementUtil.getCurrentTimestamp());
         deleteFromResourceById(phrasePostObject);
         phraseManagementRepository.save(phrasePostObject);
         return phrasePostObject;

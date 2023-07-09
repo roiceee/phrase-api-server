@@ -1,7 +1,7 @@
 package com.roiceee.phraseapi.phrasemanagement.controller;
 
 import com.roiceee.phraseapi.phrasemanagement.dto.DeletePhraseDTO;
-import com.roiceee.phraseapi.phrasemanagement.dto.PhrasePostObjectDTO;
+import com.roiceee.phraseapi.phrasemanagement.dto.PhrasePostObjectUserDTO;
 import com.roiceee.phraseapi.phrasemanagement.model.PhraseManagementMetadata;
 import com.roiceee.phraseapi.phrasemanagement.model.PhrasePostObject;
 import com.roiceee.phraseapi.phrasemanagement.service.PhraseManagementUserService;
@@ -25,15 +25,15 @@ public class PhraseManagementUserController {
     private final ModelMapper modelMapper;
 
     @PostMapping("add")
-    public ResponseEntity<PhrasePostObjectDTO> addPhrase(Authentication authentication,
-                                                         @RequestBody PhrasePostObjectDTO phrasePostObjectDTO) {
+    public ResponseEntity<PhrasePostObjectUserDTO> addPhrase(Authentication authentication,
+                                                             @RequestBody PhrasePostObjectUserDTO phrasePostObjectUserDTO) {
 
-        PhrasePostObject phrasePostObject = modelMapper.map(phrasePostObjectDTO, PhrasePostObject.class);
+        PhrasePostObject phrasePostObject = modelMapper.map(phrasePostObjectUserDTO, PhrasePostObject.class);
 
         PhrasePostObject res = phraseManagementService.addPhrase(authentication.getName(),
                 phrasePostObject);
 
-        PhrasePostObjectDTO returnedObject = modelMapper.map(res, PhrasePostObjectDTO.class);
+        PhrasePostObjectUserDTO returnedObject = modelMapper.map(res, PhrasePostObjectUserDTO.class);
 
         return ResponseEntity.ok().body(returnedObject);
     }
@@ -48,26 +48,26 @@ public class PhraseManagementUserController {
     }
 
     @PatchMapping("update")
-    public ResponseEntity<PhrasePostObjectDTO> editPhrase(Authentication authentication,
-                                                         @RequestBody PhrasePostObjectDTO phrasePostObjectDTO) {
+    public ResponseEntity<PhrasePostObjectUserDTO> editPhrase(Authentication authentication,
+                                                              @RequestBody PhrasePostObjectUserDTO phrasePostObjectUserDTO) {
 
-        PhrasePostObject phrasePostObject = modelMapper.map(phrasePostObjectDTO, PhrasePostObject.class);
+        PhrasePostObject phrasePostObject = modelMapper.map(phrasePostObjectUserDTO, PhrasePostObject.class);
 
         PhrasePostObject res = phraseManagementService.editPhrase(authentication.getName(),
                 phrasePostObject);
 
-        PhrasePostObjectDTO returnedObject = modelMapper.map(res, PhrasePostObjectDTO.class);
+        PhrasePostObjectUserDTO returnedObject = modelMapper.map(res, PhrasePostObjectUserDTO.class);
 
         return ResponseEntity.ok().body(returnedObject);
     }
 
     @GetMapping("get-all")
-    public ResponseEntity<List<PhrasePostObjectDTO>> getAllPhrases(Authentication authentication) {
+    public ResponseEntity<List<PhrasePostObjectUserDTO>> getAllPhrases(Authentication authentication) {
 
         List<PhrasePostObject> res = phraseManagementService.getAllPhrases(authentication.getName());
 
-        List<PhrasePostObjectDTO> returnList = res.stream().map(obj -> modelMapper.map(obj,
-                PhrasePostObjectDTO.class)).toList();
+        List<PhrasePostObjectUserDTO> returnList = res.stream().map(obj -> modelMapper.map(obj,
+                PhrasePostObjectUserDTO.class)).toList();
 
         return ResponseEntity.ok().body(returnList);
     }
