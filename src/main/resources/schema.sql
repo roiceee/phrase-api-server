@@ -213,3 +213,13 @@ ALTER TABLE ONLY public.request_count
 -- PostgreSQL database dump complete
 --
 
+
+--update on 2023-07-09
+ALTER TABLE IF EXISTS public.phrase_management
+    ADD COLUMN date_submitted timestamp without time zone DEFAULT now();
+
+ALTER TABLE IF EXISTS public.phrase_management
+    ADD COLUMN date_modified_by_admin timestamp without time zone;
+
+ALTER TABLE IF EXISTS public.phrase_management
+    ALTER COLUMN date_submitted SET NOT NULL;

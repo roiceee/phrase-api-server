@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.sql.Timestamp;
+
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
@@ -31,5 +33,11 @@ public class PhrasePostObject extends Phrase {
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private Status status;
+
+    @Column(name = "date_submitted")
+    private Timestamp dateSubmitted;
+
+    @Column(name = "date_modified_by_admin")
+    private Timestamp dateModifiedByAdmin;
 
 }

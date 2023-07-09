@@ -1,6 +1,6 @@
 package com.roiceee.phraseapi.config;
 
-import org.apache.coyote.Request;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,7 +18,7 @@ import org.springframework.security.web.SecurityFilterChain;
  */
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig  {
+public class SecurityConfig {
 
 
     @Value("${auth0.audience}")
@@ -36,7 +36,6 @@ public class SecurityConfig  {
         */
 
 
-
         http.authorizeHttpRequests()
                 .requestMatchers("/api/*").permitAll()
                 .requestMatchers("/apikey/*").authenticated()
@@ -44,7 +43,6 @@ public class SecurityConfig  {
                 .requestMatchers("/actuator/health").permitAll()
                 .requestMatchers("/phrase-management/user/**").authenticated()
                 .requestMatchers("/phrase-management/admin/**").hasAuthority("approve:phrases");
-
 
 
         http.cors();
@@ -61,8 +59,7 @@ public class SecurityConfig  {
         indeed intended for our app. Adding our own validator is easy to do:
         */
 
-        NimbusJwtDecoder jwtDecoder = (NimbusJwtDecoder)
-                JwtDecoders.fromOidcIssuerLocation(issuer);
+        NimbusJwtDecoder jwtDecoder = JwtDecoders.fromOidcIssuerLocation(issuer);
 
         OAuth2TokenValidator<Jwt> audienceValidator = new AudienceValidator(audience);
         OAuth2TokenValidator<Jwt> withIssuer = JwtValidators.createDefaultWithIssuer(issuer);
@@ -74,7 +71,7 @@ public class SecurityConfig  {
         return jwtDecoder;
     }
 
-     protected JwtAuthenticationConverter authenticationConverter() {
+    protected JwtAuthenticationConverter authenticationConverter() {
         JwtGrantedAuthoritiesConverter authoritiesConverter = new JwtGrantedAuthoritiesConverter();
         authoritiesConverter.setAuthorityPrefix("");
         authoritiesConverter.setAuthoritiesClaimName("permissions");

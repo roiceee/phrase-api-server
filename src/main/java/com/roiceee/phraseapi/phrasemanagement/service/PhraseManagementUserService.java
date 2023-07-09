@@ -35,9 +35,11 @@ public class PhraseManagementUserService {
         phrasePostObject.setId(null);
         phrasePostObject.setStatus(Status.PENDING);
         phrasePostObject.setUserId(userID);
+        phrasePostObject.setDateSubmitted(PhraseManagementUtil.getCurrentTimestamp());
 
 
         phraseManagementRepository.save(phrasePostObject);
+
 
         return phrasePostObject;
     }
@@ -57,6 +59,7 @@ public class PhraseManagementUserService {
 
         phrasePostObject.setStatus(Status.PENDING);
         phrasePostObject.setUserId(userID);
+        phrasePostObject.setDateSubmitted(PhraseManagementUtil.getCurrentTimestamp());
 
         deletePhraseFromResourcesByID(phrasePostObject.getId());
         phraseManagementRepository.save(phrasePostObject);
