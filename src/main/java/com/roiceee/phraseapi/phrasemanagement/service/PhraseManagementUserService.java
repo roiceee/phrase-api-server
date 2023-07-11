@@ -126,17 +126,14 @@ public class PhraseManagementUserService {
     }
 
     private void deletePhraseFromResourceRepository(long phraseID) {
-        jokeRepository.deleteByPhrasemanagementID(phraseID);
-        quoteRepository.deleteByPhrasemanagementID(phraseID);
+        jokeRepository.deleteByPhraseManagementID(phraseID);
+        quoteRepository.deleteByPhraseManagementID(phraseID);
     }
 
     private PhrasePostObjectUserDTO convertPhrasePostObjectToDTO(PhrasePostObject phrasePostObject) {
         return modelMapper.map(phrasePostObject, PhrasePostObjectUserDTO.class);
     }
 
-    private PhrasePostObject convertDTOToPhrasePostObject(PhrasePostObjectUserDTO phrasePostObjectUserDTO) {
-        return modelMapper.map(phrasePostObjectUserDTO, PhrasePostObject.class);
-    }
 
 
 }

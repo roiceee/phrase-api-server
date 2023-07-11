@@ -106,14 +106,14 @@ public class PhraseManagementAdminService {
                 JokeModel joke = new JokeModel();
                 joke.setAuthor(phrasePostObject.getAuthor());
                 joke.setPhrase(phrasePostObject.getPhrase());
-                joke.setPhrasemanagementID(phrasePostObject.getId());
+                joke.setPhraseManagementID(phrasePostObject.getId());
                 jokeRepository.save(joke);
             }
             case "quote" -> {
                 QuoteModel quoteModel = new QuoteModel();
                 quoteModel.setAuthor(phrasePostObject.getAuthor());
                 quoteModel.setPhrase(phrasePostObject.getPhrase());
-                quoteModel.setPhrasemanagementID(phrasePostObject.getId());
+                quoteModel.setPhraseManagementID(phrasePostObject.getId());
                 quoteRepository.save(quoteModel);
             }
         }
@@ -121,9 +121,9 @@ public class PhraseManagementAdminService {
 
     public void deleteFromResourceRepository(PhrasePostObject phrasePostObject) {
         switch (phrasePostObject.getType()) {
-            case "joke" -> jokeRepository.deleteByPhrasemanagementID(phrasePostObject.getId());
+            case "joke" -> jokeRepository.deleteByPhraseManagementID(phrasePostObject.getId());
 
-            case "quote" -> quoteRepository.deleteByPhrasemanagementID(phrasePostObject.getId());
+            case "quote" -> quoteRepository.deleteByPhraseManagementID(phrasePostObject.getId());
 
         }
     }

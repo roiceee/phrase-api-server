@@ -29,8 +29,7 @@ public interface QuoteRepository extends JpaRepository<QuoteModel, Long> {
     List<QuoteModel> getRandomQuoteListWithQuery(int quantity, String query);
 
 
-
     Page<QuoteModel> findAllByPhraseIsContaining(String phrase, Pageable pageable);
 
-    void deleteByPhrasemanagementID(Long id);
+    void deleteByPhraseManagementID(Long id);
 }

@@ -1,6 +1,5 @@
 package com.roiceee.phraseapi.resourceapi.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -25,13 +24,6 @@ public class JokeModel extends Phrase {
     private String phrase;
 
     @Column(name = "phrase_management_id")
-    private Long phrasemanagementID;
-    @JsonIgnore
-    public long getID() {
-        return ID;
-    }
-    @JsonIgnore
-    public long getPhrasemanagementID() {
-        return phrasemanagementID;
-    }
+    private Long phraseManagementID;
+
 }
