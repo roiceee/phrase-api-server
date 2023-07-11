@@ -1,7 +1,7 @@
 package com.roiceee.phraseapi.resourceapi.controller;
 
 import com.roiceee.phraseapi.apikeymanagement.service.ApiKeyService;
-import com.roiceee.phraseapi.resourceapi.model.Phrase;
+import com.roiceee.phraseapi.resourceapi.dto.PhraseDTO;
 import com.roiceee.phraseapi.resourceapi.service.FetchResourceService;
 import com.roiceee.phraseapi.resourceapi.service.RequestCountService;
 import com.roiceee.phraseapi.resourceapi.service.ResourceControllerLimiterService;
@@ -26,12 +26,12 @@ public class RequestResourceController {
 
 
     @GetMapping(params = {Params.appID, Params.TYPE})
-    public ResponseEntity<Phrase> getRandomResource(
+    public ResponseEntity<PhraseDTO> getRandomResource(
             @RequestParam(value = Params.appID) String appid,
             @RequestParam(value = Params.TYPE) String type
     ) {
         this.beforeAction(appid);
-        Phrase phrase = fetchResourceService.getRandomPhrase(type);
+        PhraseDTO phrase = fetchResourceService.getRandomPhrase(type);
         this.afterAction(appid);
         return ResponseEntity
                 .ok()
@@ -39,13 +39,13 @@ public class RequestResourceController {
     }
 
     @GetMapping(params = {Params.appID, Params.TYPE, Params.QTY})
-    public ResponseEntity<List<? extends Phrase>> getRandomResourceList(
+    public ResponseEntity<List<PhraseDTO>> getRandomResourceList(
             @RequestParam(value = Params.appID) String appid,
             @RequestParam(value = Params.TYPE) String type,
             @RequestParam(value = Params.QTY) int qty
     ) {
         this.beforeAction(appid);
-        List<? extends Phrase> phraseList = fetchResourceService.getRandomPhraseList(type, qty);
+        List<PhraseDTO> phraseList = fetchResourceService.getRandomPhraseList(type, qty);
         this.afterAction(appid);
         return ResponseEntity
                 .ok()
@@ -53,14 +53,14 @@ public class RequestResourceController {
     }
 
     @GetMapping(params = {Params.appID, Params.TYPE, Params.QTY, Params.QUERY})
-    public ResponseEntity<List<? extends Phrase>> getResourcesWithPagination(
+    public ResponseEntity<List<PhraseDTO>> getResourcesWithPagination(
             @RequestParam(value = Params.appID) String appid,
             @RequestParam(value = Params.TYPE) String type,
             @RequestParam(value = Params.QTY) int qty,
             @RequestParam(value = Params.QUERY) String query
     ) {
         this.beforeAction(appid);
-        List<? extends Phrase> phraseList = fetchResourceService.getRandomPhraseListWithQuery(type, qty, query);
+        List<PhraseDTO> phraseList = fetchResourceService.getRandomPhraseListWithQuery(type, qty, query);
         this.afterAction(appid);
         return ResponseEntity
                 .ok()
@@ -68,7 +68,7 @@ public class RequestResourceController {
     }
 
     @GetMapping(params = {Params.appID, Params.TYPE, Params.PAGE, Params.QTY, Params.QUERY})
-    public ResponseEntity<Page<? extends Phrase>> getResourcesByKeywordWithPagination(
+    public ResponseEntity<Page<PhraseDTO>> getResourcesByKeywordWithPagination(
             @RequestParam(value = Params.appID) String appid,
             @RequestParam(value = Params.TYPE) String type,
             @RequestParam(value = Params.PAGE) int page,
@@ -76,7 +76,7 @@ public class RequestResourceController {
             @RequestParam(value = Params.QUERY) String query
     ) {
         this.beforeAction(appid);
-        Page<? extends Phrase> phrases = fetchResourceService.getPhraseListWithQueryPagination(type, query, page,
+        Page<PhraseDTO> phrases = fetchResourceService.getPhraseListWithQueryPagination(type, query, page,
                 qty);
         this.afterAction(appid);
         return ResponseEntity

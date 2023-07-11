@@ -1,6 +1,8 @@
 package com.roiceee.phraseapi.phrasemanagement.service;
 
+import com.roiceee.phraseapi.phrasemanagement.dto.PhrasePostObjectUserDTO;
 import com.roiceee.phraseapi.phrasemanagement.exception.*;
+import com.roiceee.phraseapi.phrasemanagement.model.PhraseCount;
 import com.roiceee.phraseapi.phrasemanagement.model.PhrasePostObject;
 import com.roiceee.phraseapi.phrasemanagement.model.Status;
 import com.roiceee.phraseapi.phrasemanagement.repository.PhraseManagementRepository;
@@ -9,6 +11,7 @@ import com.roiceee.phraseapi.resourceapi.repository.JokeRepository;
 import com.roiceee.phraseapi.resourceapi.repository.QuoteRepository;
 import com.roiceee.phraseapi.resourceapi.util.ReqParamTypeValues;
 import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,56 +25,61 @@ public class PhraseManagementUserService {
     private final PhraseManagementRepository phraseManagementRepository;
     private final JokeRepository jokeRepository;
     private final QuoteRepository quoteRepository;
+    private final ModelMapper modelMapper;
 
 
-    public PhrasePostObject addPhrase(String userID, PhrasePostObject phrasePostObject) {
+    public PhrasePostObjectUserDTO addPhrase(String userID, PhrasePostObjectUserDTO phrasePostObjectUserDTO) {
 
-        checkIfPhraseIsEmpty(phrasePostObject.getPhrase());
-        checkIfPhraseExists(phrasePostObject.getPhrase());
-        checkIfTypeExists(phrasePostObject.getType());
+        checkIfPhraseIsEmpty(phrasePostObjectUserDTO.getPhrase());
+        checkIfPhraseExists(phrasePostObjectUserDTO.getPhrase());
+        checkIfTypeExists(phrasePostObjectUserDTO.getType());
         checkIfMaxPhrasesExceeds(userID);
 
         //set id to null to avoid id conflict, let the database handle it
-        phrasePostObject.setId(null);
-        phrasePostObject.setStatus(Status.PENDING);
-        phrasePostObject.setUserId(userID);
-        phrasePostObject.setDateSubmitted(PhraseManagementUtil.getCurrentTimestamp());
+        PhrasePostObject phrasePostObject = new PhrasePostObject(userID, phrasePostObjectUserDTO.getType(),
+                phrasePostObjectUserDTO.getAuthor(), phrasePostObjectUserDTO.getPhrase());
 
+        PhrasePostObject res = phraseManagementRepository.save(phrasePostObject);
 
-        phraseManagementRepository.save(phrasePostObject);
-
-
-        return phrasePostObject;
+        return convertPhrasePostObjectToDTO(res);
     }
 
     public void deletePhrase(String userID, long id) {
         checkIfPhraseExistsByIdAndUserId(id, userID);
-        deletePhraseFromResourcesByID(id);
+        deletePhraseFromResourceRepository(id);
         phraseManagementRepository.deletePhrasePostObjectByIdAndUserId(id, userID);
     }
 
-    public PhrasePostObject editPhrase(String userID, PhrasePostObject phrasePostObject) {
+    public PhrasePostObjectUserDTO editPhrase(String userID, PhrasePostObjectUserDTO phrasePostObjectUserDTO) {
 
-        checkIfPhraseIsEmpty(phrasePostObject.getPhrase());
-        checkIfTypeExists(phrasePostObject.getType());
-        checkIfPhraseExistsByIdAndUserId(phrasePostObject.getId(), userID);
-        checkIfUpdatedPhraseIsSameAsOldPhrase(phrasePostObject.getPhrase(), phrasePostObject.getId());
+        checkIfPhraseIsEmpty(phrasePostObjectUserDTO.getPhrase());
+        checkIfTypeExists(phrasePostObjectUserDTO.getType());
+        checkIfUpdatedPhraseIsSameAsOldPhrase(phrasePostObjectUserDTO.getPhrase(), phrasePostObjectUserDTO.getId());
 
+        PhrasePostObject phrasePostObject =
+                phraseManagementRepository.findByIdAndUserId(phrasePostObjectUserDTO.getId(), userID).orElseThrow(PhraseNotFoundException::new);
+
+        phrasePostObject.setType(phrasePostObjectUserDTO.getType());
+        phrasePostObject.setAuthor(phrasePostObjectUserDTO.getAuthor());
+        phrasePostObject.setPhrase(phrasePostObjectUserDTO.getPhrase());
         phrasePostObject.setStatus(Status.PENDING);
-        phrasePostObject.setUserId(userID);
         phrasePostObject.setDateSubmitted(PhraseManagementUtil.getCurrentTimestamp());
 
-        deletePhraseFromResourcesByID(phrasePostObject.getId());
-        phraseManagementRepository.save(phrasePostObject);
-        return phrasePostObject;
+        deletePhraseFromResourceRepository(phrasePostObject.getId());
+        PhrasePostObject res = phraseManagementRepository.save(phrasePostObject);
+        return convertPhrasePostObjectToDTO(res);
     }
 
-    public List<PhrasePostObject> getAllPhrases(String userID) {
-       return phraseManagementRepository.findAllByUserId(userID);
+    public List<PhrasePostObjectUserDTO> getAllPhrases(String userID) {
+
+        List<PhrasePostObject> res = phraseManagementRepository.findAllByUserId(userID);
+        return res.stream().map(obj -> modelMapper.map(obj,
+                PhrasePostObjectUserDTO.class)).toList();
     }
 
-    public int getNumberOfPhrases(String userId) {
-        return (int) phraseManagementRepository.countPhrasePostObjectByUserId(userId);
+    public PhraseCount getPhraseCount(String userId) {
+        return new PhraseCount(PhraseManagementUtil.MAX_PHRASES,
+                phraseManagementRepository.countPhrasePostObjectByUserId(userId));
     }
 
     private void checkIfMaxPhrasesExceeds(String userId) {
@@ -89,18 +97,18 @@ public class PhraseManagementUserService {
         throw new InvalidPhraseTypeException();
     }
 
+    private void checkIfPhraseExistsByIdAndUserId(long id, String userID) {
+        if (phraseManagementRepository.existsPhrasePostObjectByIdAndUserId(id, userID)) {
+            return;
+        }
+        throw new PhraseNotFoundException();
+    }
+
     private void checkIfPhraseIsEmpty(String phrase) {
         if (!phrase.isEmpty() || !phrase.isBlank()) {
             return;
         }
         throw new PhraseIsEmptyException();
-    }
-
-    private void checkIfPhraseExistsByIdAndUserId(long phraseID, String userID) {
-        if (phraseManagementRepository.existsPhrasePostObjectByIdAndUserId(phraseID, userID)) {
-            return;
-        }
-        throw new PhraseNotFoundException();
     }
 
     private void checkIfPhraseExists(String phrase) {
@@ -117,9 +125,15 @@ public class PhraseManagementUserService {
         checkIfPhraseExists(phrase);
     }
 
-    private void deletePhraseFromResourcesByID(long phraseID) {
-        jokeRepository.deleteByPhrasemanagementID(phraseID);
-        quoteRepository.deleteByPhrasemanagementID(phraseID);
+    private void deletePhraseFromResourceRepository(long phraseID) {
+        jokeRepository.deleteByPhraseManagementID(phraseID);
+        quoteRepository.deleteByPhraseManagementID(phraseID);
     }
+
+    private PhrasePostObjectUserDTO convertPhrasePostObjectToDTO(PhrasePostObject phrasePostObject) {
+        return modelMapper.map(phrasePostObject, PhrasePostObjectUserDTO.class);
+    }
+
+
 
 }
