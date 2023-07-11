@@ -6,9 +6,9 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class PhraseManagementMetadata {
-    private int maxPhrases;
-    private int currentPhrases;
+public class PhraseCount {
+    private long maxPhrases;
+    private long currentPhrases;
 
 
 

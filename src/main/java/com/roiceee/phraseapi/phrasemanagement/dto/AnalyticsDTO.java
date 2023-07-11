@@ -1,8 +1,10 @@
 package com.roiceee.phraseapi.phrasemanagement.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
+@AllArgsConstructor
 public class AnalyticsDTO {
     private Long totalPhrases;
     private Long quotes;

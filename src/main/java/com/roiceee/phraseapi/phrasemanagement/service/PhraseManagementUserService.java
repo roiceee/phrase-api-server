@@ -2,6 +2,7 @@ package com.roiceee.phraseapi.phrasemanagement.service;
 
 import com.roiceee.phraseapi.phrasemanagement.dto.PhrasePostObjectUserDTO;
 import com.roiceee.phraseapi.phrasemanagement.exception.*;
+import com.roiceee.phraseapi.phrasemanagement.model.PhraseCount;
 import com.roiceee.phraseapi.phrasemanagement.model.PhrasePostObject;
 import com.roiceee.phraseapi.phrasemanagement.model.Status;
 import com.roiceee.phraseapi.phrasemanagement.repository.PhraseManagementRepository;
@@ -69,12 +70,16 @@ public class PhraseManagementUserService {
         return convertPhrasePostObjectToDTO(res);
     }
 
-    public List<PhrasePostObject> getAllPhrases(String userID) {
-        return phraseManagementRepository.findAllByUserId(userID);
+    public List<PhrasePostObjectUserDTO> getAllPhrases(String userID) {
+
+        List<PhrasePostObject> res = phraseManagementRepository.findAllByUserId(userID);
+        return res.stream().map(obj -> modelMapper.map(obj,
+                PhrasePostObjectUserDTO.class)).toList();
     }
 
-    public int getNumberOfPhrases(String userId) {
-        return (int) phraseManagementRepository.countPhrasePostObjectByUserId(userId);
+    public PhraseCount getPhraseCount(String userId) {
+        return new PhraseCount(PhraseManagementUtil.MAX_PHRASES,
+                phraseManagementRepository.countPhrasePostObjectByUserId(userId));
     }
 
     private void checkIfMaxPhrasesExceeds(String userId) {
