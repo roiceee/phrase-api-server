@@ -28,14 +28,10 @@ public class PhraseManagementUserController {
     public ResponseEntity<PhrasePostObjectUserDTO> addPhrase(Authentication authentication,
                                                              @RequestBody PhrasePostObjectUserDTO phrasePostObjectUserDTO) {
 
-        PhrasePostObject phrasePostObject = modelMapper.map(phrasePostObjectUserDTO, PhrasePostObject.class);
+        PhrasePostObjectUserDTO res = phraseManagementService.addPhrase(authentication.getName(),
+                phrasePostObjectUserDTO);
 
-        PhrasePostObject res = phraseManagementService.addPhrase(authentication.getName(),
-                phrasePostObject);
-
-        PhrasePostObjectUserDTO returnedObject = modelMapper.map(res, PhrasePostObjectUserDTO.class);
-
-        return ResponseEntity.ok().body(returnedObject);
+        return ResponseEntity.ok().body(res);
     }
 
     @DeleteMapping("delete")
@@ -51,14 +47,10 @@ public class PhraseManagementUserController {
     public ResponseEntity<PhrasePostObjectUserDTO> editPhrase(Authentication authentication,
                                                               @RequestBody PhrasePostObjectUserDTO phrasePostObjectUserDTO) {
 
-        PhrasePostObject phrasePostObject = modelMapper.map(phrasePostObjectUserDTO, PhrasePostObject.class);
+        PhrasePostObjectUserDTO res = phraseManagementService.editPhrase(authentication.getName(),
+                phrasePostObjectUserDTO);
 
-        PhrasePostObject res = phraseManagementService.editPhrase(authentication.getName(),
-                phrasePostObject);
-
-        PhrasePostObjectUserDTO returnedObject = modelMapper.map(res, PhrasePostObjectUserDTO.class);
-
-        return ResponseEntity.ok().body(returnedObject);
+        return ResponseEntity.ok().body(res);
     }
 
     @GetMapping("get-all")

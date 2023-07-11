@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 
 import java.util.List;
+import java.util.Optional;
 
 
 public interface PhraseManagementRepository extends JpaRepository<PhrasePostObject, Long> {
@@ -26,4 +27,5 @@ public interface PhraseManagementRepository extends JpaRepository<PhrasePostObje
     Page<PhrasePostObject> findAllByStatus(Pageable pageable, Status status);
 
     List<PhrasePostObject> findAllByUserId(String userId);
+    Optional<PhrasePostObject> findByIdAndUserId(Long id, String userId);
 }
