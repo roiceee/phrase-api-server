@@ -62,6 +62,20 @@ public class PhraseManagementAdminService {
         return convertPhrasePostObjectToDTO(phrasePostObject);
     }
 
+    public PhrasePostObjectAdminDTO pendPhrase(Long id) {
+        PhrasePostObject phrasePostObject =
+                phraseManagementRepository.findById(id).orElseThrow(PhraseNotFoundException::new);
+
+        phrasePostObject.setStatus(Status.PENDING);
+        phrasePostObject.setDateModifiedByAdmin(PhraseManagementUtil.getCurrentTimestamp());
+
+        deleteFromResourceRepository(phrasePostObject);
+
+        phraseManagementRepository.save(phrasePostObject);
+
+        return convertPhrasePostObjectToDTO(phrasePostObject);
+    }
+
     public void deletePhrase(Long id) {
         PhrasePostObject phrasePostObject =
                 phraseManagementRepository.findById(id).orElseThrow(PhraseNotFoundException::new);
