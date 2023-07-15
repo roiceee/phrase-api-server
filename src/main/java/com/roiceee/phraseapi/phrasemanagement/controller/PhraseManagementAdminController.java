@@ -75,6 +75,14 @@ public class PhraseManagementAdminController {
         return ResponseEntity.ok().body(res);
     }
 
+    @PatchMapping("pend")
+    public ResponseEntity<PhrasePostObjectAdminDTO> pendPhrase(@RequestParam Long id) {
+
+        PhrasePostObjectAdminDTO res = phraseManagementAdminService.pendPhrase(id);
+
+        return ResponseEntity.ok().body(res);
+    }
+
     @GetMapping("get-analytics")
     public ResponseEntity<AnalyticsDTO> getAnalytics() {
         return ResponseEntity.ok().body(phraseManagementAdminService.getAnalytics());
