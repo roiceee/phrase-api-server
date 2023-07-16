@@ -2,7 +2,9 @@ package com.roiceee.phraseapi.phrasemanagement.controller;
 
 import com.roiceee.phraseapi.phrasemanagement.dto.AnalyticsDTO;
 import com.roiceee.phraseapi.phrasemanagement.dto.PhrasePostObjectAdminDTO;
+import com.roiceee.phraseapi.phrasemanagement.model.Status;
 import com.roiceee.phraseapi.phrasemanagement.service.PhraseManagementAdminService;
+import com.roiceee.phraseapi.phrasemanagement.util.SortOrders;
 import com.roiceee.phraseapi.util.Origins;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -24,32 +26,39 @@ public class PhraseManagementAdminController {
 
     @GetMapping("get-all/{pageNo}")
     public ResponseEntity<Page<PhrasePostObjectAdminDTO>> getAllPhrases(
-            @PathVariable("pageNo") Integer pageNo
+            @PathVariable("pageNo") Integer pageNo,
+            @RequestParam(defaultValue = SortOrders.DATE_SUBMITTED) String sortBy
 
     ) {
 
-        return ResponseEntity.ok().body(phraseManagementAdminService.getAllPhrases(pageNo));
+        return ResponseEntity.ok().body(phraseManagementAdminService.getAllPhrases(pageNo, sortBy));
     }
 
     @GetMapping("get-pending/{pageNo}")
     public ResponseEntity<Page<PhrasePostObjectAdminDTO>> getAllPendingPhrases(
-            @PathVariable("pageNo") Integer pageNo
+            @PathVariable("pageNo") Integer pageNo,
+            @RequestParam(defaultValue = SortOrders.DATE_SUBMITTED) String sortBy
     ) {
-        return ResponseEntity.ok().body(phraseManagementAdminService.getAllPendingPhrases(pageNo));
+        return ResponseEntity.ok().body(phraseManagementAdminService.getPhrasesByStatus(pageNo, sortBy,
+                Status.PENDING));
     }
 
     @GetMapping("get-approved/{pageNo}")
     public ResponseEntity<Page<PhrasePostObjectAdminDTO>> getAllApprovedPhrases(
-            @PathVariable("pageNo") Integer pageNo
+            @PathVariable("pageNo") Integer pageNo,
+            @RequestParam(defaultValue = SortOrders.DATE_SUBMITTED) String sortBy
     ) {
-        return ResponseEntity.ok().body(phraseManagementAdminService.getAllApprovedPhrases(pageNo));
+        return ResponseEntity.ok().body(phraseManagementAdminService.getPhrasesByStatus(pageNo, sortBy,
+                Status.APPROVED));
     }
 
     @GetMapping("get-rejected/{pageNo}")
     public ResponseEntity<Page<PhrasePostObjectAdminDTO>> getAllRejectedPhrases(
-            @PathVariable("pageNo") Integer pageNo
+            @PathVariable("pageNo") Integer pageNo,
+            @RequestParam(defaultValue = SortOrders.DATE_SUBMITTED) String sortBy
     ) {
-        return ResponseEntity.ok().body(phraseManagementAdminService.getAllRejectedPhrases(pageNo));
+        return ResponseEntity.ok().body(phraseManagementAdminService.getPhrasesByStatus(pageNo, sortBy,
+                Status.REJECTED));
     }
 
     @PatchMapping("approve")
@@ -87,7 +96,6 @@ public class PhraseManagementAdminController {
     public ResponseEntity<AnalyticsDTO> getAnalytics() {
         return ResponseEntity.ok().body(phraseManagementAdminService.getAnalytics());
     }
-
 
 
 }
