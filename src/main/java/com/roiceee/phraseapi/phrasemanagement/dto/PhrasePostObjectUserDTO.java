@@ -16,4 +16,6 @@ public class PhrasePostObjectUserDTO {
     private String phrase;
 
     private Status status;
+
+    private String dateSubmitted;
 }
