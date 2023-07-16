@@ -23,9 +23,14 @@ public interface PhraseManagementRepository extends JpaRepository<PhrasePostObje
 
     boolean existsPhrasePostObjectByPhraseAndId(String phrase, Long id);
 
-    Page<PhrasePostObject> findAllByStatus(Pageable pageable, Status status);
+    Page<PhrasePostObject> findAllByStatusOrderByDateSubmitted(Pageable pageable, Status status);
+
+    Page<PhrasePostObject> findAllByStatusOrderByPhrase(Pageable pageable, Status status);
 
     List<PhrasePostObject> findAllByUserIdOrderByDateSubmittedAsc(String userId);
+    Page<PhrasePostObject> findAllByOrderByDateSubmitted(Pageable pageable);
+
+    Page<PhrasePostObject> findAllByOrderByPhrase(Pageable pageable);
 
     List<PhrasePostObject> findAllByUserIdOrderByPhraseAsc(String userId);
     Optional<PhrasePostObject> findByIdAndUserId(Long id, String userId);

@@ -8,6 +8,7 @@ import com.roiceee.phraseapi.phrasemanagement.model.PhrasePostObject;
 import com.roiceee.phraseapi.phrasemanagement.model.Status;
 import com.roiceee.phraseapi.phrasemanagement.repository.PhraseManagementRepository;
 import com.roiceee.phraseapi.phrasemanagement.util.PhraseManagementUtil;
+import com.roiceee.phraseapi.phrasemanagement.util.SortOrders;
 import com.roiceee.phraseapi.resourceapi.model.JokeModel;
 import com.roiceee.phraseapi.resourceapi.model.QuoteModel;
 import com.roiceee.phraseapi.resourceapi.repository.JokeRepository;
@@ -17,9 +18,12 @@ import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 
 
 @Service
@@ -83,21 +87,26 @@ public class PhraseManagementAdminService {
         phraseManagementRepository.delete(phrasePostObject);
     }
 
-    public Page<PhrasePostObjectAdminDTO> getAllPhrases(int page) {
-        return phraseManagementRepository.findAll(pageableOf(page)).map(this::convertPhrasePostObjectToDTO);
+    public Page<PhrasePostObjectAdminDTO> getAllPhrases(int page, String sortBy) {
+        Page<PhrasePostObjectAdminDTO> res = new PageImpl<>(new ArrayList<>());
+        if (sortBy.equals(SortOrders.DATE_SUBMITTED))
+            res = phraseManagementRepository.findAllByOrderByDateSubmitted(pageableOf(page)).map(this::convertPhrasePostObjectToDTO);
+        else if (sortBy.equals(SortOrders.ALPHABETICAL))
+            res = phraseManagementRepository.findAllByOrderByPhrase(pageableOf(page)).map(this::convertPhrasePostObjectToDTO);
+        return res;
     }
 
-    public Page<PhrasePostObjectAdminDTO> getAllPendingPhrases(int page) {
-        return phraseManagementRepository.findAllByStatus(pageableOf(page), Status.PENDING).map(this::convertPhrasePostObjectToDTO);
+    public Page<PhrasePostObjectAdminDTO> getPhrasesByStatus(int page, String sortBy, Status status) {
+        Page<PhrasePostObjectAdminDTO> res = new PageImpl<>(new ArrayList<>());
+        if (sortBy.equals(SortOrders.DATE_SUBMITTED))
+            res = phraseManagementRepository.findAllByStatusOrderByDateSubmitted(pageableOf(page),
+                    status).map(this::convertPhrasePostObjectToDTO);
+        else if (sortBy.equals(SortOrders.ALPHABETICAL))
+            res = phraseManagementRepository.findAllByStatusOrderByPhrase(pageableOf(page), status).map(this::convertPhrasePostObjectToDTO);
+
+        return res;
     }
 
-    public Page<PhrasePostObjectAdminDTO> getAllApprovedPhrases(int page) {
-        return phraseManagementRepository.findAllByStatus(pageableOf(page), Status.APPROVED).map(this::convertPhrasePostObjectToDTO);
-    }
-
-    public Page<PhrasePostObjectAdminDTO> getAllRejectedPhrases(int page) {
-        return phraseManagementRepository.findAllByStatus(pageableOf(page), Status.REJECTED).map(this::convertPhrasePostObjectToDTO);
-    }
 
     public AnalyticsDTO getAnalytics() {
 
