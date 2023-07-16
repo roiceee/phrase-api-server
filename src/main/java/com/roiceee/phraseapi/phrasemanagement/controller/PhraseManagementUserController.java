@@ -4,6 +4,7 @@ import com.roiceee.phraseapi.phrasemanagement.dto.DeletePhraseDTO;
 import com.roiceee.phraseapi.phrasemanagement.dto.PhrasePostObjectUserDTO;
 import com.roiceee.phraseapi.phrasemanagement.model.PhraseCount;
 import com.roiceee.phraseapi.phrasemanagement.service.PhraseManagementUserService;
+import com.roiceee.phraseapi.phrasemanagement.util.SortOrders;
 import com.roiceee.phraseapi.util.Origins;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -49,10 +50,12 @@ public class PhraseManagementUserController {
         return ResponseEntity.ok().body(res);
     }
 
-    @GetMapping("get-all")
-    public ResponseEntity<List<PhrasePostObjectUserDTO>> getAllPhrases(Authentication authentication) {
+    @GetMapping(value = "get-all")
+    public ResponseEntity<List<PhrasePostObjectUserDTO>> getAllPhrases(Authentication authentication,
+                                                                       @RequestParam(defaultValue =
+                                                                               SortOrders.DATE_SUBMITTED) String sortBy) {
 
-        return ResponseEntity.ok().body(phraseManagementService.getAllPhrases(authentication.getName()));
+        return ResponseEntity.ok().body(phraseManagementService.getAllPhrases(authentication.getName(), sortBy));
     }
 
     @GetMapping("get-metadata")

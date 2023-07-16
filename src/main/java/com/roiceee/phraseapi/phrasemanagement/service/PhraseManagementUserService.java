@@ -7,6 +7,7 @@ import com.roiceee.phraseapi.phrasemanagement.model.PhrasePostObject;
 import com.roiceee.phraseapi.phrasemanagement.model.Status;
 import com.roiceee.phraseapi.phrasemanagement.repository.PhraseManagementRepository;
 import com.roiceee.phraseapi.phrasemanagement.util.PhraseManagementUtil;
+import com.roiceee.phraseapi.phrasemanagement.util.SortOrders;
 import com.roiceee.phraseapi.resourceapi.repository.JokeRepository;
 import com.roiceee.phraseapi.resourceapi.repository.QuoteRepository;
 import com.roiceee.phraseapi.resourceapi.util.ReqParamTypeValues;
@@ -15,6 +16,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -70,9 +72,15 @@ public class PhraseManagementUserService {
         return convertPhrasePostObjectToDTO(res);
     }
 
-    public List<PhrasePostObjectUserDTO> getAllPhrases(String userID) {
+    public List<PhrasePostObjectUserDTO> getAllPhrases(String userID, String sortBy) {
+        List<PhrasePostObject> res = new ArrayList<>();
 
-        List<PhrasePostObject> res = phraseManagementRepository.findAllByUserId(userID);
+        if (sortBy.equals(SortOrders.DATE_SUBMITTED)) {
+            res = phraseManagementRepository.findAllByUserIdOrderByDateSubmittedAsc(userID);
+        } else if (sortBy.equals(SortOrders.ALPHABETICAL)) {
+            res = phraseManagementRepository.findAllByUserIdOrderByPhraseAsc(userID);
+        }
+
         return res.stream().map(obj -> modelMapper.map(obj,
                 PhrasePostObjectUserDTO.class)).toList();
     }
@@ -133,7 +141,6 @@ public class PhraseManagementUserService {
     private PhrasePostObjectUserDTO convertPhrasePostObjectToDTO(PhrasePostObject phrasePostObject) {
         return modelMapper.map(phrasePostObject, PhrasePostObjectUserDTO.class);
     }
-
 
 
 }

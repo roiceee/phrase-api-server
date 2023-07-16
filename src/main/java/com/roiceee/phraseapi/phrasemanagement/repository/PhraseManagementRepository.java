@@ -6,7 +6,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-
 import java.util.List;
 import java.util.Optional;
 
@@ -26,6 +25,8 @@ public interface PhraseManagementRepository extends JpaRepository<PhrasePostObje
 
     Page<PhrasePostObject> findAllByStatus(Pageable pageable, Status status);
 
-    List<PhrasePostObject> findAllByUserId(String userId);
+    List<PhrasePostObject> findAllByUserIdOrderByDateSubmittedAsc(String userId);
+
+    List<PhrasePostObject> findAllByUserIdOrderByPhraseAsc(String userId);
     Optional<PhrasePostObject> findByIdAndUserId(Long id, String userId);
 }
