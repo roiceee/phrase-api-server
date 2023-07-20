@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.sql.Timestamp;
+
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "jokes")
@@ -25,5 +27,8 @@ public class JokeModel extends Phrase {
 
     @Column(name = "phrase_management_id")
     private Long phraseManagementID;
+
+    @Column(name = "timestamp", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
 }

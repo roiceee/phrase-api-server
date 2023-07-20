@@ -27,6 +27,13 @@ public interface JokeRepository extends JpaRepository<JokeModel, Long> {
             nativeQuery = true)
     List<JokeModel> getRandomJokeListWithQuery(int quantity, String query);
 
+    Page<JokeModel> findAllByPhraseIsContainingOrderByTimestampAsc(String phrase, Pageable pageable);
+
+    Page<JokeModel> findAllByPhraseIsContainingOrderByTimestampDesc(String phrase, Pageable pageable);
+    Page<JokeModel> findAllByAuthorIsContainingOrderByTimestampAsc(String phrase, Pageable pageable);
+
+    Page<JokeModel> findAllByAuthorIsContainingOrderByTimestampDesc(String phrase, Pageable pageable);
+
     Page<JokeModel> findAllByPhraseIsContaining(String phrase, Pageable pageable);
 
     void deleteByPhraseManagementID(Long id);

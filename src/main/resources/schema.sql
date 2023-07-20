@@ -223,3 +223,11 @@ ALTER TABLE IF EXISTS public.phrase_management
 
 ALTER TABLE IF EXISTS public.phrase_management
     ALTER COLUMN date_submitted SET NOT NULL;
+
+--update on 2023-07-20
+
+ALTER TABLE IF EXISTS public.jokes
+    ADD COLUMN "timestamp" timestamp without time zone NOT NULL DEFAULT now();
+
+ALTER TABLE IF EXISTS public.quotes
+    ADD COLUMN "timestamp" timestamp without time zone NOT NULL DEFAULT now();

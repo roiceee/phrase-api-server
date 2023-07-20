@@ -28,6 +28,12 @@ public interface QuoteRepository extends JpaRepository<QuoteModel, Long> {
             nativeQuery = true)
     List<QuoteModel> getRandomQuoteListWithQuery(int quantity, String query);
 
+    Page<QuoteModel> findAllByPhraseIsContainingOrderByTimestampAsc(String phrase, Pageable pageable);
+
+    Page<QuoteModel> findAllByPhraseIsContainingOrderByTimestampDesc(String phrase, Pageable pageable);
+
+    Page<QuoteModel> findAllByAuthorIsContainingOrderByTimestampAsc(String author, Pageable pageable);
+    Page<QuoteModel> findAllByAuthorIsContainingOrderByTimestampDesc(String author, Pageable pageable);
 
     Page<QuoteModel> findAllByPhraseIsContaining(String phrase, Pageable pageable);
 

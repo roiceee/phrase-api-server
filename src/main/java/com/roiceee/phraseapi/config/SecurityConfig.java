@@ -37,8 +37,8 @@ public class SecurityConfig {
 
 
         http.authorizeHttpRequests()
-                .requestMatchers("/api/*").permitAll()
-                .requestMatchers("/apikey/*").authenticated()
+                .requestMatchers("/api/**").permitAll()
+                .requestMatchers("/apikey/**").authenticated()
                 .requestMatchers("/check").permitAll()
                 .requestMatchers("/actuator/health").permitAll()
                 .requestMatchers("/phrase-management/user/**").authenticated()
