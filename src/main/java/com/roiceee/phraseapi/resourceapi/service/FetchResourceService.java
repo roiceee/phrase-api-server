@@ -6,10 +6,7 @@ import com.roiceee.phraseapi.resourceapi.model.JokeModel;
 import com.roiceee.phraseapi.resourceapi.model.Phrase;
 import com.roiceee.phraseapi.resourceapi.repository.JokeRepository;
 import com.roiceee.phraseapi.resourceapi.repository.QuoteRepository;
-import com.roiceee.phraseapi.resourceapi.util.Params;
-import com.roiceee.phraseapi.resourceapi.util.ReqParamPageValues;
-import com.roiceee.phraseapi.resourceapi.util.ReqParamQtyValues;
-import com.roiceee.phraseapi.resourceapi.util.ReqParamTypeValues;
+import com.roiceee.phraseapi.resourceapi.util.*;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -70,6 +67,68 @@ public class FetchResourceService {
             case ReqParamTypeValues.QUOTE -> quoteRepository.findAllByPhraseIsContaining(query, pageable);
             default -> throw new InvalidParamValueException(type, Params.TYPE);
         });
+    }
+
+    // this doesn't need to have error messages to end users because it is meant to be consumed by the phrase api
+    // client
+    // app and not meant to be used by other apps
+    public Page<PhraseDTO> getPhraseListToClientApp(String type, int page, int quantity, String query
+            , String searchBy, String orderBy) {
+
+        Pageable pageable = PageRequest.of(page, quantity);
+
+        return switch (type) {
+            case ReqParamTypeValues.JOKE -> searchJokeBy(searchBy, query, orderBy, pageable);
+            case ReqParamTypeValues.QUOTE -> searchQuoteBy(searchBy, query, orderBy, pageable);
+            default -> throw new InvalidParamValueException(searchBy, Params.SEARCH_BY);
+        };
+
+    }
+
+    //break down the method above to smaller methods
+
+    private Page<PhraseDTO> searchJokeBy(String searchBy, String query, String orderBy, Pageable pageable) {
+        return convertToDtoPage(
+                switch (searchBy) {
+                    case ReqParamSearchByValues.PHRASE -> switch (orderBy) {
+                        case ReqParamOrderByValues.ASC ->
+                                jokeRepository.findAllByPhraseIsContainingOrderByTimestampAsc(query, pageable);
+                        case ReqParamOrderByValues.DESC ->
+                                jokeRepository.findAllByPhraseIsContainingOrderByTimestampDesc(query, pageable);
+                        default -> throw new InvalidParamValueException(orderBy, Params.ORDER_BY);
+                    };
+
+                    case ReqParamSearchByValues.AUTHOR -> switch (orderBy) {
+                        case ReqParamOrderByValues.ASC ->
+                                jokeRepository.findAllByAuthorIsContainingOrderByTimestampAsc(query, pageable);
+                        case ReqParamOrderByValues.DESC ->
+                                jokeRepository.findAllByAuthorIsContainingOrderByTimestampDesc(query, pageable);
+                        default -> throw new InvalidParamValueException(orderBy, Params.ORDER_BY);
+                    };
+                    default -> throw new InvalidParamValueException(searchBy, Params.SEARCH_BY);
+                });
+    }
+
+    private Page<PhraseDTO> searchQuoteBy(String searchBy, String query, String orderBy, Pageable pageable) {
+        return convertToDtoPage(
+                switch (searchBy) {
+                    case ReqParamSearchByValues.PHRASE -> switch (orderBy) {
+                        case ReqParamOrderByValues.ASC ->
+                                quoteRepository.findAllByPhraseIsContainingOrderByTimestampAsc(query, pageable);
+                        case ReqParamOrderByValues.DESC ->
+                                quoteRepository.findAllByPhraseIsContainingOrderByTimestampDesc(query, pageable);
+                        default -> throw new InvalidParamValueException(orderBy, Params.ORDER_BY);
+                    };
+
+                    case ReqParamSearchByValues.AUTHOR -> switch (orderBy) {
+                        case ReqParamOrderByValues.ASC ->
+                                quoteRepository.findAllByAuthorIsContainingOrderByTimestampAsc(query, pageable);
+                        case ReqParamOrderByValues.DESC ->
+                                quoteRepository.findAllByAuthorIsContainingOrderByTimestampDesc(query, pageable);
+                        default -> throw new InvalidParamValueException(orderBy, Params.ORDER_BY);
+                    };
+                    default -> throw new InvalidParamValueException(searchBy, Params.SEARCH_BY);
+                });
     }
 
 
