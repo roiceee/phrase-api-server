@@ -92,17 +92,18 @@ public class FetchResourceService {
                 switch (searchBy) {
                     case ReqParamSearchByValues.PHRASE -> switch (orderBy) {
                         case ReqParamOrderByValues.ASC ->
-                                jokeRepository.findAllByPhraseIsContainingOrderByTimestampAsc(query, pageable);
+                                jokeRepository.findAllByPhraseIsContainingIgnoreCaseOrderByTimestampAsc(query,
+                                        pageable);
                         case ReqParamOrderByValues.DESC ->
-                                jokeRepository.findAllByPhraseIsContainingOrderByTimestampDesc(query, pageable);
+                                jokeRepository.findAllByPhraseIsContainingIgnoreCaseOrderByTimestampDesc(query, pageable);
                         default -> throw new InvalidParamValueException(orderBy, Params.ORDER_BY);
                     };
 
                     case ReqParamSearchByValues.AUTHOR -> switch (orderBy) {
                         case ReqParamOrderByValues.ASC ->
-                                jokeRepository.findAllByAuthorIsContainingOrderByTimestampAsc(query, pageable);
+                                jokeRepository.findAllByAuthorIsContainingIgnoreCaseOrderByTimestampAsc(query, pageable);
                         case ReqParamOrderByValues.DESC ->
-                                jokeRepository.findAllByAuthorIsContainingOrderByTimestampDesc(query, pageable);
+                                jokeRepository.findAllByAuthorIsContainingIgnoreCaseOrderByTimestampDesc(query, pageable);
                         default -> throw new InvalidParamValueException(orderBy, Params.ORDER_BY);
                     };
                     default -> throw new InvalidParamValueException(searchBy, Params.SEARCH_BY);
@@ -114,17 +115,17 @@ public class FetchResourceService {
                 switch (searchBy) {
                     case ReqParamSearchByValues.PHRASE -> switch (orderBy) {
                         case ReqParamOrderByValues.ASC ->
-                                quoteRepository.findAllByPhraseIsContainingOrderByTimestampAsc(query, pageable);
+                                quoteRepository.findAllByPhraseIsContainingIgnoreCaseOrderByTimestampAsc(query, pageable);
                         case ReqParamOrderByValues.DESC ->
-                                quoteRepository.findAllByPhraseIsContainingOrderByTimestampDesc(query, pageable);
+                                quoteRepository.findAllByPhraseIsContainingIgnoreCaseOrderByTimestampDesc(query, pageable);
                         default -> throw new InvalidParamValueException(orderBy, Params.ORDER_BY);
                     };
 
                     case ReqParamSearchByValues.AUTHOR -> switch (orderBy) {
                         case ReqParamOrderByValues.ASC ->
-                                quoteRepository.findAllByAuthorIsContainingOrderByTimestampAsc(query, pageable);
+                                quoteRepository.findAllByAuthorIsContainingIgnoreCaseOrderByTimestampAsc(query, pageable);
                         case ReqParamOrderByValues.DESC ->
-                                quoteRepository.findAllByAuthorIsContainingOrderByTimestampDesc(query, pageable);
+                                quoteRepository.findAllByAuthorIsContainingIgnoreCaseOrderByTimestampDesc(query, pageable);
                         default -> throw new InvalidParamValueException(orderBy, Params.ORDER_BY);
                     };
                     default -> throw new InvalidParamValueException(searchBy, Params.SEARCH_BY);
