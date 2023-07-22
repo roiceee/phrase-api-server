@@ -68,7 +68,7 @@ public class ResourceControllerLimiterService {
 
     private Bucket newBucket() {
         int REFRESH_INTERVAL_IN_MINUTES = 1;
-        int REQUEST_LIMIT = 100;
+        int REQUEST_LIMIT = 1000;
         Bandwidth bandwidth = Bandwidth.classic(REQUEST_LIMIT, Refill.intervally(REQUEST_LIMIT,
                 Duration.ofMinutes(REFRESH_INTERVAL_IN_MINUTES)));
         return Bucket.builder().addLimit(bandwidth).build();
