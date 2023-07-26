@@ -81,7 +81,7 @@ If you have any questions or feedback, feel free to reach out to me at jroiceald
 ## Other
 
 **Technologies Used:**\
-**Backend:** Spring Boot REST\
+**Backend Language & Framework:**Java / Spring Boot REST\
 **Build Tool:** Maven\
 **Database:** PostgreSQL\
 **Authorization Server:** Auth0\
