@@ -10,5 +10,6 @@ import java.util.UUID;
 public interface RequestNumberRepository extends JpaRepository<RequestCountModel, Long> {
     @Query(value = "SELECT SUM(count) FROM request_counter", nativeQuery = true)
     long getCountSum();
+
     Optional<RequestCountModel> findByApiKey(UUID apiKey);
 }

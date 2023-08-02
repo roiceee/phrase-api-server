@@ -26,7 +26,7 @@ public class ApiKeyService {
             throw new UserHasApiKeyAlreadyException();
         }
         String uuid = UUID.randomUUID().toString();
-        apiKeyRepository.createApiKey(id, uuid);
+        apiKeyRepository.save(new UserApiKeyModel(id, uuid));
         UserApiKeyModel model = new UserApiKeyModel();
         model.setApiKey(uuid);
         return convertToDTO(model);
