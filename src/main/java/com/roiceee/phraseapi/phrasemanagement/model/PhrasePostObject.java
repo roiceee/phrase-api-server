@@ -2,19 +2,21 @@ package com.roiceee.phraseapi.phrasemanagement.model;
 
 import com.roiceee.phraseapi.resourceapi.model.Phrase;
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.DynamicInsert;
 
 import java.sql.Timestamp;
+import java.util.Objects;
 
 
-@EqualsAndHashCode(callSuper = true)
+
 @Entity
 @Table(name = "phrase_management")
-@Data
 @NoArgsConstructor
+@Getter
+@Setter
 @DynamicInsert
 public class PhrasePostObject extends Phrase {
 
@@ -52,4 +54,16 @@ public class PhrasePostObject extends Phrase {
     @Column(name = "date_modified_by_admin")
     private Timestamp dateModifiedByAdmin;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PhrasePostObject that = (PhrasePostObject) o;
+        return Objects.equals(getId(), that.getId()) && Objects.equals(getUserId(), that.getUserId()) && Objects.equals(getType(), that.getType()) && Objects.equals(getAuthor(), that.getAuthor()) && Objects.equals(getPhrase(), that.getPhrase()) && getStatus() == that.getStatus() && Objects.equals(getDateSubmitted(), that.getDateSubmitted()) && Objects.equals(getDateModifiedByAdmin(), that.getDateModifiedByAdmin());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getUserId(), getType(), getAuthor(), getPhrase(), getStatus(), getDateSubmitted(), getDateModifiedByAdmin());
+    }
 }

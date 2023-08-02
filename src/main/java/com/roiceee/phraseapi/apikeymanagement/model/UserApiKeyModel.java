@@ -5,16 +5,15 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Table(name = "api_keys")
 @Getter
 @Setter
+@NoArgsConstructor
 public class UserApiKeyModel {
-
-    public UserApiKeyModel() {
-    }
 
     public UserApiKeyModel(String ID, String apiKey) {
         this.ID = ID;
