@@ -8,7 +8,6 @@ import io.github.bucket4j.Bucket;
 import io.github.bucket4j.Refill;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.util.Iterator;
@@ -16,7 +15,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-@Service
+//temporary remove rate limiter to monitor memory usage
+//@Service
 public class ResourceControllerLimiterService {
     private final ConcurrentHashMap<String, BucketWithTimestamp> bucketCache;
 
