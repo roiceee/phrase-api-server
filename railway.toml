@@ -1,2 +1,2 @@
 [build]
-command = "java -Xmx300m -jar phrase-api-server.jar"
+command = "java -Xmx320m -jar phrase-api-server.jar"
