@@ -4,6 +4,7 @@ import com.roiceee.phraseapi.apikeymanagement.service.ApiKeyService;
 import com.roiceee.phraseapi.resourceapi.dto.PhraseDTO;
 import com.roiceee.phraseapi.resourceapi.service.FetchResourceService;
 import com.roiceee.phraseapi.resourceapi.service.RequestCountService;
+import com.roiceee.phraseapi.resourceapi.service.ResourceControllerLimiterService;
 import com.roiceee.phraseapi.resourceapi.util.Params;
 import com.roiceee.phraseapi.resourceapi.util.ReqParamOrderByValues;
 import com.roiceee.phraseapi.resourceapi.util.ReqParamSearchByValues;
@@ -24,8 +25,8 @@ public class RequestResourceController {
     private final FetchResourceService fetchResourceService;
     private final ApiKeyService apiKeyService;
     private final RequestCountService requestCountService;
-    //temporary remove rate limiter to monitor memory usage
-    //private final ResourceControllerLimiterService resourceControllerLimiterService;
+
+    private final ResourceControllerLimiterService resourceControllerLimiterService;
 
 
     @GetMapping(params = {Params.APP_ID, Params.TYPE})
@@ -111,8 +112,8 @@ public class RequestResourceController {
 
     private void beforeAction(String appid) {
         apiKeyService.checkIfApiKeyExists(appid);
-        //resourceControllerLimiterService.addExistingKeyIfAbsentInCache(appid);
-        //resourceControllerLimiterService.consumeOne(appid);
+        resourceControllerLimiterService.addExistingKeyIfAbsentInCache(appid);
+        resourceControllerLimiterService.consumeOne(appid);
     }
 
     private void afterAction(String appid) {
