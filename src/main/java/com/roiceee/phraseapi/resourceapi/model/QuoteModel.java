@@ -35,6 +35,11 @@ public class QuoteModel extends Phrase {
     @Column(name = "timestamp", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
+    public QuoteModel(String author, String phrase) {
+        this.author = author;
+        this.phrase = phrase;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
