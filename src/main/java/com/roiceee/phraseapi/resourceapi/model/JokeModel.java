@@ -14,7 +14,6 @@ import java.util.Objects;
 @Getter
 @Setter
 @NoArgsConstructor
-
 public class JokeModel extends Phrase {
 
     @Id
@@ -34,6 +33,12 @@ public class JokeModel extends Phrase {
 
     @Column(name = "timestamp", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+
+
+    public JokeModel(String author, String phrase) {
+        this.author = author;
+        this.phrase = phrase;
+    }
 
     @Override
     public boolean equals(Object o) {
