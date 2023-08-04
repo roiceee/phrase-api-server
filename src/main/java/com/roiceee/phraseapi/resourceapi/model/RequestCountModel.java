@@ -4,7 +4,9 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Objects;
@@ -14,6 +16,8 @@ import java.util.UUID;
 @Table(name = "request_counter")
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class RequestCountModel {
     @Id
     @Column(name = "api_key")
@@ -24,6 +28,8 @@ public class RequestCountModel {
 
     @Column(name = "owner")
     private String owner;
+
+
 
     @Override
     public boolean equals(Object o) {

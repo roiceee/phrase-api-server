@@ -28,11 +28,8 @@ public class RequestCountService {
             return;
         }
 
-
-        RequestCountModel model = new RequestCountModel();
-        model.setApiKey(UUID.fromString(apiKey));
-        model.setCount(1L);
-        model.setOwner(apiKeyRepository.findByApiKey(apiKey).getID());
+        RequestCountModel model = new RequestCountModel(UUID.fromString(apiKey), 1L,
+                apiKeyRepository.findByApiKey(apiKey).getID());
 
         requestNumberRepository.save(model);
     }
