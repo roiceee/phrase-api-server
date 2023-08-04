@@ -2,11 +2,13 @@ package com.roiceee.phraseapi.resourceapi.config;
 
 
 import com.roiceee.phraseapi.resourceapi.service.ResourceControllerLimiterService;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 
-//@Configuration
-//@EnableScheduling
+@Configuration
+@EnableScheduling
 public class ScheduledTasks {
 
     private final ResourceControllerLimiterService resourceControllerLimiterService;
