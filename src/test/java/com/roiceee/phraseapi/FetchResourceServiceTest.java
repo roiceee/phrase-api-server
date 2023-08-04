@@ -105,6 +105,45 @@ public class FetchResourceServiceTest {
         Assertions.assertThrows(InvalidParamValueException.class, () -> {
             fetchResourceService.getRandomPhraseList("joke", wrongSize);
         });
-
     }
+
+    @Test
+    public void testGetRandomPhraseListWithQueryHappyFlow() {
+        List<JokeModel> jokeModelList = List.of(new JokeModel("joke1", "author1"), new JokeModel("joke2",
+                "author2"));
+        List<QuoteModel> quoteModelList = List.of(new QuoteModel("quote1", "author1"), new QuoteModel("quote2",
+                "author2"));
+        int size = 2;
+        String query = "query";
+
+        when(jokeRepository.getRandomJokeListWithQuery(size, query)).thenReturn(jokeModelList);
+        when(quoteRepository.getRandomQuoteListWithQuery(size, query)).thenReturn(quoteModelList);
+
+        List<PhraseDTO> jokePhraseDTOList = fetchResourceService.getRandomPhraseListWithQuery("joke", size, query);
+        List<PhraseDTO> quotePhraseDTOList = fetchResourceService.getRandomPhraseListWithQuery("quote", size, query);
+
+        assertEquals(jokePhraseDTOList.size(), size);
+        assertEquals(quotePhraseDTOList.size(), size);
+
+}
+
+    @Test
+    public void testGetRandomPhraseListWithQueryError() {
+        String wrongType = "wrongType";
+        int size = 2;
+        String query = "query";
+
+        Assertions.assertThrows(InvalidParamValueException.class, () -> {
+            fetchResourceService.getRandomPhraseListWithQuery(wrongType, size, query);
+        });
+
+
+        int wrongSize = 0;
+
+        Assertions.assertThrows(InvalidParamValueException.class, () -> {
+            fetchResourceService.getRandomPhraseListWithQuery("joke", wrongSize, query);
+        });
+    }
+
+
 }
